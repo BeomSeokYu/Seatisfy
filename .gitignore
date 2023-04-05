@@ -1,0 +1,12 @@
+.settings
+.classpath
+.project
+.springBeans
+build
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
