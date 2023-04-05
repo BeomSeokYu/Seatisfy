@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security-5.2.xsd">
+	
+	<bean id="customAccessDenied" class="edu.springz.security.CustomAccessDeniedHandler"/>
+	<bean id="customLoginSuccess" class="edu.springz.security.CustomLoginSuccessHandler"/>
+	<!-- <bean id="customPasswordEncoder" class="edu.springz.security.CustomNoOpPasswordEncoder"/> -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	
+	<security:http>
+		<security:intercept-url pattern="/sample/all" access="permitAll"/>
+		<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>
+		
+		<!-- 로그인 페이지 지정 / 로그인 성공 핸들러 지정 -->
+		<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/>
+		
+		<!-- 로그아웃 페이지 지정 및 로그아웃 처리 -->
+		<security:logout logout-url="/customLogout" invalidate-session="true"/>
+		
+		<!-- 접근 불가 메시지 설정 -->
+		<!-- <security:access-denied-handler error-page="/accessDenied"/> -->
+		<security:access-denied-handler ref="customAccessDenied"/>
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<!-- 
+			<security:user-service>
+				<security:user name="member" password="{noop}1111" authorities="ROLE_MEMBER"/>
+				<security:user name="admin" password="{noop}1111" authorities="ROLE_ADMIN, ROLE_MEMBER"/>
+			</security:user-service> 
+			-->
+			<security:jdbc-user-service data-source-ref="dataSource"
+                                		users-by-username-query="select id, pw, enabled from tbl_member where id = ?"	
+                                		authorities-by-username-query="select id, auth from tbl_member_auth where id = ?"/>
+                                		<!--유저의 id로 유저의 권한 정보를 가져오는 속성 (확인용)-->
+                                		<!--유저의 id로 유저의 정보를 가져오는 속성 (확인용)-->
+                                		
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+<!-- 			<security:password-encoder ref="customPasswordEncoder"/> -->
+		</security:authentication-provider>
+	</security:authentication-manager>
+</beans>
