@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+
+<insert id="insert" parameterType="com.reserve.seat.notice.NoticeDTO" useGeneratedKeys="true" keyProperty="nno">
+<![CDATA[
+	INSERT INTO notice
+	(ntitle, ncontent, nwriter)
+	VALUES
+	(#{ntitle}, #{ncontent}, #{nwriter})
+]]>
+
+</insert>
+
+<select id="all_notice" resultType="com.reserve.seat.notice.NoticeDTO" >
+	<![CDATA[
+		SELECT * 
+		FROM notice
+		ORDER BY nno DESC
+	]]>
+</select>
+
+<select id="detail_notice" parameterType="String" resultType="com.reserve.seat.notice.NoticeDTO">
+	<![CDATA[
+		SELECT * FROM notice WHERE nno = #{nno}
+	]]>
+</select>
+
+<update id="update_notice" parameterType="HashMap">
+	<![CDATA[
+		UPDATE notice
+		SET ntitle = #{ntitle}, ncontent = #{ncontent}
+		WHERE nno = #{nno}
+	]]>
+</update>
+
+<delete id="delete_notice" parameterType="hashMap">
+			<![CDATA[
+				DELETE FROM notice
+				WHERE nno = #{nno}
+			]]>
+</delete>
+
+
+</mapper>
