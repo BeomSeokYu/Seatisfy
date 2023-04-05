@@ -8,14 +8,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<title>공지사항 전체 목록</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
 </head>
 <body>
-<table id="example1" class="table table-bordered table-striped">
-							<thead>
+
+<div class="container">
+<div class="container">
+    <div style="padding-top: 50px">
+        <table class="table table-hover">
 								<tr>
 									<th>번호</th>
 									<th>제목</th>
@@ -23,8 +28,6 @@
 									<th>작성자</th>
 									<th>날짜</th>
 								</tr>
-							</thead>
-							<tbody>
 								<c:forEach items="${noticeList}" var="notice">
 									<tr>
 										<td>${notice.nno}</td>
@@ -34,17 +37,9 @@
 										<td>${notice.ndate}</td>
 									</tr>
 								</c:forEach>
-							</tbody>
-							<tfoot>
-								<tr>
-									<th>번호</th>
-									<th>제목</th>
-									<th>분류</th>
-									<th>작성자</th>
-									<th>날짜</th>
-								</tr>
-							</tfoot>
 						</table>
+						</div><hr></div></div>
+<script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 						
 </body>
 </html>
