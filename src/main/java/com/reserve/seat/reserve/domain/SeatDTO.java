@@ -6,16 +6,16 @@
 package com.reserve.seat.reserve.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class SeatDTO {
 	private int sno;
 	private int pno;
 	private int isreserved;
-	
-	public SeatDTO() {}
 	
 	public SeatDTO(int pno, int isreserved) {
 		this.pno = pno;

@@ -6,32 +6,34 @@
 package com.reserve.seat.reserve.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class PostDTO {
 	private int pno;
-	private String pwiter;
+	private String pwriter;
 	private String pcontent;
 	private String location;
 	private String seatinfo;
-	private String rdate_start;
-	private String rdate_end;
-	private String pdate_upload;
-	private String pdate_update;
-	
-	public PostDTO(){}
-	
-	public PostDTO(String pwiter, String pcontent, String location, String seatinfo, String rdate_start,
-			String rdate_end, String pdate_upload, String pdate_update) {
-		this.pwiter = pwiter;
+	private String startdate;
+	private String enddate;
+	private String regdate;
+	private String moddate;
+
+	public PostDTO(String pwriter, String pcontent, String location, String seatinfo, String startdate, String enddate,
+			String moddate) {
+		super();
+		this.pwriter = pwriter;
 		this.pcontent = pcontent;
 		this.location = location;
 		this.seatinfo = seatinfo;
-		this.rdate_start = rdate_start;
-		this.rdate_end = rdate_end;
-		this.pdate_upload = pdate_upload;
-		this.pdate_update = pdate_update;
+		this.startdate = startdate;
+		this.enddate = enddate;
+		this.moddate = moddate;
 	}
+
+	
 }

@@ -3,6 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
+ <!-- 
+작성자 : 유범석 
+작성일 : 03-04-05
+-->
+
+
 <mapper namespace="com.reserve.seat.reserve.mapper.ReserMapper">
   <!-- 쿼리 보관 -->
   <sql id="criteria">
@@ -25,7 +31,7 @@
 	</trim>
   </sql>
   
-  <!-- <select id="selectBoardAllPaging" resultType="com.reserve.seat.reserve.domain.PostDTO">
+  <select id="selectBoardAllPaging" resultType="com.reserve.seat.reserve.domain.PostDTO">
   	<![CDATA[
   		SELECT	bno, title, content, writer, regDate, updateDate, replyCnt
   		FROM 	(	SELECT	/*+INDEX_DESC(tbl_board pk_tbl_board) */
@@ -44,7 +50,7 @@
   		SELECT COUNT(*) FROM tbl_board WHERE ]]> 
   			<include refid="criteria"/> 
   	<![CDATA[ bno > 0 ]]>
-  </select> -->
+  </select>
   
   <select id="selectBoardAll" resultType="com.reserve.seat.reserve.domain.PostDTO">
   	<![CDATA[
@@ -54,11 +60,42 @@
   	]]>
   </select>
   
-  <select id="selectBoard" resultType="com.reserve.seat.reserve.domain.PostDTO">
-  	SELECT pno, pwriter, ptitle, pcontent, location, seatinfo, rdate_start, rdate_end, pdate_upload, pdate_update
+  <select id="selectPost" resultType="com.reserve.seat.reserve.domain.PostDTO">
+  	SELECT 
+  		pno, 
+  		pwriter, 
+  		ptitle, 
+  		pcontent, 
+  		location, 
+  		seatinfo, 
+  		startdate, 
+  		enddate, 
+  		regdate, 
+  		moddate
   	FROM post
   	WHERE pno = #{pno}
   </select>
+  
+  <insert id="insertPost">
+  	INSERT INTO post( 
+  		pwriter, 
+  		ptitle, 
+  		pcontent, 
+  		location, 
+  		seatinfo, 
+  		startdate, 
+  		enddate, 
+  		moddate) 
+  	VALUES(
+  		#{pwriter}, 
+  		#{ptitle}, 
+  		#{pcontent}, 
+  		#{location}, 
+  		#{seatinfo}, 
+  		#{startdate}, 
+  		#{enddate}, 
+  		#{moddate} )
+  </insert>
   
   <insert id="insertBoardSelectKey">
   	<!-- bno을 사전에 증가 시켜 bno으로 저장해 둠 -->
@@ -69,16 +106,12 @@
   	VALUES(#{bno}, #{title}, #{content}, #{writer})
   </insert>
   
-  <insert id="insertBoard">
-  	INSERT INTO tbl_board(bno, title, content, writer) 
-  	VALUES(seq_tbl_board.NEXTVAL, #{title}, #{content}, #{writer})
-  </insert>
   
-  <delete id="deleteBoard">
+  <delete id="deletePost">
   	DELETE FROM tbl_board WHERE bno = #{bno}
   </delete>
   
-  <update id="updateBoard">
+  <update id="updatePost">
   	UPDATE tbl_board
   	SET title=#{title}, content=#{content}, update_date=SYSDATE WHERE bno = #{bno}
   </update>
