@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.reserve.seat.qna.QnaRepository">
+
+  <insert id="insertQna">
+  <![CDATA[
+	  insert into qna(qtitle, qcontent, qdate)
+	  values(#{qtitle}, #{qcontent}, #{qdate})
+  	]]>
+  </insert>
+    <select id="QnaAllList"
+  	resultType="com.reserve.seat.qna.Qna">
+  	<![CDATA[
+  	  select * from qna order by qno desc
+  	]]>
+  	</select>
+<!--   <select id="selectQna"
+  	resultType="com.reserve.seat.qna.Qna">
+  	<![CDATA[
+  	  select * from qna where qno = #{qno}
+  	]]>
+  	</select>
+  	
+
+  	
+  <update id="updateQna">
+	  update qna 
+	  set qtitle = #{qtitle}, qcontent = #{qcontent}, update_date=SYSDATE
+	  where qno = #{qno}
+  </update>
+  
+  <delete id="deleteQna">
+  	  delete qna where qno = #{qno}
+  </delete> -->
+  
+</mapper>
