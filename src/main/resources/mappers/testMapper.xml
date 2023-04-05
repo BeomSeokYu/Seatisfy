@@ -5,8 +5,8 @@
   
 <mapper namespace="test">
  
-  <select id="select" resultType="int">
-  	SELECT id FROM test
+  <select id="select" resultType="String">
+  	SELECT username FROM user
   </select>
  
 </mapper>
