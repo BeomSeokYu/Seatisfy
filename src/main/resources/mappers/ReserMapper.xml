@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.reserve.seat.reserve.mapper.ReserMapper">
+  <!-- 쿼리 보관 -->
+  <sql id="criteria">
+  	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+		<foreach collection="typeArr" item="type">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'T'.toString()">
+						title LIKE '%' || #{ keyword } || '%'
+					</when>
+					<when test="type == 'C'.toString()">
+						content LIKE '%' || #{ keyword } || '%'
+					</when>
+					<when test="type == 'W'.toString()">
+						writer LIKE '%' || #{ keyword } || '%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+  </sql>
+  
+  <!-- <select id="selectBoardAllPaging" resultType="com.reserve.seat.reserve.domain.PostDTO">
+  	<![CDATA[
+  		SELECT	bno, title, content, writer, regDate, updateDate, replyCnt
+  		FROM 	(	SELECT	/*+INDEX_DESC(tbl_board pk_tbl_board) */
+  							rownum rn, bno, title, content, writer, reg_date as regDate, update_date as updateDate, reply_cnt as replyCnt
+  					FROM 	tbl_board
+  					WHERE ]]>
+  						보관 쿼리 사용
+  						<include refid="criteria"/>
+  	<![CDATA[	rownum <= #{ amount } * #{ pageNum } )
+  		WHERE 	rn > #{ amount } * ( #{ pageNum } - 1 )
+  	]]>
+  </select>
+  
+  <select id="totalCount" resultType="int">
+  	<![CDATA[
+  		SELECT COUNT(*) FROM tbl_board WHERE ]]> 
+  			<include refid="criteria"/> 
+  	<![CDATA[ bno > 0 ]]>
+  </select> -->
+  
+  <select id="selectBoardAll" resultType="com.reserve.seat.reserve.domain.PostDTO">
+  	<![CDATA[
+  		SELECT bno, title, content, writer, reg_date as regDate, update_date as updateDate, reply_cnt as replyCnt
+  		FROM tbl_board WHERE bno > 0 
+  		ORDER BY bno DESC
+  	]]>
+  </select>
+  
+  <select id="selectBoard" resultType="com.reserve.seat.reserve.domain.PostDTO">
+  	SELECT pno, pwriter, ptitle, pcontent, location, seatinfo, rdate_start, rdate_end, pdate_upload, pdate_update
+  	FROM post
+  	WHERE pno = #{pno}
+  </select>
+  
+  <insert id="insertBoardSelectKey">
+  	<!-- bno을 사전에 증가 시켜 bno으로 저장해 둠 -->
+  	<selectKey keyProperty="bno" order="BEFORE" resultType="int">
+  		SELECT seq_tbl_board.NEXTVAL FROM dual
+  	</selectKey>
+  	INSERT INTO tbl_board(bno, title, content, writer) 
+  	VALUES(#{bno}, #{title}, #{content}, #{writer})
+  </insert>
+  
+  <insert id="insertBoard">
+  	INSERT INTO tbl_board(bno, title, content, writer) 
+  	VALUES(seq_tbl_board.NEXTVAL, #{title}, #{content}, #{writer})
+  </insert>
+  
+  <delete id="deleteBoard">
+  	DELETE FROM tbl_board WHERE bno = #{bno}
+  </delete>
+  
+  <update id="updateBoard">
+  	UPDATE tbl_board
+  	SET title=#{title}, content=#{content}, update_date=SYSDATE WHERE bno = #{bno}
+  </update>
+  
+  <update id="updateReplyCnt">
+  	UPDATE tbl_board
+  	SET reply_cnt = #{replyCnt} WHERE bno = #{bno}
+  </update>
+</mapper>
