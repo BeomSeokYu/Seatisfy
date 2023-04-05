@@ -11,31 +11,31 @@ import org.springframework.stereotype.Service;
 public class NoticeService {
 
 	@Autowired
-	private NoticeRepository noticeRepository;
+	private NoticeMapper noticeMapper;
 	
 	//공지 등록
 	public void insertNotice(NoticeDTO notice) {
-		noticeRepository.insertNotice(notice);
+		noticeMapper.insertNotice(notice);
 	}
 
 	//공지 목록
 	public List<NoticeDTO> AllNoticeList() {
-		return noticeRepository.AllNoticeList();
+		return noticeMapper.AllNoticeList();
 	}
 
 	//공지 상세보기
 	public NoticeDTO detailNotice(String nno) {
-		return noticeRepository.detailNotice(nno);
+		return noticeMapper.detailNotice(nno);
 	}
 	
 	//공지 수정
 	public void updateNotice(NoticeDTO notice) {
-		noticeRepository.updateNotice(notice);
+		noticeMapper.updateNotice(notice);
 	}
 
 	//공지 삭제
 	public void deleteNotice(String nno) {
-		noticeRepository.deleteNotice(nno);
+		noticeMapper.deleteNotice(nno);
 	}
 	
 	

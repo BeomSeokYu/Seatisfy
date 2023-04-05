@@ -21,7 +21,7 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 
-	//공지 등록
+	//공지 등록 조회 폼
 	@GetMapping("/add")
 	public String requestAddNoticeForm(@ModelAttribute("NewNotice") NoticeDTO notice) {
 
@@ -54,9 +54,33 @@ public class NoticeController {
 		return "notice/noticeDetail";
 	}
 	
+	//공지 수정 폼
+	@GetMapping("/update")
+	public String updateNoticeForm(@ModelAttribute("updateNotice") NoticeDTO notice, 
+								   @RequestParam("nno") String nno, Model model) {
+		
+		NoticeDTO noticeNum = noticeService.detailNotice(nno);
+		model.addAttribute("notice", noticeNum);
+		
+		return "notice/noticeUpdate";
+	}
+	
 	//공지 수정
+	@PostMapping("/update")
+	public String updateNotice(NoticeDTO notice) {
+		
+		noticeService.updateNotice(notice);
+		return "redirect:/notice/list";
+	}
 	
 	
 	//공지 삭제
+	@PostMapping("/remove")
+	public String removeNotice(@RequestParam("nno") String nno) {
+		
+		noticeService.deleteNotice(nno);
+		
+		return "redirect:/notice/list";
+	}
 	
 }

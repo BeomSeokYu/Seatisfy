@@ -5,7 +5,7 @@ package com.reserve.seat.notice;
 import java.util.List;
 
 
-public interface NoticeRepository {
+public interface NoticeMapper {
 
 	
 	void insertNotice(NoticeDTO notice);	//공지 등록
