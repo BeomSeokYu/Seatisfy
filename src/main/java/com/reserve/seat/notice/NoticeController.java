@@ -31,7 +31,7 @@ public class NoticeController {
 
 	//공지 등록
 	@PostMapping("/add")
-	public String submitAddNoticeForm(@ModelAttribute  NoticeDTO notice) {
+	public String submitAddNoticeForm(@ModelAttribute NoticeDTO notice) {
 		noticeService.insertNotice(notice);
 		return "redirect:/notice/list";
 	}

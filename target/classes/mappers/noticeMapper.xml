@@ -87,20 +87,6 @@
   </select>
   
   
-        
-  <!-- <update id="updateReplyCnt">
-  	UPDATE tbl_board
-  	SET reply_cnt = #{replyCnt} WHERE bno = #{bno}
-  </update>  -->
-
-
-
-
-
-
-
-
-
 
 
 
