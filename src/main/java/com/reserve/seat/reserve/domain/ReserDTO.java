@@ -5,6 +5,7 @@
 
 package com.reserve.seat.reserve.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,15 +13,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ReserDTO {
 	private int rno;
 	private int pno;
 	private int sno;
 	private String rdate;
-	
-	public ReserDTO(int pno, int sno, String rdate) {
-		this.pno = pno;
-		this.sno = sno;
-		this.rdate = rdate;
-	}
 }

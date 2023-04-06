@@ -17,13 +17,13 @@
 			<trim prefix="OR">
 				<choose>
 					<when test="type == 'T'.toString()">
-						title LIKE '%' || #{ keyword } || '%'
-					</when>
-					<when test="type == 'C'.toString()">
-						content LIKE '%' || #{ keyword } || '%'
+						ptitle LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
 					</when>
 					<when test="type == 'W'.toString()">
-						writer LIKE '%' || #{ keyword } || '%'
+						pwriter LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+					</when>
+					<when test="type == 'C'.toString()">
+						pcontent LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
 					</when>
 				</choose>
 			</trim>
@@ -31,48 +31,29 @@
 	</trim>
   </sql>
   
-  <select id="selectBoardAllPaging" resultType="com.reserve.seat.reserve.domain.PostDTO">
+  <select id="selectAllPost" resultType="com.reserve.seat.reserve.domain.PostDTO">
   	<![CDATA[
-  		SELECT	bno, title, content, writer, regDate, updateDate, replyCnt
-  		FROM 	(	SELECT	/*+INDEX_DESC(tbl_board pk_tbl_board) */
-  							rownum rn, bno, title, content, writer, reg_date as regDate, update_date as updateDate, reply_cnt as replyCnt
-  					FROM 	tbl_board
-  					WHERE ]]>
-  						보관 쿼리 사용
-  						<include refid="criteria"/>
-  	<![CDATA[	rownum <= #{ amount } * #{ pageNum } )
-  		WHERE 	rn > #{ amount } * ( #{ pageNum } - 1 )
-  	]]>
+	  	SELECT *
+	  	FROM post
+	  	WHERE]]>
+	  		<include refid="criteria"/>
+	<![CDATA[
+			2 > 1
+		ORDER BY pno DESC
+	  	LIMIT #{ amount } OFFSET #{ offset }
+	]]>
   </select>
   
   <select id="totalCount" resultType="int">
   	<![CDATA[
-  		SELECT COUNT(*) FROM tbl_board WHERE ]]> 
+  		SELECT COUNT(*) FROM post WHERE ]]> 
   			<include refid="criteria"/> 
-  	<![CDATA[ bno > 0 ]]>
-  </select>
-  
-  <select id="selectBoardAll" resultType="com.reserve.seat.reserve.domain.PostDTO">
-  	<![CDATA[
-  		SELECT bno, title, content, writer, reg_date as regDate, update_date as updateDate, reply_cnt as replyCnt
-  		FROM tbl_board WHERE bno > 0 
-  		ORDER BY bno DESC
-  	]]>
+  	<![CDATA[ pno > 0 ]]>
   </select>
   
   <select id="selectPost" resultType="com.reserve.seat.reserve.domain.PostDTO">
-  	SELECT 
-  		pno, 
-  		pwriter, 
-  		ptitle, 
-  		pcontent, 
-  		location, 
-  		seatinfo, 
-  		startdate, 
-  		enddate, 
-  		regdate, 
-  		moddate
-  	FROM post
+  	SELECT * 
+  	FROM post 
   	WHERE pno = #{pno}
   </select>
   
@@ -97,23 +78,22 @@
   		#{moddate} )
   </insert>
   
-  <insert id="insertBoardSelectKey">
-  	<!-- bno을 사전에 증가 시켜 bno으로 저장해 둠 -->
-  	<selectKey keyProperty="bno" order="BEFORE" resultType="int">
-  		SELECT seq_tbl_board.NEXTVAL FROM dual
-  	</selectKey>
-  	INSERT INTO tbl_board(bno, title, content, writer) 
-  	VALUES(#{bno}, #{title}, #{content}, #{writer})
-  </insert>
-  
-  
   <delete id="deletePost">
-  	DELETE FROM tbl_board WHERE bno = #{bno}
+  	DELETE FROM post WHERE pno = #{pno}
   </delete>
   
   <update id="updatePost">
-  	UPDATE tbl_board
-  	SET title=#{title}, content=#{content}, update_date=SYSDATE WHERE bno = #{bno}
+  	UPDATE post
+  	SET 
+  		pwriter=#{pwriter}, 
+  		ptitle=#{ptitle}, 
+  		pcontent=#{pcontent}, 
+  		location=#{location}, 
+  		seatinfo=#{seatinfo}, 
+  		startdate=#{startdate}, 
+  		enddate=#{enddate}, 
+  		moddate=NOW() 
+	WHERE pno = #{pno}
   </update>
   
   <update id="updateReplyCnt">

@@ -5,6 +5,7 @@
 
 package com.reserve.seat.reserve.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,13 +13,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class SeatDTO {
 	private int sno;
 	private int pno;
 	private int isreserved;
-	
-	public SeatDTO(int pno, int isreserved) {
-		this.pno = pno;
-		this.isreserved = isreserved;
-	}
 }
