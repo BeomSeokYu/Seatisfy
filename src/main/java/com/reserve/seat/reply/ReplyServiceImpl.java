@@ -15,25 +15,22 @@ public class ReplyServiceImpl implements ReplyService {
 	@Autowired
 	private ReplyMapper replyMapper;
 	
-	@Autowired
-	private NoticeMapper noticeMapper; 
-	
 	@Override
 	//댓글 등록 
-	public int insertReply(ReplyDTO reply) {
-		return replyMapper.insertReply(reply);
+	public boolean insertReply(ReplyDTO reply) {
+		return replyMapper.insertReply(reply) == 1 ? true : false;
 	}
 
 	@Override
 	//댓글 수정
-	public int updateReply(ReplyDTO reply) {
-		return replyMapper.updateReply(reply);
+	public boolean updateReply(ReplyDTO reply) {
+		return replyMapper.updateReply(reply) == 1? true : false;
 	}
 
 	@Override
 	//댓글 삭제
-	public int deleteReply(int rno) {
-		return replyMapper.deleteReply(rno);
+	public boolean deleteReply(int rno) {
+		return replyMapper.deleteReply(rno) == 1? true : false;
 	}
 
 	@Override
