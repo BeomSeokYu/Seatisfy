@@ -6,12 +6,14 @@
 <mapper namespace="com.reserve.seat.user.UserMapper">
 	<!-- 게시물 등록  -->
 	<insert id="insertUser">
+	<![CDATA[
 	INSERT INTO user(username, password, name, phone)
 	VALUES(#{username}, #{password}, #{name}, #{phone} )
+	]]>
 	</insert>
 	
 	<!-- 회원 찾기 -->
-	<select id="selectUser" resultType="com.reserve.seat.user.UserVo">
+	<select id="selectUser" resultType="com.reserve.seat.user.User">
 		SELECT 				* 
 		FROM 				user
 		WHERE				username = #{username}

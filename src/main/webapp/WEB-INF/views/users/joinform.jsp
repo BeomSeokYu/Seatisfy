@@ -14,12 +14,12 @@
 	<form:form modelAttribute="user" 
 			   action="./join?${_csrf.parameterName}=${_csrf.token}"
 	           class="form-horizontal"
-	           method = "post">
+	           method="post">
 	<fieldset>
-	아이디 : <form:input path="username" class="form-control"/>
-	비밀번호 : <form:input path="password" type="password" class="form-control"/>
-	이름 : <form:input path="name" class="form-control"/>
-	휴대폰 : <form:input path="phone" class="form-control"/>
+	아이디 : <form:input path="username" class="form-control"/><br>
+	비밀번호 : <form:input path="password" type="password" class="form-control"/><br>
+	이름 : <form:input path="name" class="form-control"/><br>
+	휴대폰 : <form:input path="phone" class="form-control"/><br>
 	<input type="submit" class="btn btn-primary" value="등록"/>
 	
 	

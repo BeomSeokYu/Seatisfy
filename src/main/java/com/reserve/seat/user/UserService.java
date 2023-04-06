@@ -1,11 +1,8 @@
 package com.reserve.seat.user;
 
-import org.springframework.stereotype.Service;
-
-@Service
 public interface UserService {
-	public boolean signup(UserVo uvo);
+	public void signup(User user);
 	
-	public UserVo selectUser(String username);
+//	public User selectUser(String username);
 	
 }

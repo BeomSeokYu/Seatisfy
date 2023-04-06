@@ -2,8 +2,8 @@ package com.reserve.seat.user;
 
 public interface UserMapper {
 
-	public int insertUser(UserVo uvo);
+	public int insertUser(User user);
 	
-	public UserVo selectUser(String username);
+//	public User selectUser(String username);
 	
 }
