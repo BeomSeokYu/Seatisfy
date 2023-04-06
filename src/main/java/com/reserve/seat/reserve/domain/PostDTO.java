@@ -25,6 +25,6 @@ public class PostDTO {
 	private String seatinfo;
 	private String startdate;
 	private String enddate;
-	private Date regdate;
+	private String regdate;
 	private String moddate;
 }

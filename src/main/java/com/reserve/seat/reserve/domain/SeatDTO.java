@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SeatDTO {
-	private int sno;
-	private int pno;
-	private int isreserved;
+	private Integer sno;
+	private Integer pno;
+	private boolean isreserved;
 }

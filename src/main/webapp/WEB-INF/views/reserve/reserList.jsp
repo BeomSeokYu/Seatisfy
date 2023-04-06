@@ -46,15 +46,17 @@
 						</tr>
 					</thead>
 					<tbody id="imgList">
-						<c:forEach items="${ list }" var="pvo" varStatus="i">
+						<%-- <c:forEach items="${ list }" var="pvo" varStatus="i">
 							<tr class="move" data="${ pvo.pno }">
 					            <td>${ pvo.pno }</td>
 					            <td>${ pvo.ptitle }</td>
-					            <%-- <td>${ pvo.pcontent }</td> --%>
+					            <td>${ pvo.pcontent }</td>
 					            <td>${ pvo.pwriter }</td>
-					            <td><fmt:formatDate value="${ pvo.regdate }" pattern="yyyy-MM-dd"/></td>
+					            <fmt:parseDate value="${noticeDateStr}" var="noticePostDate" pattern="yyyyMMdd"/>
+								<fmt:formatDate value="${noticePostDate}" pattern="yyyy.MM.dd"/>
+					            <td>${ pvo.regdate }</td>
 					        </tr>
-						</c:forEach>
+						</c:forEach> --%>
 					</tbody>
 				</table>
 				<div class="row text-center" id="none"></div>

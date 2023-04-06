@@ -5,11 +5,11 @@
  
  <!-- 
 작성자 : 유범석 
-작성일 : 03-04-06
+작성일 : 03-04-05
 -->
 
 
-<mapper namespace="com.reserve.seat.mapper.ReserMapper">
+<mapper namespace="com.reserve.seat.mapper.SeatMapper">
   <!-- 쿼리 보관 -->
   <sql id="criteria">
   	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
@@ -17,13 +17,13 @@
 			<trim prefix="OR">
 				<choose>
 					<when test="type == 'T'.toString()">
-						rno LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+						ptitle LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
 					</when>
 					<when test="type == 'W'.toString()">
-						sno LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+						pwriter LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
 					</when>
 					<when test="type == 'C'.toString()">
-						pno LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+						pcontent LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
 					</when>
 				</choose>
 			</trim>
@@ -31,52 +31,51 @@
 	</trim>
   </sql>
   
-  <select id="selectAllReser" resultType="com.reserve.seat.reserve.domain.ReserDTO">
+  <select id="selectAllSeat" resultType="com.reserve.seat.reserve.domain.SeatDTO">
   	<![CDATA[
 	  	SELECT *
-	  	FROM reservation
+	  	FROM seat
 	  	WHERE]]>
 	  		<include refid="criteria"/>
 	<![CDATA[
 			2 > 1
-		ORDER BY rno DESC
+		ORDER BY sno DESC
 	  	LIMIT #{ amount } OFFSET #{ offset }
 	]]>
   </select>
   
   <select id="totalCount" resultType="int">
   	<![CDATA[
-  		SELECT COUNT(*) FROM reservation WHERE ]]> 
+  		SELECT COUNT(*) FROM seat WHERE ]]> 
   			<include refid="criteria"/> 
-  	<![CDATA[ rno > 0 ]]>
+  	<![CDATA[ sno > 0 ]]>
   </select>
   
-  <select id="selectReser" resultType="com.reserve.seat.reserve.domain.ReserDTO">
+  <select id="selectSeat" resultType="com.reserve.seat.reserve.domain.SeatDTO">
   	SELECT * 
-  	FROM reservation 
-  	WHERE rno = #{rno}
+  	FROM seat 
+  	WHERE sno = #{sno}
   </select>
   
-  <insert id="insertReser">
-  	INSERT INTO reservation(  
+  <insert id="insertSeat">
+  	INSERT INTO seat( 
   		pno, 
-  		sno, 
-  		uno ) 
+  		isreserved ) 
   	VALUES(
   		#{pno}, 
-  		#{sno}, 
-  		#{uno} )
+  		#{isreserved} )
   </insert>
   
-  <delete id="deleteReser">
-  	DELETE FROM reservation WHERE rno = #{rno}
+  <delete id="deleteSeat">
+  	DELETE FROM seat WHERE sno = #{sno}
   </delete>
   
-  <update id="updateReser">
-  	UPDATE reservation
-  	SET pno=#{pno}, 
-  		sno=#{sno}, 
-  		uno=#{uno} 
-	WHERE rno = #{rno}
+  <update id="updateSeat">
+  	UPDATE seat
+  	SET 
+  		pno=#{pno}, 
+  		isreserved=#{isreserved} 
+	WHERE sno = #{sno}
   </update>
+
 </mapper>

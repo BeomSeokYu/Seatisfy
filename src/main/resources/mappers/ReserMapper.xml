@@ -5,11 +5,11 @@
  
  <!-- 
 작성자 : 유범석 
-작성일 : 03-04-05
+작성일 : 03-04-06
 -->
 
 
-<mapper namespace="com.reserve.seat.reserve.mapper.ReserMapper">
+<mapper namespace="com.reserve.seat.mapper.ReserMapper">
   <!-- 쿼리 보관 -->
   <sql id="criteria">
   	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
@@ -17,13 +17,13 @@
 			<trim prefix="OR">
 				<choose>
 					<when test="type == 'T'.toString()">
-						ptitle LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+						rno LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
 					</when>
 					<when test="type == 'W'.toString()">
-						pwriter LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+						sno LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
 					</when>
 					<when test="type == 'C'.toString()">
-						pcontent LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+						pno LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
 					</when>
 				</choose>
 			</trim>
@@ -31,73 +31,52 @@
 	</trim>
   </sql>
   
-  <select id="selectAllPost" resultType="com.reserve.seat.reserve.domain.PostDTO">
+  <select id="selectAllReser" resultType="com.reserve.seat.reserve.domain.ReserDTO">
   	<![CDATA[
 	  	SELECT *
-	  	FROM post
+	  	FROM reservation
 	  	WHERE]]>
 	  		<include refid="criteria"/>
 	<![CDATA[
 			2 > 1
-		ORDER BY pno DESC
+		ORDER BY rno DESC
 	  	LIMIT #{ amount } OFFSET #{ offset }
 	]]>
   </select>
   
   <select id="totalCount" resultType="int">
   	<![CDATA[
-  		SELECT COUNT(*) FROM post WHERE ]]> 
+  		SELECT COUNT(*) FROM reservation WHERE ]]> 
   			<include refid="criteria"/> 
-  	<![CDATA[ pno > 0 ]]>
+  	<![CDATA[ rno > 0 ]]>
   </select>
   
-  <select id="selectPost" resultType="com.reserve.seat.reserve.domain.PostDTO">
+  <select id="selectReser" resultType="com.reserve.seat.reserve.domain.ReserDTO">
   	SELECT * 
-  	FROM post 
-  	WHERE pno = #{pno}
+  	FROM reservation 
+  	WHERE rno = #{rno}
   </select>
   
-  <insert id="insertPost">
-  	INSERT INTO post( 
-  		pwriter, 
-  		ptitle, 
-  		pcontent, 
-  		location, 
-  		seatinfo, 
-  		startdate, 
-  		enddate, 
-  		moddate) 
+  <insert id="insertReser">
+  	INSERT INTO reservation(  
+  		pno, 
+  		sno, 
+  		uno ) 
   	VALUES(
-  		#{pwriter}, 
-  		#{ptitle}, 
-  		#{pcontent}, 
-  		#{location}, 
-  		#{seatinfo}, 
-  		#{startdate}, 
-  		#{enddate}, 
-  		#{moddate} )
+  		#{pno}, 
+  		#{sno}, 
+  		#{uno} )
   </insert>
   
-  <delete id="deletePost">
-  	DELETE FROM post WHERE pno = #{pno}
+  <delete id="deleteReser">
+  	DELETE FROM reservation WHERE rno = #{rno}
   </delete>
   
-  <update id="updatePost">
-  	UPDATE post
-  	SET 
-  		pwriter=#{pwriter}, 
-  		ptitle=#{ptitle}, 
-  		pcontent=#{pcontent}, 
-  		location=#{location}, 
-  		seatinfo=#{seatinfo}, 
-  		startdate=#{startdate}, 
-  		enddate=#{enddate}, 
-  		moddate=NOW() 
-	WHERE pno = #{pno}
-  </update>
-  
-  <update id="updateReplyCnt">
-  	UPDATE tbl_board
-  	SET reply_cnt = #{replyCnt} WHERE bno = #{bno}
+  <update id="updateReser">
+  	UPDATE reservation
+  	SET pno=#{pno}, 
+  		sno=#{sno}, 
+  		uno=#{uno} 
+	WHERE rno = #{rno}
   </update>
 </mapper>

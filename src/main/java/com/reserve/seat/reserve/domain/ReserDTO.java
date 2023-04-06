@@ -15,8 +15,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReserDTO {
-	private int rno;
-	private int pno;
-	private int sno;
+	private Integer rno;
+	private Integer pno;
+	private Integer sno;
+	private Integer uno;
 	private String rdate;
 }

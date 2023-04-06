@@ -3,17 +3,16 @@
  * 작성일 : 23-04-05
  */
 
-package com.reserve.seat.reserve.mapper;
+package com.reserve.seat.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 
 import com.reserve.seat.Criteria;
 import com.reserve.seat.reserve.domain.PostDTO;
 
 
-public interface ReserMapper {
+public interface PostMapper {
 	
 	// 게시물 전체 가져오기
 	public List<PostDTO> selectAllPost(Criteria criteria);
