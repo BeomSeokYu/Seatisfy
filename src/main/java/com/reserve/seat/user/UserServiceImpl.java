@@ -13,21 +13,9 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void signup(User user) {
-		System.out.println("User Service Impl - signup()" + user.getUsername());
 		userMapper.insertUser(user);		
 	}
 
-	@Override
-	public void name() {
-		System.out.println("User Service Impl - test");
-	}
 
-
-//	@Override
-//	public User selectUser(String username) {
-//		
-//		return userMapper.selectUser(username);
-//	}
-	
 
 }

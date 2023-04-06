@@ -4,8 +4,7 @@ import com.reserve.seat.user.User;
 
 public interface UserMapper {
 
-	public int insertUser(User user);
-	
-//	public User selectUser(String username);
+	public void insertUser(User user);
+
 	
 }

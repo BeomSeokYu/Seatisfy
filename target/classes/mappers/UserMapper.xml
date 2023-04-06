@@ -10,12 +10,7 @@
 		VALUES(#{username}, #{password}, #{name}, #{phone} )
 	</insert>
 	
-	<!-- 회원 찾기 -->
-	<select id="selectUser" resultType="com.reserve.seat.user.User">
-		SELECT 				* 
-		FROM 				user
-		WHERE				username = #{username}
-	</select>
+
 	
 
 </mapper>
