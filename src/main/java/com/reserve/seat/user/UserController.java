@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.reserve.seat.mapper.UserMapper;
+
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,8 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 public class UserController {
-
 	private final UserService userService;
+	private final UserMapper userMapper;
 //	private final BCryptPasswordEncoder bcryptPasswordEncoder;
 
 	@GetMapping("/login")
@@ -58,7 +61,11 @@ public class UserController {
 		
 		System.out.println(user.getUsername());
 		
-		userService.signup(user);
+		System.out.println(userService);
+		
+//		userService.name();
+//		userService.signup(user);
+		userMapper.insertUser(user);
 		
 		System.out.println(user.getClass());
 		

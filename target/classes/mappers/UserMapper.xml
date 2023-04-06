@@ -3,13 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.reserve.seat.user.UserMapper">
+<mapper namespace="com.reserve.seat.mapper.UserMapper">
 	<!-- 게시물 등록  -->
 	<insert id="insertUser">
-	<![CDATA[
-	INSERT INTO user(username, password, name, phone)
-	VALUES(#{username}, #{password}, #{name}, #{phone} )
-	]]>
+		INSERT INTO user(username, password, name, phone)
+		VALUES(#{username}, #{password}, #{name}, #{phone} )
 	</insert>
 	
 	<!-- 회원 찾기 -->

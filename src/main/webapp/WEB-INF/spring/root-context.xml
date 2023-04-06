@@ -46,6 +46,6 @@
 	</bean>
 	
 	<!-- MyBatis Mapper -->
-   <mybatis-spring:scan base-package="com.reserve.seat.*"/>
+   <mybatis-spring:scan base-package="com.reserve.seat.mapper"/>
    
 </beans>

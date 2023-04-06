@@ -1,4 +1,6 @@
-package com.reserve.seat.user;
+package com.reserve.seat.mapper;
+
+import com.reserve.seat.user.User;
 
 public interface UserMapper {
 
