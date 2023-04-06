@@ -2,19 +2,15 @@ package com.reserve.seat.qna;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-@Service
-public class QnaService {
-	@Autowired
-	private QnaMapper qnaMapper;
+public interface QnaService {
+	public void insertQna(QnaDTO qna);
 	
-	public void insertQna(Qna qna) {
-		qnaMapper.insertQna(qna);
-	}
+	public List<QnaDTO> qnaList();
 	
-	public List<Qna> QnaAllList(){
-		return qnaMapper.QnaAllList();
-	}
+	public void updateQna(QnaDTO qna);
+	
+	public void deleteQna(String qno);
+	
+	public QnaDTO selectQna(String qno);
+	
 }

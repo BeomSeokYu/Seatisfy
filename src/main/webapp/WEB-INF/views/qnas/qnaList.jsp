@@ -30,13 +30,30 @@
 								<c:forEach items="${qnaList}" var="qna">
 									<tr>
 										<td>${qna.qno}</td>
-							<td><a href="/qna/detail?qno=${qna.qno}">${qna.qtitle}</a></td>
+							<td><a href="/qnas/select?qno=${qna.qno}">${qna.qtitle}</a></td>
 										<td>${qna.qcontent}</td>
 										<td>${qna.qdate}</td>
 									</tr>
+				
 								</c:forEach>
 						</table>
-						</div><hr></div></div>
+						</div><hr>
+						</div>
+						<div class="col-12">
+									<nav aria-label="Page navigation example">
+				  <ul class="pagination justify-content-center">
+				    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+				    <li class="page-item"><a class="page-link" href="#">1</a></li>
+				    <li class="page-item"><a class="page-link" href="#">2</a></li>
+				    <li class="page-item"><a class="page-link" href="#">3</a></li>
+				    <li class="page-item"><a class="page-link" href="#">Next</a>
+				    </li>
+				   <a href="/qnas/add" class="btn btn-secondary  justify-right">등록</a>
+				  </ul>
+				</nav>
+				</div>
+			</div>
+
 <script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 						
 </body>

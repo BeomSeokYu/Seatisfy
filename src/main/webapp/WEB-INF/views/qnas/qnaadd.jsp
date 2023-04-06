@@ -16,12 +16,11 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 <body>
-<form:form modelAttribute="NewQna" 
+ <form:form modelAttribute="eee" 
 			   action="./add?${_csrf.parameterName}=${_csrf.token}"
 	           class="form-horizontal"
 	           method = "post">
 	<fieldset>
-
               <div class="form-group">
                 <label for="qtitle">제목</label>
                 <form:input path="qtitle" name="qtitle" class="form-control"/>
@@ -42,7 +41,7 @@
 
 
 	</fieldset>
-	</form:form>
+	</form:form> 
 
  <script>
       $('#summernote').summernote({

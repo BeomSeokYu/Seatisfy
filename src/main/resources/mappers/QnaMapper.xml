@@ -3,37 +3,53 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.reserve.seat.qna.QnaRepository">
-
-  <insert id="insertQna">
-  <![CDATA[
-	  insert into qna(qtitle, qcontent, qdate)
-	  values(#{qtitle}, #{qcontent}, #{qdate})
-  	]]>
-  </insert>
-    <select id="QnaAllList"
-  	resultType="com.reserve.seat.qna.Qna">
-  	<![CDATA[
-  	  select * from qna order by qno desc
-  	]]>
-  	</select>
-<!--   <select id="selectQna"
-  	resultType="com.reserve.seat.qna.Qna">
-  	<![CDATA[
-  	  select * from qna where qno = #{qno}
-  	]]>
-  	</select>
-  	
-
-  	
-  <update id="updateQna">
-	  update qna 
-	  set qtitle = #{qtitle}, qcontent = #{qcontent}, update_date=SYSDATE
-	  where qno = #{qno}
-  </update>
+<mapper namespace="com.reserve.seat.mapper.QnaMapper">
+  <!-- 쿼리 보관 -->
+<!--   <sql id="criteria">
+  	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+		<foreach collection="typeArr" item="type">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'T'.toString()">
+						qtitle LIKE concat_ws(#{ keyword }, '%', '%') '%' || #{ keyword } || '%'
+					</when>
+					<when test="type == 'C'.toString()">
+						qcontent LIKE concat_ws(#{ keyword }, '%', '%') '%' || #{ keyword } || '%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+  </sql> -->
   
-  <delete id="deleteQna">
-  	  delete qna where qno = #{qno}
-  </delete> -->
+	<insert id="insertQna">
+	  <![CDATA[
+		  INSERT INTO qna(qtitle, qcontent)
+		  VALUES(#{qtitle}, #{qcontent})
+	  	]]>
+	</insert>
+  	<select id="qnaList"
+	resultType="com.reserve.seat.qna.QnaDTO">
+	<![CDATA[
+	  select * from qna order by qno desc
+	]]>
+	</select>
+	
+	<delete id="deleteQna">
+  	DELETE FROM qna WHERE qno = #{qno}
+  	</delete>
+  	
+  	<update id="updateQna">
+  	UPDATE qna
+  	SET
+  		qtitle=#{qtitle},
+  		qcontent=#{qcontent}
+  	WHERE qno = #{qno}
+  	</update>
+  	
+  	<select id="selectQna" resultType="com.reserve.seat.qna.QnaDTO">
+  	SELECT * FROM qna WHERE qno = #{qno}
+  	</select>
+  	
   
 </mapper>
