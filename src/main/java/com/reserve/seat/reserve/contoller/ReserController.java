@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.reserve.seat.reserve.domain.Criteria;
+import com.reserve.seat.Criteria;
 import com.reserve.seat.reserve.domain.PostDTO;
 import com.reserve.seat.reserve.mapper.ReserMapper;
 

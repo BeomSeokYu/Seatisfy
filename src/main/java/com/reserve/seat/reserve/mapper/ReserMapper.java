@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.reserve.seat.reserve.domain.Criteria;
+import com.reserve.seat.Criteria;
 import com.reserve.seat.reserve.domain.PostDTO;
 
 

@@ -1,4 +1,4 @@
-package com.reserve.seat.reserve.domain;
+package com.reserve.seat;
 
 import lombok.Getter;
 import lombok.Setter;
