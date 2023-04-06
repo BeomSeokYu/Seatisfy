@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -23,14 +24,14 @@ public class NoticeController {
 
 	//공지 등록 조회 폼
 	@GetMapping("/add")
-	public String requestAddNoticeForm(@ModelAttribute("NewNotice") NoticeDTO notice) {
+	public String requestAddNoticeForm(@ModelAttribute("notice") NoticeDTO notice) {
 
 		return "notice/noticeAdd";
 	}
 
 	//공지 등록
 	@PostMapping("/add")
-	public String submitAddNoticeForm(@ModelAttribute("NewNotice") NoticeDTO notice) {
+	public String submitAddNoticeForm(@ModelAttribute  NoticeDTO notice) {
 		noticeService.insertNotice(notice);
 		return "redirect:/notice/list";
 	}
@@ -82,5 +83,25 @@ public class NoticeController {
 		
 		return "redirect:/notice/list";
 	}
+	
+	//페이지 수
+	@PostMapping("/total")
+	@ResponseBody
+	public int NoticeList(Criteria cri) {
+
+		int totalcount = noticeService.totalCount(cri);
+		
+		return totalcount;
+		
+	}
+	
+	//공지 전체 목록
+	@PostMapping("/list")
+	@ResponseBody
+	public List<NoticeDTO> NoticeListCount(Criteria cri) {
+
+		return noticeService.selectAllNotice(cri);
+	}
+	
 	
 }

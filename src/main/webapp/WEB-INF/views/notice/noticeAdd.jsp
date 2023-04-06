@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 <body>
-<form:form modelAttribute="NewNotice" 
+<form:form modelAttribute="notice" 
 			   action="./add?${_csrf.parameterName}=${_csrf.token}"
 	           class="form-horizontal"
 	           method = "post">

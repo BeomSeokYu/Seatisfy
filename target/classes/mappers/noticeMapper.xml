@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.reserve.seat.notice.NoticeMapper">
+<mapper namespace="com.reserve.seat.mapper.NoticeMapper">
+
+<!-- 쿼리 보관 -->
+   <sql id="criteria">
+  	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+		<foreach collection="typeArr" item="type">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'T'.toString()">
+						ntitle LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+					</when>
+					<when test="type == 'W'.toString()">
+						nwriter LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+					</when>
+					<when test="type == 'C'.toString()">
+						ncontent LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+  </sql>
 
 <insert id="insertNotice">
 <![CDATA[
@@ -40,6 +61,52 @@
 				WHERE nno = #{nno}
 			]]>
 </delete>
+
+
+
+
+  
+  <select id="selectAllNotice" resultType="com.reserve.seat.notice.NoticeDTO">
+  	<![CDATA[
+	  	SELECT *
+	  	FROM notice
+	  	WHERE]]>
+	  		<include refid="criteria"/>
+	<![CDATA[
+			2 > 1
+		ORDER BY nno DESC
+	  	LIMIT #{ amount } OFFSET #{ offset }
+	]]>
+  </select>
+  
+  <select id="totalCount" resultType="int">
+  	<![CDATA[
+  		SELECT COUNT(*) FROM notice WHERE ]]> 
+  			<include refid="criteria"/> 
+  	<![CDATA[ nno > 0 ]]>
+  </select>
+  
+  
+        
+  <!-- <update id="updateReplyCnt">
+  	UPDATE tbl_board
+  	SET reply_cnt = #{replyCnt} WHERE bno = #{bno}
+  </update>  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </mapper>

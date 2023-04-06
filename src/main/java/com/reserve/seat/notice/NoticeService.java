@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.reserve.seat.mapper.NoticeMapper;
+
 @Service
 public class NoticeService {
 
@@ -38,6 +40,14 @@ public class NoticeService {
 		noticeMapper.deleteNotice(nno);
 	}
 	
+	//공지 페이징 목록
+	public List<NoticeDTO> selectAllNotice(Criteria cri){
+		return noticeMapper.selectAllNotice(cri);
+	}
 	
+	//공지 전체 갯수
+	public int totalCount(Criteria cri) {
+		return noticeMapper.totalCount(cri);
+	}
 	
 }
