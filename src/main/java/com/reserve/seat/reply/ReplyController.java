@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/reply")
@@ -28,6 +29,13 @@ public class ReplyController {
 	//댓글 조회
 	
 	//댓글 수정
+	@PostMapping("/edit")
+	@ResponseBody
+	public String editReply(ReplyDTO reply) {
+	    replyService.updateReply(reply);
+	    
+	    return "success";
+	}
 	
 	//댓글 삭제
 	@PostMapping("/remove")

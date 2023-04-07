@@ -14,12 +14,12 @@
 </head>
 <body>
 
-	<div class="card">
+	 <div class="card">
 		<h5 class="card-header">제목 : ${notice.ntitle}</h5>
 		<div class="card-body">
 			<h5 class="card-title">내용 : ${notice.ncontent}</h5>
 			
-
+ 
 			<div class="d-flex justify-content-end badge bg-light text-dark">작성일자 : ${notice.ndate}</div>
 		</div>
 	</div>
@@ -48,14 +48,14 @@
 					</div>
 					<div class="card-body">
     <blockquote class="blockquote mb-0">
-					<p>${reply.rcontent }</p>
+					<p id="updateReply">${reply.rcontent }</p>
 					<div class="d-flex justify-content-end">
       <footer class="blockquote-footer">${reply.regDate}</footer>
-      <a href="">수정</a>
+      <button id="modBtn" type="button" class="btn btn-warning" data-dismiss="modal" onclick="editReply(${reply.rno}, '${reply.rcontent}')">수정</button>
 						<form method="POST" action="/reply/remove">
 						<input type="hidden" name="nno" value="${notice.nno }">
 						<input type="hidden" name="rno" value="${reply.rno }">
-						<input type="submit" value="삭제" />
+						<button class="btn btn-danger" data-dismiss="modal">삭제</button>
 						</form> 
       </div>
     </blockquote>
@@ -94,14 +94,17 @@
 		</div>
 	</form>
 	
-</div>
+</div> 
 
 
 <!-- 댓글 끝  -->
 
+<script>
 
 
 
+
+</script>
 
 
 
