@@ -3,25 +3,57 @@ package com.reserve.seat.reserve.service;
 import java.util.List;
 
 import com.reserve.seat.Criteria;
+import com.reserve.seat.reserve.domain.PostDTO;
 import com.reserve.seat.reserve.domain.ReserDTO;
+import com.reserve.seat.reserve.domain.SeatDTO;
 
 public interface ReserService {
 
-	// 전체 가져오기
+	/**
+	 * ReserService -----------------------------------
+	 */
 	public List<ReserDTO> getReserList(Criteria criteria);
-	
-	// 하나 가져오기
+
 	public ReserDTO getReser(int rno);
-	
-	// 게시물 삽입
+
 	public void addReser(ReserDTO rdto);
-	
-	// 게시물 수정
+
 	public boolean editReser(ReserDTO rdto);
-	
-	// 게시물 삭제
+
 	public int removeReser(int rno);
-	
-	// 게시물 수 가져오기
+
 	public int getReserTotalCount(Criteria criteria);
+	
+	
+	/**
+	 * PostService ------------------------------------------
+	 */
+	
+	public List<PostDTO> getPostList(Criteria criteria);
+
+	public PostDTO getPost(int pno);
+
+	public void addPost(PostDTO pdto);
+
+	public boolean editPost(PostDTO pdto);
+
+	public int removePost(int pno);
+
+	public int getPostTotalCount(Criteria criteria);
+	
+	
+	/**
+	 * SeatService -------------------------------------
+	 */
+	public List<SeatDTO> getSeatList(Criteria criteria);
+
+	public SeatDTO getSeat(int sno);
+
+	public void addSeat(SeatDTO sdto);
+
+	public boolean editSeat(SeatDTO sdto);
+
+	public int removeSeat(int sno);
+
+	public int getSeatTotalCount(Criteria criteria);
 }

@@ -18,44 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ReserServiceImpl implements PostService, ReserService, SeatService{
+public class ReserServiceImpl implements ReserService {
 	private final PostMapper postMapper;
 	private final ReserMapper reserMapper;
 	private final SeatMapper seatMapper;
-	
-	/**
-	 * PostService ------------------------------------------
-	 */
-	
-	@Override
-	public List<PostDTO> getPostList(Criteria criteria) {
-		return postMapper.selectAllPost(criteria);
-	}
 
-	@Override
-	public PostDTO getPost(int pno) {
-		return postMapper.selectPost(pno);
-	}
-
-	@Override
-	public void addPost(PostDTO pdto) {
-		postMapper.insertPost(pdto);
-	}
-
-	@Override
-	public boolean editPost(PostDTO pdto) {
-		return postMapper.updatePost(pdto);
-	}
-
-	@Override
-	public int removePost(int pno) {
-		return postMapper.deletePost(pno);
-	}
-
-	@Override
-	public int getPostTotalCount(Criteria criteria) {
-		return postMapper.totalCount(criteria);
-	}
 
 	/**
 	 * ReserService -----------------------------------
@@ -92,6 +59,39 @@ public class ReserServiceImpl implements PostService, ReserService, SeatService{
 	
 	
 	
+	/**
+	 * PostService -----------------------------------
+	 */
+	@Override
+	public List<PostDTO> getPostList(Criteria criteria) {
+		return postMapper.selectAllPost(criteria);
+	}
+
+	@Override
+	public PostDTO getPost(int pno) {
+		return postMapper.selectPost(pno);
+	}
+
+	@Override
+	public void addPost(PostDTO pdto) {
+		postMapper.insertPost(pdto);
+	}
+
+	@Override
+	public boolean editPost(PostDTO pdto) {
+		return postMapper.updatePost(pdto);
+	}
+
+	@Override
+	public int removePost(int pno) {
+		return postMapper.deletePost(pno);
+	}
+
+	@Override
+	public int getPostTotalCount(Criteria criteria) {
+		return postMapper.totalCount(criteria);
+	}
+	
 	
 	/**
 	 * ReserService -------------------------------------
@@ -125,5 +125,4 @@ public class ReserServiceImpl implements PostService, ReserService, SeatService{
 	public int getSeatTotalCount(Criteria criteria) {
 		return seatMapper.totalCount(criteria);
 	}
-
 }
