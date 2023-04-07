@@ -12,13 +12,13 @@
     <title>로그인</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- MetisMenu CSS -->
+<!--     <link href="resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    MetisMenu CSS
     <link href="resources/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
+    Custom CSS
     <link href="resources/dist/css/sb-admin-2.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    Custom Fonts
+    <link href="resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -73,12 +73,12 @@
 
 
     <!-- jQuery -->
-    <script src="resources/vendor/jquery/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
+<!--     <script src="resources/vendor/jquery/jquery.min.js"></script>
+    Bootstrap Core JavaScript
     <script src="resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Metis Menu Plugin JavaScript -->
+    Metis Menu Plugin JavaScript
     <script src="resources/vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="resources/dist/js/sb-admin-2.js"></script>
+    Custom Theme JavaScript
+    <script src="resources/dist/js/sb-admin-2.js"></script> -->
 </body>
 </html>

@@ -28,11 +28,14 @@ public class UserController {
 		return "login";
 	}
 	
-	@GetMapping("/logout")
-	public void customLogout() {
-		System.out.println("Controller - logout()");
-		
-	}
+//	@PostMapping("/login")
+//	public String loginSuccess() {
+//		return "redirect:/";
+//	}
+//	@PostMapping("/logout")
+//	public String logout() {
+//		return "redirect:/";
+//	}
 
 	
 	@GetMapping("/join")
