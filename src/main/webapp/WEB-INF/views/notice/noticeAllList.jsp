@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%> 
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,15 +50,17 @@
 						</tr>
 					</thead>
 					<tbody id="imgList">
-						<c:forEach items="${ noticeList }" var="notice" varStatus="i">
+						<%-- <c:forEach items="${ noticeList }" var="notice" varStatus="i">
 							<tr class="move" data="${ notice.nno }">
 					            <td>${ notice.nno }</td>
 					            <td>${ notice.ntitle }</td>
 					            <td>${ notice.ncontent}</td>
 					            <td>${ notice.nwriter }</td>
-					            <td>${notice.ndate }</td>
+					            <td><fmt:parseDate value="${notice.ndate }" pattern="yyyy-MM-dd HH:mm:ss" var="ndate" />
+					            	<fmt:formatDate value="${ndate }" pattern="yyyy-MM-dd"/>
+					            </td>
 					        </tr>
-						</c:forEach>
+						</c:forEach> --%>
 					</tbody>
 				</table>
 				<div class="row text-center" id="none"></div>
@@ -146,6 +149,8 @@
          }
          var imgHTML = '';
          for (var i = 0; i < data.length; i++) {
+        	 var date = new Date(data[i].ndate);
+             var formattedDate = date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
             imgHTML += ''
                   + "<tr>"
             	  +"<td>" + data[i].nno + "</td>"
@@ -153,7 +158,7 @@
                   + data[i].nno	+"'\">"	+ data[i].ntitle + "</a></td>" 
                   +'<td>' + data[i].ncontent+ "</td>"
                   + '<td>' + data[i].nwriter + "</td>"
-                  +"<td>" + data[i].ndate + "</td></tr>"
+                  +"<td>" + formattedDate + "</td></tr>"
          }
          $('#imgList').html(imgHTML);
       }	

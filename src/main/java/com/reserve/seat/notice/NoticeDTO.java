@@ -3,6 +3,8 @@
 
 package com.reserve.seat.notice;
 
+import javax.validation.constraints.NotBlank;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,8 +13,13 @@ import lombok.Setter;
 public class NoticeDTO {
 	
 	private int nno;			//공지 번호
+	
+	@NotBlank(message = "제목 필수")
 	private String ntitle;		//공지 제목
+	
+	@NotBlank
 	private String ncontent;	//공지 내용
+	
 	private String ndate;		//공지 등록일
 	private String nwriter;		//작성자
 	

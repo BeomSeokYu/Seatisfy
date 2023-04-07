@@ -7,12 +7,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.reserve.seat.reply.ReplyDTO;
+import com.reserve.seat.reply.ReplyService;
 
 
 @Controller
@@ -21,6 +26,9 @@ public class NoticeController {
 
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private ReplyService replyService;
 
 	//공지 등록 조회 폼
 	@GetMapping("/add")
@@ -31,7 +39,12 @@ public class NoticeController {
 
 	//공지 등록
 	@PostMapping("/add")
-	public String submitAddNoticeForm(@ModelAttribute NoticeDTO notice) {
+	public String submitAddNoticeForm(@Validated @ModelAttribute("notice") NoticeDTO notice, BindingResult br) {
+		
+		if(br.hasErrors()) {
+			return "notice/noticeAdd";
+		}
+		
 		noticeService.insertNotice(notice);
 		return "redirect:/notice/list";
 	}
@@ -51,6 +64,13 @@ public class NoticeController {
 		
 		NoticeDTO noticeNum = noticeService.detailNotice(nno);
 		model.addAttribute("notice", noticeNum);
+		
+		//댓글 조회
+		List<ReplyDTO> replyList = replyService.selectReplyList(nno); 
+		model.addAttribute("replyList", replyList);
+		
+		
+		
 
 		return "notice/noticeDetail";
 	}

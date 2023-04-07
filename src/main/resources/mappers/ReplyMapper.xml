@@ -24,30 +24,32 @@
   </sql>
 
 	<!-- 댓글 등록  -->
-	<insert id="insertReply">
+	<insert id="insertReply" parameterType="com.reserve.seat.reply.ReplyDTO">
 	INSERT 
-	INTO reply(pno, rcontent, rwriter)
+	INTO 
+	reply(nno, rcontent, rwriter)
 	VALUES
-	(#{pno}, #{rcontent}, #rwriter})
+	(#{nno}, #{rcontent}, #{rwriter})
 	</insert>
 	
 	<!-- 댓글 수정  -->
-	<update id="updateReply">
+	<update id="updateReply" parameterType="com.reserve.seat.reply.ReplyDTO">
 		UPDATE reply
 		SET rcontent = #{rcontent}, modDate = #{now()}
-		WHERE rno = #{rno} 
+		WHERE rno = #{rno} and nno = #{nno}
 	</update>
 	
 	<!-- 댓글 삭제  -->
-	<delete id="deleteReply">
-		DELETE FROM reply WHERE rno = #{rno}
+	<delete id="deleteReply" parameterType="String">
+		DELETE FROM notice
+		WHERE rno = #{rno}
 	</delete>
 	
 	<!-- 댓글 조회 -->
-  <select id="selectReply" resultType="com.reserve.seat.reply.ReplyDTO">
+  <select id="selectReplyList" parameterType="String" resultType="com.reserve.seat.reply.ReplyDTO">
     SELECT * 
     FROM reply 
-    WHERE rno = #{rno}
+    WHERE nno = #{nno}
   </select>
   
   <!-- 전체 댓글 -->
@@ -59,16 +61,16 @@
 	  	WHERE]]>
 	  		<include refid="criteria"/>
 	<![CDATA[
-		bno = #{bno} AND rno > 0
+		pno = #{pno} AND rno > 0
 		ORDER BY rno
 	  	LIMIT #{ amount } OFFSET #{ offset }
     ]]>
   </select>
   
   <!-- 전체 댓글 수 조회 totalReply  -->
-  <select id="totalReply" resultType="int">
+  <select id="totalReply" parameterType="int" resultType="int">
   		SELECT COUNT(rno) 
   		FROM reply
-  		WHERE pno = #{pno}
+  		WHERE nno = #{nno}
   </select> 
 </mapper>

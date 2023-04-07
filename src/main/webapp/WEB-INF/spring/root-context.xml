@@ -45,7 +45,12 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
-	<!-- MyBatis Mapper -->
-    <mybatis-spring:scan base-package="com.reserve.seat.mapper"/>
+	<!-- Validator 메세지 다국어 처리 -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+	    <property name="validationMessageSource" ref="messageSource" />
+	</bean>
 	
+	<!-- MyBatis Mapper -->
+   <mybatis-spring:scan base-package="com.reserve.seat.mapper"/>
+   
 </beans>

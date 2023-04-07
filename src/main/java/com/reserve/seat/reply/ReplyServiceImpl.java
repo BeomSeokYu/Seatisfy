@@ -17,26 +17,26 @@ public class ReplyServiceImpl implements ReplyService {
 	
 	@Override
 	//댓글 등록 
-	public boolean insertReply(ReplyDTO reply) {
-		return replyMapper.insertReply(reply) == 1 ? true : false;
+	public void insertReply(ReplyDTO reply) {
+		replyMapper.insertReply(reply);
 	}
 
 	@Override
 	//댓글 수정
-	public boolean updateReply(ReplyDTO reply) {
-		return replyMapper.updateReply(reply) == 1? true : false;
+	public void updateReply(ReplyDTO reply) {
+		replyMapper.updateReply(reply);
 	}
 
 	@Override
 	//댓글 삭제
-	public boolean deleteReply(int rno) {
-		return replyMapper.deleteReply(rno) == 1? true : false;
+	public void deleteReply(String rno) {
+		replyMapper.deleteReply(rno);
 	}
 
 	@Override
 	//댓글 조회
-	public ReplyDTO selectReply(int rno) {
-		return replyMapper.selectReply(rno);
+	public List<ReplyDTO> selectReplyList(String nno) {
+		return replyMapper.selectReplyList(nno);
 	}
 
 	@Override
@@ -47,8 +47,8 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Override
 	//댓글 전체 수
-	public int totalReply(int pno) {
-		return replyMapper.totalReply(pno);
+	public int totalReply(int nno) {
+		return replyMapper.totalReply(nno);
 	}
 
 }

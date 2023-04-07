@@ -27,7 +27,7 @@
               <div class="form-group">
                 <label for="ntitle">제목</label>
                 <form:input path="ntitle" name="ntitle" class="form-control"/>
-                
+                <form:errors path="ntitle"/>
               </div>
               
               <div class="form-group">
