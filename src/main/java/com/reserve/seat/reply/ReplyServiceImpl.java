@@ -29,8 +29,8 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Override
 	//댓글 삭제
-	public void deleteReply(String rno) {
-		replyMapper.deleteReply(rno);
+	public void deleteReply(ReplyDTO reply) {
+		replyMapper.deleteReply(reply);
 	}
 
 	@Override

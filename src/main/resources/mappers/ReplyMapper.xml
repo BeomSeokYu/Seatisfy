@@ -40,9 +40,9 @@
 	</update>
 	
 	<!-- 댓글 삭제  -->
-	<delete id="deleteReply" parameterType="String">
-		DELETE FROM notice
-		WHERE rno = #{rno}
+	<delete id="deleteReply" parameterType="com.reserve.seat.reply.ReplyDTO">
+		DELETE FROM reply
+		WHERE nno = #{nno} and rno = #{rno}
 	</delete>
 	
 	<!-- 댓글 조회 -->

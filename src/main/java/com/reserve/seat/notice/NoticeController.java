@@ -67,7 +67,9 @@ public class NoticeController {
 		
 		//댓글 조회
 		List<ReplyDTO> replyList = replyService.selectReplyList(nno); 
+		int cnt = replyList.size();	// 댓글 수
 		model.addAttribute("replyList", replyList);
+		model.addAttribute("cnt", cnt);
 		
 		
 		

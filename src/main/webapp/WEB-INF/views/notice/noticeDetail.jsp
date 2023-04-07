@@ -9,6 +9,8 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항 상세보기</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 </head>
 <body>
 
@@ -34,57 +36,62 @@
 
 <hr>
 
-<ul>
-	<!-- <li>
-		<div>
-			<p>첫번째 댓글 작성자</p>
-			<p>첫번째 댓글</p>
-		</div>
-	</li>
-	<li>
-		<div>
-			<p>두번째 댓글 작성자</p>
-			<p>두번째 댓글</p>
-		</div>
-	</li>
-	<li>
-		<div>
-			<p>세번째 댓글 작성자</p>
-			<p>세번째 댓글</p>
-		</div>
-	</li> -->
-
+<div class="card">
+		<div class="card-body">댓글 리스트</div>
+		
+		
+		<b>${cnt }개의 답변이 있습니다.</b>
 		<c:forEach items="${replyList}" var="reply">
-			<li>
-				<div>
-					<p>${reply.rwriter}/ ${reply.regDate}</p>
+		<div class="card">
+				<div class="card-header">
+					작성자 : <b>${reply.rwriter}</b>
+					</div>
+					<div class="card-body">
+    <blockquote class="blockquote mb-0">
 					<p>${reply.rcontent }</p>
-						<a href="">수정</a>
-						<form method="POST" action="/reply/remove?rno=${reply.rno }">
+					<div class="d-flex justify-content-end">
+      <footer class="blockquote-footer">${reply.regDate}</footer>
+      <a href="">수정</a>
+						<form method="POST" action="/reply/remove">
+						<input type="hidden" name="nno" value="${notice.nno }">
+						<input type="hidden" name="rno" value="${reply.rno }">
 						<input type="submit" value="삭제" />
 						</form> 
+      </div>
+    </blockquote>
+  </div>
+</div>
+			
+			
+			<br>
+</c:forEach>
+</div>
+						
 					<hr>
 
 
-				</div>
-			</li>
-		</c:forEach>
-	</ul>
 
 <div>
 
+<!-- 댓글 등록 -->
 	<form method="post" action="/reply/write">
-	
+	<div class="card text-center">
+  <div class="card-header">
 		<p>
 			<label>댓글 작성자</label> <input type="text" name="rwriter">
 		</p>
-		<p>
+		</div>
+		<div class="card-body">
+    <h5 class="card-title">답변 등록</h5>
+    <p class="card-text">
 			<textarea rows="5" cols="50" name="rcontent"></textarea>
 		</p>
 		<p>
 			<input type="hidden" name="nno" value="${notice.nno }">
 			<button type="submit">댓글 작성</button>
 		</p>
+		</div>
+		</div>
 	</form>
 	
 </div>
@@ -105,6 +112,6 @@
 
 
 
-
+<script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

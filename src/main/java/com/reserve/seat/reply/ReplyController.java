@@ -31,10 +31,10 @@ public class ReplyController {
 	
 	//댓글 삭제
 	@PostMapping("/remove")
-	public String removeReply(@RequestParam("rno") String rno) {
+	public String removeReply(ReplyDTO reply) {
 		
-		replyService.deleteReply(rno);
+		replyService.deleteReply(reply);
 		
-		return "redirect:/notice/list";
+		return "redirect:/notice/detail?nno=" + reply.getNno();
 	}
 }
