@@ -244,12 +244,12 @@
 		    <artifactId>validation-api</artifactId>
 		    <version>2.0.1.Final</version>
 		</dependency>
-		
+	
 		<!-- hibernate-validator -->
 		<dependency>
 		    <groupId>org.hibernate</groupId>
 		    <artifactId>hibernate-validator</artifactId>
-		    <version>8.0.0.Final</version>
+		    <version>6.2.0.Final</version>
 		</dependency>
 		
 		      

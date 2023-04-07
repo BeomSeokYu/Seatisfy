@@ -27,5 +27,6 @@
 	<form method="POST" action="/qnas/delete?qno=${qna.qno }">
 		<input type="submit" value="삭제" />
 	</form>
+	<a href="/qnas/list" class="btn btn-secondary  justify-right">이전</a>
 </body>
 </html>

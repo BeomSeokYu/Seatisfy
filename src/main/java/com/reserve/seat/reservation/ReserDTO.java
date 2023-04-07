@@ -1,6 +1,6 @@
 package com.reserve.seat.reservation;
 
-import com.reserve.seat.qna.QnaDTO;
+import com.reserve.seat.reservation.ReserDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 	@AllArgsConstructor
 	@NoArgsConstructor
 	public class ReserDTO {
-		private int rno;
-		private int pno;
-		private int sno;
-		private int uno;
+		private Integer rno;
+		private Integer pno;
+		private Integer sno;
+		private Integer uno;
 		private String rdate;
 	}

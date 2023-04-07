@@ -3,53 +3,25 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.reserve.seat.mapper.QnaMapper">
-  <!-- 쿼리 보관 -->
-<!--   <sql id="criteria">
-  	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
-		<foreach collection="typeArr" item="type">
-			<trim prefix="OR">
-				<choose>
-					<when test="type == 'T'.toString()">
-						qtitle LIKE concat_ws(#{ keyword }, '%', '%') '%' || #{ keyword } || '%'
-					</when>
-					<when test="type == 'C'.toString()">
-						qcontent LIKE concat_ws(#{ keyword }, '%', '%') '%' || #{ keyword } || '%'
-					</when>
-				</choose>
-			</trim>
-		</foreach>
-	</trim>
-  </sql> -->
-  
-	<insert id="insertQna">
-	  <![CDATA[
-		  INSERT INTO qna(qtitle, qcontent)
-		  VALUES(#{qtitle}, #{qcontent})
-	  	]]>
-	</insert>
-  	<select id="qnaList"
-	resultType="com.reserve.seat.qna.QnaDTO">
-	<![CDATA[
-	  select * from qna order by qno desc
-	]]>
-	</select>
-	
-	<delete id="deleteQna">
-  	DELETE FROM qna WHERE qno = #{qno}
+<mapper namespace="com.reserve.seat.mapper.RnaMapper">
+
+	<delete id="deleteReser">
+  	DELETE FROM reservation WHERE rno = #{rno}
   	</delete>
   	
-  	<update id="updateQna">
-  	UPDATE qna
+  	<update id="updateReser">
+  	UPDATE reservation
   	SET
-  		qtitle=#{qtitle},
-  		qcontent=#{qcontent}
-  	WHERE qno = #{qno}
+  		rno=#{rno},
+  		pno=#{pno}
+  		sno=#{sno}
+  		uno=#{uno}
+  	WHERE rno = #{rno}
   	</update>
   	
-  	<select id="selectQna" resultType="com.reserve.seat.qna.QnaDTO">
+  	<!-- <select id="selectQna" resultType="com.reserve.seat.qna.QnaDTO">
   	SELECT * FROM qna WHERE qno = #{qno}
-  	</select>
+  	</select> -->
   	
   
 </mapper>
