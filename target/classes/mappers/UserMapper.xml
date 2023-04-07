@@ -10,7 +10,11 @@
 		VALUES(#{username}, #{password}, #{name}, #{phone} )
 	</insert>
 	
-
+	<select id="countIdDuplicated" resultType="int">
+		SELECT count(*) 
+		FROM user 
+		WHERE username = #{username} 
+	</select>
 	
 
 </mapper>

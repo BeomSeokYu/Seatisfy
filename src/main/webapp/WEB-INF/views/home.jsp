@@ -13,6 +13,8 @@
 
 <P>  The time on the server is ${serverTime}. </P>
 
+<a href="/user/join">회원가입</a>
+
 <a href="/user/login">로그인</a>
 <button onClick="javascript:goPost()">로그아웃 POST</button>
 
@@ -20,7 +22,8 @@
 function goPost(){
     let f = document.createElement('form');
     f.setAttribute('method', 'post');
-    f.setAttribute('action', '/user/logout');
+    f.setAttribute('action', '/user/logout?${_csrf.parameterName}=${_csrf.token}');
+    
     document.body.appendChild(f);
     f.submit();
 }

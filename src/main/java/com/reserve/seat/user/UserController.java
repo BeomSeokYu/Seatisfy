@@ -1,16 +1,19 @@
 package com.reserve.seat.user;
 
+import java.util.List;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.reserve.seat.mapper.UserMapper;
-
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,27 +31,29 @@ public class UserController {
 		return "login";
 	}
 	
-//	@PostMapping("/login")
-//	public String loginSuccess() {
-//		return "redirect:/";
-//	}
-//	@PostMapping("/logout")
-//	public String logout() {
-//		return "redirect:/";
-//	}
-
-	
 	@GetMapping("/join")
 	public String joinForm(@ModelAttribute("user") User user) {
 		return "users/joinform";
 	}
 	
 	@PostMapping("/join")
-	public String joinUser(@ModelAttribute("user") User user) {
+	public String joinUser(@Validated @ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		
+		if (bindingResult.hasErrors()) {
+			log.info("errors={}", bindingResult);
+			// 에러를 List로 저장
+			List<ObjectError> list = bindingResult.getAllErrors();
+			for( ObjectError error : list ) {
+				System.out.println(error);
+			}
+			return "users/joinform";
+		}
+		
 		//회원 정보 디비 등록시 비번을 암호화 스프링 시큐리티 필수 사항
 		String encodedPassword = bcryptPasswordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 		
+		//성공 로직
 		userService.signup(user);
 		
 		return "redirect:/user/login";

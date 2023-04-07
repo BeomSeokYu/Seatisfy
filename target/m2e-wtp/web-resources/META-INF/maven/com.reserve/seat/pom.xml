@@ -238,6 +238,7 @@
 		    <version>5.3.19</version>
 		</dependency>
 		
+
 		<!-- validation-api -->
 		<dependency>
 		    <groupId>javax.validation</groupId>
@@ -247,9 +248,9 @@
 		
 		<!-- hibernate-validator -->
 		<dependency>
-		    <groupId>org.hibernate</groupId>
+		    <groupId>org.hibernate.validator</groupId>
 		    <artifactId>hibernate-validator</artifactId>
-		    <version>8.0.0.Final</version>
+		    <version>6.2.0.Final</version>
 		</dependency>
 		
 		      

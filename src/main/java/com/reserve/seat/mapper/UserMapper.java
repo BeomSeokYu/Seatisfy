@@ -6,5 +6,6 @@ public interface UserMapper {
 
 	public void insertUser(User user);
 
+	public int countIdDuplicated(String username);
 	
 }
