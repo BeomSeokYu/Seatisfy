@@ -55,9 +55,16 @@ public class UserController {
 		
 		//성공 로직
 		userService.signup(user);
+		userService.changeTmpPw(user);	//임시 비밀번호로 DB데이터 변경, 메일 전송
 		
 		return "redirect:/user/login";
 	}
+	
+	@GetMapping("/changepw")
+	public String changepw(Model model) {
+		return "users/pwfind";
+	}
+	
 
 	
 

@@ -9,12 +9,18 @@
 		INSERT INTO user(username, password, name, phone)
 		VALUES(#{username}, #{password}, #{name}, #{phone} )
 	</insert>
-	
-	<select id="countIdDuplicated" resultType="int">
-		SELECT count(*) 
+		
+	<select id="findById" resultType="com.reserve.seat.user.User">
+		SELECT * 
 		FROM user 
 		WHERE username = #{username} 
 	</select>
+		
+	<update id="updatePassword">
+		UPDATE user 
+		SET password = #{password}
+		WHERE username = #{username} 
+	</update>
 	
 
 </mapper>

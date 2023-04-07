@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = UniqueUsernameValidator.class)
 public @interface UniqueUsername {
-    String message() default "이미 가입된 이메일입니다. 다른 이메일을 사용하세요.";
+    String message() default "이미 가입된 회원입니다. 다른 이메일을 사용하세요.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

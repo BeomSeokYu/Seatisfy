@@ -16,6 +16,6 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
 	 @Override
 	 public boolean isValid(String username, ConstraintValidatorContext context) {
 	     // 데이터베이스에 접근하여 중복된 아이디가 있는지 검증
-	     return userMapper.countIdDuplicated(username) == 0;
+	     return userMapper.findById(username) == null;
 	 }
 }
