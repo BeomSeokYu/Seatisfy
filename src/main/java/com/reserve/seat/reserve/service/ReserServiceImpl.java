@@ -106,6 +106,11 @@ public class ReserServiceImpl implements ReserService {
 	public SeatDTO getSeat(int sno) {
 		return seatMapper.selectSeat(sno);
 	}
+	
+	@Override
+	public List<SeatDTO> getSeatsByPost(int pno) {
+		return seatMapper.selectSeatsByPost(pno);
+	}
 
 	@Override
 	public void addSeat(String seatinfo, int pno) {
@@ -119,7 +124,6 @@ public class ReserServiceImpl implements ReserService {
 			}
 		}
 		
-		//seatMapper.insertSeat(sdto);
 	}
 
 	@Override

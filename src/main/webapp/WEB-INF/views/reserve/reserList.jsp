@@ -124,7 +124,7 @@
 		var imgHTML = '';
 		for (var i = 0; i < data.length; i++) {
 			imgHTML += ''
-					+ "<tr onclick=\"location.href='newsDetail.jsp?nno="
+					+ "<tr onclick=\"location.href='/reserve/detail/"
 					+ data[i].pno + "'\"><td>" + data[i].pno + "</td>"
 					+ '<td>' + data[i].ptitle + "</td>" + '<td>'
 					+ data[i].pwriter + "</td><td>" + data[i].regdate + "</td></a></tr>"

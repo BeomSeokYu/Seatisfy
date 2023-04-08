@@ -57,6 +57,13 @@
   	WHERE sno = #{sno}
   </select>
   
+  <select id="selectSeatsByPost" resultType="com.reserve.seat.reserve.domain.SeatDTO">
+  	SELECT * 
+  	FROM seat 
+  	WHERE pno = #{pno}
+  	ORDER BY seatnum
+  </select>
+  
   <insert id="insertSeat">
   	INSERT INTO seat( 
   		seatnum,

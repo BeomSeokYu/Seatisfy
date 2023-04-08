@@ -20,6 +20,9 @@ public interface SeatMapper {
 	// 하나 가져오기
 	public SeatDTO selectSeat(int sno);
 	
+	// 게시물의 좌석 정보 가져오기
+	public List<SeatDTO> selectSeatsByPost(int pno);
+	
 	// 삽입
 	public void insertSeat(SeatDTO sdto);
 	

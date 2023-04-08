@@ -46,7 +46,9 @@ public interface ReserService {
 	 * SeatService -------------------------------------
 	 */
 	public List<SeatDTO> getSeatList(Criteria criteria);
-
+	
+	public List<SeatDTO> getSeatsByPost(int pno);
+	
 	public SeatDTO getSeat(int sno);
 
 	public void addSeat(String seatinfo, int pno);
