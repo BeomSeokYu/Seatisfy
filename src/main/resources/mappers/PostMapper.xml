@@ -57,12 +57,13 @@
   	WHERE pno = #{pno}
   </select>
   
-  <insert id="insertPost">
+  <insert id="insertPost" useGeneratedKeys="true" keyProperty="pno">
   	INSERT INTO post( 
   		pwriter, 
   		ptitle, 
   		pcontent, 
-  		location, 
+  		place, 
+  		address, 
   		seatinfo, 
   		startdate, 
   		enddate, 
@@ -71,7 +72,8 @@
   		#{pwriter}, 
   		#{ptitle}, 
   		#{pcontent}, 
-  		#{location}, 
+  		#{place}, 
+  		#{address}, 
   		#{seatinfo}, 
   		#{startdate}, 
   		#{enddate}, 
@@ -88,7 +90,8 @@
   		pwriter=#{pwriter}, 
   		ptitle=#{ptitle}, 
   		pcontent=#{pcontent}, 
-  		location=#{location}, 
+  		place=#{place}, 
+  		address=#{address}, 
   		seatinfo=#{seatinfo}, 
   		startdate=#{startdate}, 
   		enddate=#{enddate}, 

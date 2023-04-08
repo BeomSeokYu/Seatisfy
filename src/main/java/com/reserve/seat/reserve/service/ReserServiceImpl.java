@@ -1,5 +1,6 @@
 package com.reserve.seat.reserve.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -94,7 +95,7 @@ public class ReserServiceImpl implements ReserService {
 	
 	
 	/**
-	 * ReserService -------------------------------------
+	 * SeatService -------------------------------------
 	 */
 	@Override
 	public List<SeatDTO> getSeatList(Criteria criteria) {
@@ -107,8 +108,18 @@ public class ReserServiceImpl implements ReserService {
 	}
 
 	@Override
-	public void addSeat(SeatDTO sdto) {
-		seatMapper.insertSeat(sdto);
+	public void addSeat(String seatinfo, int pno) {
+		int seatNum = 1;
+		for (String row : seatinfo.split(" ")) {
+			for (String col : row.split(",")) {
+				if (col.equals("1")) {
+					SeatDTO sdto = new SeatDTO(null, seatNum++, pno, false);
+					seatMapper.insertSeat(sdto);					
+				}
+			}
+		}
+		
+		//seatMapper.insertSeat(sdto);
 	}
 
 	@Override

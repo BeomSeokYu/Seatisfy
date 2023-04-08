@@ -5,8 +5,6 @@
 
 package com.reserve.seat.reserve.domain;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +19,8 @@ public class PostDTO {
 	private String pwriter;
 	private String ptitle;
 	private String pcontent;
-	private String location;
+	private String place;
+	private String address;
 	private String seatinfo;
 	private String startdate;
 	private String enddate;

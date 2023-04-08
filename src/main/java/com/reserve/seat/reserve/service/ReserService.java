@@ -49,7 +49,7 @@ public interface ReserService {
 
 	public SeatDTO getSeat(int sno);
 
-	public void addSeat(SeatDTO sdto);
+	public void addSeat(String seatinfo, int pno);
 
 	public boolean editSeat(SeatDTO sdto);
 

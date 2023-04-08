@@ -45,6 +45,7 @@ public class ReserController {
 	public String addForm(@ModelAttribute PostDTO postDTO) {
 		log.info("{}", "addForm");
 		reserService.addPost(postDTO);
+		reserService.addSeat(postDTO.getSeatinfo(), postDTO.getPno());
 		return "redirect:/reserve";
 	}
 	

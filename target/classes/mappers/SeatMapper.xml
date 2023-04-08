@@ -59,9 +59,11 @@
   
   <insert id="insertSeat">
   	INSERT INTO seat( 
-  		pno, 
+  		seatnum,
+  		pno,  
   		isreserved ) 
   	VALUES(
+  		#{seatnum}, 
   		#{pno}, 
   		#{isreserved} )
   </insert>
@@ -73,6 +75,7 @@
   <update id="updateSeat">
   	UPDATE seat
   	SET 
+  		seatnum=#{seatnum},
   		pno=#{pno}, 
   		isreserved=#{isreserved} 
 	WHERE sno = #{sno}
