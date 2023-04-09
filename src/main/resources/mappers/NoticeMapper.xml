@@ -41,7 +41,7 @@
 	]]>
 </select>
 
-<select id="detailNotice" parameterType="String" resultType="com.reserve.seat.notice.NoticeDTO">
+<select id="detailNotice" parameterType="int" resultType="com.reserve.seat.notice.NoticeDTO">
 	<![CDATA[
 		SELECT * FROM notice WHERE nno = #{nno}
 	]]>
@@ -55,7 +55,7 @@
 	]]>
 </update>
 
-<delete id="deleteNotice" parameterType="String">
+<delete id="deleteNotice" parameterType="int">
 			<![CDATA[
 				DELETE FROM notice
 				WHERE nno = #{nno}
@@ -85,6 +85,13 @@
   			<include refid="criteria"/> 
   	<![CDATA[ nno > 0 ]]>
   </select>
+  
+  <!-- 댓글 수 업데이트 -->
+    <update id="updateReplyCnt">
+		UPDATE notice
+		SET reply_cnt = reply_cnt + #{num}
+		WHERE nno = #{nno}
+	</update>
   
   
 

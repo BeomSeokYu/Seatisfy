@@ -63,6 +63,9 @@
 						</c:forEach> --%>
 					</tbody>
 				</table>
+				<button id="regBtn" type="button" class="btn btn-xs pull-right btn-info">
+                            등록
+                            </button>
 				<div class="row text-center" id="none"></div>
 				
 				<hr class="my-4">
@@ -162,6 +165,11 @@
          }
          $('#imgList').html(imgHTML);
       }	
+      
+    //등록 버튼 클릭 이벤트 처리
+  	$('#regBtn').on('click', function(){
+  		self.location = "/notice/add";
+  	});
 </script>      
 <script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -40,19 +40,10 @@
                 <form:input path="nwriter" name="nwriter" value="admin" class="form-control"/>
                 
               </div>
-               <%-- <div class="form-group">
-                <label for="inputStatus">유형</label>
-                <form:select path="ncate" class="form-control custom-select">
-                  <option selected disabled>선택하세요</option>
-                  <option>일반</option>
-                  <option>행사</option>
-                  <option>기타</option>
-                </form:select>
-               </div> --%>
                 
  		<div class="row">
         <div class="col-12">
-          <a href="#" class="btn btn-secondary">취소</a>
+          <button type="button" class="btn btn-warning" onclick="history.back()">뒤로가기</button>
           <input type="submit" value="등록" class="btn btn-success float-right">
         </div>
       </div>

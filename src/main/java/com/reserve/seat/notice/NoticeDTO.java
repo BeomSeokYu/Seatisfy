@@ -5,32 +5,18 @@ package com.reserve.seat.notice;
 
 import javax.validation.constraints.NotBlank;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Setter
-@Getter
+@Data
 public class NoticeDTO {
 	
 	private int nno;			//공지 번호
-	
-	@NotBlank(message = "제목 필수")
 	private String ntitle;		//공지 제목
-	
-	@NotBlank
 	private String ncontent;	//공지 내용
-	
-	private String ndate;		//공지 등록일
 	private String nwriter;		//작성자
+	private String regdate;		//공지 등록일
+	private String modDate;		//공지 수정일
+	private int replyCnt;		//댓글 수
 	
-	public NoticeDTO(int nno, String ntitle, String ncontent, String ndate, String nwriter) {
-		this.nno = nno;
-		this.ntitle = ntitle;
-		this.ncontent = ncontent;
-		this.ndate = ndate;
-		this.nwriter = nwriter;
-	}
-
-	public NoticeDTO() { }
 	
 }

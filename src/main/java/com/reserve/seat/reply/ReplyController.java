@@ -19,7 +19,7 @@ public class ReplyController {
 	@PostMapping("/write")
 	public String addReply(ReplyDTO reply) {
 		
-		replyService.insertReply(reply);
+//		replyService.insertReply(reply);
 		
 		return "redirect:/notice/detail?nno=" + reply.getNno();
 		
@@ -32,7 +32,7 @@ public class ReplyController {
 	@PostMapping("/edit")
 	@ResponseBody
 	public String editReply(ReplyDTO reply) {
-	    replyService.updateReply(reply);
+//	    replyService.updateReply(reply);
 	    
 	    return "success";
 	}
@@ -41,7 +41,7 @@ public class ReplyController {
 	@PostMapping("/remove")
 	public String removeReply(ReplyDTO reply) {
 		
-		replyService.deleteReply(reply);
+//		replyService.deleteReply(reply);
 		
 		return "redirect:/notice/detail?nno=" + reply.getNno();
 	}

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.reserve.seat.reply.ReplyDTO;
 import com.reserve.seat.reply.ReplyService;
@@ -26,27 +27,24 @@ public class NoticeController {
 
 	@Autowired
 	private NoticeService noticeService;
-	
-	@Autowired
-	private ReplyService replyService;
 
 	//공지 등록 조회 폼
 	@GetMapping("/add")
 	public String requestAddNoticeForm(@ModelAttribute("notice") NoticeDTO notice) {
-
+		//url에 /notice/add로 입력 시 notice/noticeAdd.jsp로 이동
 		return "notice/noticeAdd";
 	}
 
 	//공지 등록
 	@PostMapping("/add")
-	public String submitAddNoticeForm(@Validated @ModelAttribute("notice") NoticeDTO notice, BindingResult br) {
+	public String submitAddNoticeForm(@ModelAttribute("notice") NoticeDTO notice, RedirectAttributes rttr) {
 		
-		if(br.hasErrors()) {
-			return "notice/noticeAdd";
-		}
-		
+		//공지를 notice 테이블에 등록하고
 		noticeService.insertNotice(notice);
-		return "redirect:/notice/list";
+		
+		rttr.addFlashAttribute("result", notice.getNno());	// 공지 번호를
+		
+		return "redirect:/notice/list";	 //공지 전체 목록으로 response.sendRedirect()처리
 	}
 
 	//공지 전체 목록
@@ -62,14 +60,14 @@ public class NoticeController {
 	@GetMapping("/detail")
 	public String requestNoticeByNum(@RequestParam("nno") String nno, Model model) {
 		
-		NoticeDTO noticeNum = noticeService.detailNotice(nno);
-		model.addAttribute("notice", noticeNum);
+//		NoticeDTO noticeNum = noticeService.detailNotice(nno);
+//		model.addAttribute("notice", noticeNum);
 		
 		//댓글 조회
-		List<ReplyDTO> replyList = replyService.selectReplyList(nno); 
-		int cnt = replyList.size();	// 댓글 수
-		model.addAttribute("replyList", replyList);
-		model.addAttribute("cnt", cnt);
+//		List<ReplyDTO> replyList = replyService.selectReplyList(nno); 
+//		int cnt = replyList.size();	// 댓글 수
+//		model.addAttribute("replyList", replyList);
+//		model.addAttribute("cnt", cnt);
 		
 		
 		
@@ -82,8 +80,8 @@ public class NoticeController {
 	public String updateNoticeForm(@ModelAttribute("updateNotice") NoticeDTO notice, 
 								   @RequestParam("nno") String nno, Model model) {
 		
-		NoticeDTO noticeNum = noticeService.detailNotice(nno);
-		model.addAttribute("notice", noticeNum);
+//		NoticeDTO noticeNum = noticeService.detailNotice(nno);
+//		model.addAttribute("notice", noticeNum);
 		
 		return "notice/noticeUpdate";
 	}
@@ -101,7 +99,7 @@ public class NoticeController {
 	@PostMapping("/remove")
 	public String removeNotice(@RequestParam("nno") String nno) {
 		
-		noticeService.deleteNotice(nno);
+//		noticeService.deleteNotice(nno);
 		
 		return "redirect:/notice/list";
 	}

@@ -16,28 +16,29 @@ public class NoticeServiceImpl implements NoticeService{
 	private NoticeMapper noticeMapper;
 	
 	//공지 등록
-	public int insertNotice(NoticeDTO notice) {
-		return noticeMapper.insertNotice(notice);
+	public boolean insertNotice(NoticeDTO notice) {
+		return noticeMapper.insertNotice(notice) == 1 ? true : false;
 	}
+	
+	//공지 수정
+	public boolean updateNotice(NoticeDTO notice) {
+		return noticeMapper.updateNotice(notice) == 1 ? true : false;
+	}
+
+	//공지 삭제
+	public boolean deleteNotice(int nno) {
+		//공지 삭제시 댓글 먼저 삭제
+		return noticeMapper.deleteNotice(nno) == 1 ? true : false ;
+	}
+	
+	//공지 상세보기
+	public NoticeDTO detailNotice(int nno) {
+		return noticeMapper.detailNotice(nno);
+	}		
 
 	//공지 목록
 	public List<NoticeDTO> AllNoticeList() {
 		return noticeMapper.AllNoticeList();
-	}
-
-	//공지 상세보기
-	public NoticeDTO detailNotice(String nno) {
-		return noticeMapper.detailNotice(nno);
-	}
-	
-	//공지 수정
-	public int updateNotice(NoticeDTO notice) {
-		return noticeMapper.updateNotice(notice);
-	}
-
-	//공지 삭제
-	public int deleteNotice(String nno) {
-		return noticeMapper.deleteNotice(nno);
 	}
 	
 	//공지 페이징 목록
@@ -45,7 +46,7 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeMapper.selectAllNotice(cri);
 	}
 	
-	//공지 전체 갯수
+	//전체 공지 수 
 	public int totalCount(Criteria cri) {
 		return noticeMapper.totalCount(cri);
 	}
