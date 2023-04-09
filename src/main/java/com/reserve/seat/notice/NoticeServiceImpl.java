@@ -16,23 +16,22 @@ public class NoticeServiceImpl implements NoticeService{
 	private NoticeMapper noticeMapper;
 	
 	//공지 등록
-	public boolean insertNotice(NoticeDTO notice) {
-		return noticeMapper.insertNotice(notice) == 1 ? true : false;
+	public void insertNotice(NoticeDTO notice) {
+		noticeMapper.insertNotice(notice);
 	}
 	
 	//공지 수정
-	public boolean updateNotice(NoticeDTO notice) {
-		return noticeMapper.updateNotice(notice) == 1 ? true : false;
+	public void updateNotice(NoticeDTO notice) {
+		noticeMapper.updateNotice(notice);
 	}
 
 	//공지 삭제
-	public boolean deleteNotice(int nno) {
-		//공지 삭제시 댓글 먼저 삭제
-		return noticeMapper.deleteNotice(nno) == 1 ? true : false ;
+	public void deleteNotice(String nno) {
+		noticeMapper.deleteNotice(nno);
 	}
 	
 	//공지 상세보기
-	public NoticeDTO detailNotice(int nno) {
+	public NoticeDTO detailNotice(String nno) {
 		return noticeMapper.detailNotice(nno);
 	}		
 

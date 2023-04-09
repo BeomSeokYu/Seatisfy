@@ -37,12 +37,10 @@ public class NoticeController {
 
 	//공지 등록
 	@PostMapping("/add")
-	public String submitAddNoticeForm(@ModelAttribute("notice") NoticeDTO notice, RedirectAttributes rttr) {
+	public String submitAddNoticeForm(@ModelAttribute("notice") NoticeDTO notice) {
 		
 		//공지를 notice 테이블에 등록하고
 		noticeService.insertNotice(notice);
-		
-		rttr.addFlashAttribute("result", notice.getNno());	// 공지 번호를
 		
 		return "redirect:/notice/list";	 //공지 전체 목록으로 response.sendRedirect()처리
 	}
@@ -50,6 +48,7 @@ public class NoticeController {
 	//공지 전체 목록
 	@GetMapping("/list")
 	public String NoticeList(Model model) {
+		
 		List<NoticeDTO> noticeList = noticeService.AllNoticeList();
 		model.addAttribute("noticeList", noticeList);
 
@@ -60,8 +59,8 @@ public class NoticeController {
 	@GetMapping("/detail")
 	public String requestNoticeByNum(@RequestParam("nno") String nno, Model model) {
 		
-//		NoticeDTO noticeNum = noticeService.detailNotice(nno);
-//		model.addAttribute("notice", noticeNum);
+		NoticeDTO noticeNum = noticeService.detailNotice(nno);
+		model.addAttribute("notice", noticeNum);
 		
 		//댓글 조회
 //		List<ReplyDTO> replyList = replyService.selectReplyList(nno); 
@@ -80,8 +79,8 @@ public class NoticeController {
 	public String updateNoticeForm(@ModelAttribute("updateNotice") NoticeDTO notice, 
 								   @RequestParam("nno") String nno, Model model) {
 		
-//		NoticeDTO noticeNum = noticeService.detailNotice(nno);
-//		model.addAttribute("notice", noticeNum);
+		NoticeDTO noticeNum = noticeService.detailNotice(nno);
+		model.addAttribute("notice", noticeNum);
 		
 		return "notice/noticeUpdate";
 	}
@@ -99,7 +98,7 @@ public class NoticeController {
 	@PostMapping("/remove")
 	public String removeNotice(@RequestParam("nno") String nno) {
 		
-//		noticeService.deleteNotice(nno);
+		noticeService.deleteNotice(nno);
 		
 		return "redirect:/notice/list";
 	}

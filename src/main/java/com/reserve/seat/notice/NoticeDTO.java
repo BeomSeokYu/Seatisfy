@@ -14,7 +14,7 @@ public class NoticeDTO {
 	private String ntitle;		//공지 제목
 	private String ncontent;	//공지 내용
 	private String nwriter;		//작성자
-	private String regdate;		//공지 등록일
+	private String regDate;		//공지 등록일
 	private String modDate;		//공지 수정일
 	private int replyCnt;		//댓글 수
 	

@@ -20,7 +20,7 @@
 			<h5 class="card-title">내용 : ${notice.ncontent}</h5>
 			
  
-			<div class="d-flex justify-content-end badge bg-light text-dark">작성일자 : ${notice.ndate}</div>
+			<div class="d-flex justify-content-end badge bg-light text-dark">작성일자 : ${notice.regDate}</div>
 		</div>
 	</div>
 	

@@ -13,13 +13,13 @@ import com.reserve.seat.notice.NoticeDTO;
 public interface NoticeMapper {
 
 	
-	public int insertNotice(NoticeDTO notice);	//공지 등록
+	public void insertNotice(NoticeDTO notice);	//공지 등록
 	
-	public int updateNotice(NoticeDTO notice);	//공지 수정
+	public void updateNotice(NoticeDTO notice);	//공지 수정
 	
-	public int deleteNotice(int nno);	//공지 삭제
+	public void deleteNotice(String nno);	//공지 삭제
 	
-	public NoticeDTO detailNotice(int nno);		//공지 상세보기
+	public NoticeDTO detailNotice(String nno);		//공지 상세보기
 	
 	public List<NoticeDTO> AllNoticeList();	 //전체 공지 목록
 	

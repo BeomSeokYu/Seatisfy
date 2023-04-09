@@ -18,109 +18,75 @@
 </head>
 <body>
 
-<div class="container">
-	<div class="photo-gallery container mb-3">
-		<div class="row justify-content-center">
-			<h2>예약</h2>
-			
-			<div class="col-lg-12">
-				<div class="row">
-					<div class="col-3 text-muted">
-						<select class="form-select form-select-sm w-50 d-inline"
-							id="selectAmount">
-							<option value="10" selected>10</option>
-							<option value="20">20</option>
-							<option value="40">40</option>
-						</select> <span class="d-inline">개씩 보기</span>
-					</div>
-					<div class="col-9 text-end">
-				
-					</div>
-				</div>
-				<hr class="my-4">
+	<div class="container">
+		<div class="photo-gallery container mb-3">
+			<div class="row justify-content-center">
+				<h2>예약</h2>
 
-				<table class="table table-hover shadow bg-body rounded">
-					<thead>
-						<tr style="background-color: #999999; color: white;">
-							<th scope="col" class="col-2">no</th>
-							<th scope="col" class="col-6">제목</th>
-							<th scope="col" class="col-6">내용</th>
-							<th scope="col" class="col-2">작성자</th>
-							<th scope="col" class="col-2">작성일</th>
-						</tr>
-					</thead>
-					<tbody id="imgList">
-						<%-- <c:forEach items="${ noticeList }" var="notice" varStatus="i">
-							<tr class="move" data="${ notice.nno }">
-					            <td>${ notice.nno }</td>
-					            <td>${ notice.ntitle }</td>
-					            <td>${ notice.ncontent}</td>
-					            <td>${ notice.nwriter }</td>
-					            <td><fmt:parseDate value="${notice.ndate }" pattern="yyyy-MM-dd HH:mm:ss" var="ndate" />
-					            	<fmt:formatDate value="${ndate }" pattern="yyyy-MM-dd"/>
-					            </td>
-					        </tr>
-						</c:forEach> --%>
-					</tbody>
-				</table>
-				<button id="regBtn" type="button" class="btn btn-xs pull-right btn-info">
-                            등록
-                            </button>
-				<div class="row text-center" id="none"></div>
-				
-				<hr class="my-4">
-				<div class="row">
-					<div class="col-8">
-						<ul class="pagination justify-content-center" id="pagination">
-
-						</ul>
+				<div class="col-lg-12">
+					<div class="row">
+						<div class="col-3 text-muted">
+							<select class="form-select form-select-sm w-50 d-inline"
+								id="selectAmount">
+								<option value="10" selected>10</option>
+								<option value="20">20</option>
+								<option value="40">40</option>
+							</select> <span class="d-inline">개씩 보기</span>
+						</div>
+						<div class="col-9 text-end"></div>
 					</div>
-					<div class="col-4">
-						<div class="d-flex text-end">
-							<select class="form-select" id="selectType">
-								<option value="T" selected>제목</option>
-								<option value="C">내용</option>
-								<option value="W">작성자</option>
-								<option value="TC">제목/내용</option>
-								<option value="TCW">제목/내용/작성자</option>
-							</select> <input class="form-control form-control-sm" type="search"
-								placeholder="검색어" id="keyword">
-							<button class="btn btn-sm btn-outline-success" type="button"
-								id="searchBtn">
-								<i class="bi bi-search"></i>
-							</button>
+					<hr class="my-4">
+
+					<table class="table table-hover shadow bg-body rounded">
+						<thead>
+							<tr style="background-color: #999999; color: white;">
+								<th scope="col" class="col-2">번호</th>
+								<th scope="col" class="col-6">제목[댓글 수]</th>
+								<th scope="col" class="col-6">작성자</th>
+								<th scope="col" class="col-2">작성일</th>
+								<th scope="col" class="col-2">수정일</th>
+							</tr>
+						</thead>
+						<tbody id="imgList">
+							
+						</tbody>
+					</table>
+					<button id="regBtn" type="button"
+						class="btn btn-xs pull-right btn-info">등록</button>
+					<div class="row text-center" id="none"></div>
+
+					<hr class="my-4">
+					<div class="row">
+						<div class="col-8">
+							<ul class="pagination justify-content-center" id="pagination">
+
+							</ul>
+						</div>
+						<div class="col-4">
+							<div class="d-flex text-end">
+								<select class="form-select" id="selectType">
+									<option value="T" selected>제목</option>
+									<option value="C">내용</option>
+									<option value="W">작성자</option>
+									<option value="TC">제목/내용</option>
+									<option value="TCW">제목/내용/작성자</option>
+								</select> <input class="form-control form-control-sm" type="search"
+									placeholder="검색어" id="keyword">
+								<button class="btn btn-sm btn-outline-success" type="button"
+									id="searchBtn">
+									<i class="bi bi-search"></i>
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>	
 
 
 
-<%-- <div class="container">
-<div class="container">
-    <div style="padding-top: 50px">
-        <table class="table table-hover">
-								<tr>
-									<th>번호</th>
-									<th>제목</th>
-									<th>내용</th>
-									<th>작성자</th>
-									<th>날짜</th>
-								</tr>
-								<c:forEach items="${noticeList}" var="notice">
-									<tr>
-										<td>${notice.nno}</td>
-							<td><a href="/notice/detail?nno=${notice.nno}">${notice.ntitle}</a></td>
-										<td>${notice.ncontent}</td>
-										<td>${notice.nwriter}</td>
-										<td>${notice.ndate}</td>
-									</tr>
-								</c:forEach>
-						</table>
-						</div><hr></div></div> --%>
+	
 						
 					
 	<script src="/resources/js/page.js"></script>
@@ -152,16 +118,14 @@
          }
          var imgHTML = '';
          for (var i = 0; i < data.length; i++) {
-        	 var date = new Date(data[i].ndate);
-             var formattedDate = date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
             imgHTML += ''
                   + "<tr>"
             	  +"<td>" + data[i].nno + "</td>"
                   + "<td><a href=\"detail?nno="
                   + data[i].nno	+"'\">"	+ data[i].ntitle + "</a></td>" 
-                  +'<td>' + data[i].ncontent+ "</td>"
-                  + '<td>' + data[i].nwriter + "</td>"
-                  +"<td>" + formattedDate + "</td></tr>"
+                  +'<td>' + data[i].nwriter+ "</td>"
+                  + '<td>' + data[i].regDate + "</td>"
+                  +"<td>" + data[i].modDate + "</td></tr>"
          }
          $('#imgList').html(imgHTML);
       }	

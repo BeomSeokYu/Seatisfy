@@ -41,7 +41,7 @@
 	]]>
 </select>
 
-<select id="detailNotice" parameterType="int" resultType="com.reserve.seat.notice.NoticeDTO">
+<select id="detailNotice" parameterType="String" resultType="com.reserve.seat.notice.NoticeDTO">
 	<![CDATA[
 		SELECT * FROM notice WHERE nno = #{nno}
 	]]>
@@ -55,7 +55,7 @@
 	]]>
 </update>
 
-<delete id="deleteNotice" parameterType="int">
+<delete id="deleteNotice" parameterType="String">
 			<![CDATA[
 				DELETE FROM notice
 				WHERE nno = #{nno}
