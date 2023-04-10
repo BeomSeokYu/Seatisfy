@@ -2,6 +2,7 @@ package com.reserve.seat.user;
 
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,37 @@ public class UserServiceImpl implements UserService{
 		byte[] bytes = new byte[10];
 		random.nextBytes(bytes);
 		return Base64.getEncoder().encodeToString(bytes);
+	}
+	
+	// 비밀번호 변경
+	@Override
+	public boolean changePw(User user) {
+		return (userMapper.updatePassword(user) != 0) ? true : false;
+	}
+
+	@Override
+	public List<User> getAllUser() {
+		return userMapper.listUser();
+	}
+
+	@Override
+	public boolean changeAutority(User user) {
+		return (userMapper.updateAuthority(user) != 0) ? true : false;
+	}
+
+	@Override
+	public boolean removeUser(int uno) {
+		return (userMapper.deleteUser(uno) != 0) ? true : false;
+	}
+
+	@Override
+	public User getUserDetail(String username) {
+		return userMapper.findById(username);
+	}
+
+	@Override
+	public boolean editUser(User user) {
+		return (userMapper.updateUser(user) != 0) ? true : false;
 	}
 
 

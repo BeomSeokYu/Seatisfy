@@ -56,6 +56,9 @@
                                         <input name="remember" type="checkbox" value="Remember Me">Remember Me
                                     </label>
                                 </div>
+                                 <div class="form-group">
+                                    <a href="/user/findpw">비밀번호 찾기</a>
+                                </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <!-- <a href="index.html" class="btn btn-lg btn-info btn-block">Login</a> -->
                                  

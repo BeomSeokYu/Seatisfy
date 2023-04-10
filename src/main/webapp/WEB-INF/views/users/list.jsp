@@ -10,18 +10,18 @@
 	crossorigin="anonymous"></script>
 
 <script>
-	function removeUser(username) {
+	function removeUser(uno) {
 		$.ajax({
 			type : "POST",
-			url : "/users/remove",
+			url : "/user/remove",
 			data : {
-				username : username
+				uno : uno
 			},
 			beforeSend : function(xhr) { /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
 				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 			},
 			success : function(result) {
-				alert("고객 정보가 삭제되었습니다.")
+				alert("회원이 삭제되었습니다.");
 			},
 			error : function(request, status, error) {
 				alert(request.status + " " + request.responseText);
@@ -34,7 +34,7 @@
 	function updateAuth(username, e) {
 		$.ajax({
 			type : "POST",
-			url : "/users/list",
+			url : "/user/list",
 			data : {
 				username : username,
 				authority : e.value
@@ -44,7 +44,7 @@
 			},
 			success : function(result) {
 				alert("권한 정보 변경이 완료되었습니다.")
-				window.location.assign('/users/list');
+				window.location.assign('/user/list');
 			},
 			error : function(request, status, error) {
 				alert(request.status + " " + request.responseText);
@@ -52,7 +52,7 @@
 		})
 
 		/* window.location.reload(); */
-		window.location.assign('/users/list');
+		window.location.assign('/user/list');
 	}
 </script>
 </head>
@@ -64,11 +64,11 @@
 				<table class="table table-hover">
 					<tr>
 						<th>번호</th>
-						<th>아이디</th>
-						<th>권한</th>
-						<th>상태</th>
+						<th>이메일</th>
 						<th>이름</th>
-						<th>메일</th>
+						<th>전화번호</th>
+						<th>권한</th>
+						<th>가입일</th>
 						<th>관리</th>
 					</tr>
 					<form:form name="removeForm" method="put">
@@ -76,22 +76,22 @@
 							<tr>
 								<td>${user.uno}</td>
 								<td>${user.username}</td>
+								<td>${user.name}</td>
+								<td>${user.phone}</td>
 								<td><select onchange="updateAuth('${user.username}', this)"
 									class="form-select form-select-sm"
 									aria-label=".form-select-sm example">
 										<option selected>${user.authority}</option>
+										<option disabled>---------</option>
 										<option value="ROLE_USER">ROLE_USER</option>
-										<option value="ROLE_MANAGER">ROLE_MANAGER</option>
 										<option value="ROLE_ADMIN">ROLE_ADMIN</option>
 								</select></td>
-								<td>${user.enabled}</td>
-								<td>${user.uname}</td>
-								<td>${user.uemail}</td>
+								<td>${user.udate}</td>
 								<td>
 									<p>
-										<a href="javascript:removeUser('${user.username}')"
+										<a href="javascript:removeUser('${user.uno}')"
 											class="btn btn-danger btn-sm">삭제</a> <a
-											href="<c:url value="/users/update?id=${user.username}"/>"
+											href="<c:url value="/users/update?id=${user.uno}"/>"
 											class="btn btn-success btn-sm">수정</a>
 								</td>
 							</tr>

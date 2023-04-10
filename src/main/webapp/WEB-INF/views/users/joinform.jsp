@@ -22,6 +22,9 @@
 		비밀번호 : <form:input path="password" type="password" class="form-control"/>
 		<form:errors path="password"/>
 		<br>
+		비밀번호 확인 : <form:input path="passwordConfirm" type="password" class="form-control"/>
+		<form:errors path="passwordConfirm" cssClass="error" />
+		<br>
 		이름 : <form:input path="name" class="form-control"/>
 		<form:errors path="name"/>
 		<br>

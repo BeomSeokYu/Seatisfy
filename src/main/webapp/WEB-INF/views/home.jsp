@@ -13,10 +13,36 @@
 
 <P>  The time on the server is ${serverTime}. </P>
 
-<a href="/user/join">회원가입</a>
+<div class="container">
+	<a href="/user/join">회원가입</a>
+	
+	<a href="/user/login">로그인</a>
+	<button onClick="javascript:goPost()">로그아웃 POST</button>
+	
+	<%
+		Object details = SecurityContextHolder.getContext().getAuthentication().getDetails();
+		if (details instanceof WebAuthenticationDetails) {
+		    String sessionId = ((WebAuthenticationDetails) details).getSessionId();
+	%>
+		<br>sessionId : <%=sessionId %>
+	
+	<%
+		    // 세션 ID를 사용하는 코드
+		}
+	%>
+	
+	<hr>
+	일반 회원 페이지
+	<br><a href="/user/detail">내 정보 보기(마이페이지)</a>
+	
+	<hr>
+	관리자 페이지
+	<br><a href="/user/list">회원 목록</a>
 
-<a href="/user/login">로그인</a>
-<button onClick="javascript:goPost()">로그아웃 POST</button>
+
+</div>
+
+
 
 <script type="text/javascript">
 function goPost(){
@@ -29,20 +55,6 @@ function goPost(){
 }
 
 </script>
-
-<%
-	Object details = SecurityContextHolder.getContext().getAuthentication().getDetails();
-	if (details instanceof WebAuthenticationDetails) {
-	    String sessionId = ((WebAuthenticationDetails) details).getSessionId();
-%>
-	<br>sessionId : <%=sessionId %>
-
-<%
-	    // 세션 ID를 사용하는 코드
-	}
-%>
-
-
 <%@include file="include/footer.jsp"%>
 </body>
 </html>
