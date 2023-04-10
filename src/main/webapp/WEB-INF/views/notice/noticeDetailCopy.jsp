@@ -122,6 +122,30 @@ function sendComment() {
 
 <!-- 댓글 끝  -->
 
+<script>
+$(document).ready(function() {
+
+	// 댓글 목록을 불러오는 ajax
+	var cbNum = $('#bNum').val();
+
+	$.ajax({
+		type : "POST",
+		url : "comment/cList",
+		data : {
+			"cbNum" : cbNum
+		},
+		dataType : "json",
+		success : function(list) {
+			// 실행되는 내용
+			commentList(list);
+		},
+		error : function() {
+			alert('댓글 리스트 불러오기 실패!');
+		}
+	});
+
+
+</script>
 
 
 

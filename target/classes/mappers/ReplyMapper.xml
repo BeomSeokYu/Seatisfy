@@ -16,7 +16,7 @@
 	<update id="updateReply" parameterType="com.reserve.seat.reply.ReplyDTO">
 		UPDATE reply
 		SET rcontent = #{rcontent}, modDate = now()
-		WHERE rno = #{rno} and nno = #{nno}
+		WHERE rno = #{rno}
 	</update>
 	
 	<!-- 댓글 삭제  -->
@@ -41,9 +41,16 @@
     WHERE rno = #{rno}
   </select> 
   
+  <!--댓글 리스트 -->
+  <select id="replyList" parameterType="String" resultType="com.reserve.seat.reply.ReplyDTO">
+    SELECT * 
+    FROM reply 
+    WHERE nno = #{nno}
+    ORDER BY rno
+  </select> 
+  
   <!-- 전체 댓글  -->
-  <select id="AllReplyList" resultType="com.reserve.seat.reply.ReplyDTO">
-  <!-- query안에 꺽새가 있으면 <![CDATA 이런식으로 써줘야한다.  -->
+  <!-- <select id="AllReplyList" resultType="com.reserve.seat.reply.ReplyDTO">
     <![CDATA[
     SELECT *
 	FROM reply
@@ -51,13 +58,13 @@
 	ORDER BY regDate DESC, rno DESC
 	LIMIT #{amount} OFFSET #{offset} 
     ]]>
-  </select>
+  </select> -->
   
   <!-- 전체 댓글 수 조회 totalReply  -->
-  <select id="totalReply" resultType="String">
+  <!-- <select id="totalReply" resultType="String">
   		SELECT COUNT(rno) 
   		FROM reply
   		WHERE nno = #{nno}
-  </select> 
+  </select>  -->
   
 </mapper>
