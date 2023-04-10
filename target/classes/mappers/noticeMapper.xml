@@ -50,7 +50,7 @@
 <update id="updateNotice">
 	<![CDATA[
 		UPDATE notice
-		SET ntitle = #{ntitle}, ncontent = #{ncontent}
+		SET ntitle = #{ntitle}, ncontent = #{ncontent}, modDate = now()
 		WHERE nno = #{nno}
 	]]>
 </update>

@@ -15,27 +15,27 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ReplyServiceImpl implements ReplyService {
 
-//	private ReplyMapper replyMapper;
-//	
-//	
-//	@Override
-//	//댓글 등록 
-//	public void insertReply(ReplyDTO reply) {
-//		replyMapper.insertReply(reply);
-//	}
-//
-//	@Override
-//	//댓글 수정
-//	public void updateReply(ReplyDTO reply) {
-//		replyMapper.updateReply(reply);
-//	}
-//
-//	@Override
-//	//댓글 삭제
-//	public void deleteReply(int rno) {
-//		replyMapper.deleteReply(rno);
-//	}
-//
+	private ReplyMapper replyMapper;
+	
+	
+	@Override
+	//댓글 등록 
+	public void insertReply(ReplyDTO reply) {
+		replyMapper.insertReply(reply);
+	}
+
+	@Override
+	//댓글 수정
+	public void updateReply(ReplyDTO reply) {
+		replyMapper.updateReply(reply);
+	}
+
+	@Override
+	//댓글 삭제
+	public void deleteReply(int rno) {
+		replyMapper.deleteReply(rno);
+	}
+
 //	@Override
 //	//댓글 조회
 //	public List<ReplyDTO> selectReply(int rno) {

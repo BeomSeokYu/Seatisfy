@@ -15,7 +15,7 @@
 	<!-- 댓글 수정  -->
 	<update id="updateReply" parameterType="com.reserve.seat.reply.ReplyDTO">
 		UPDATE reply
-		SET rcontent = #{rcontent}, modDate = #{now()}
+		SET rcontent = #{rcontent}, modDate = now()
 		WHERE rno = #{rno} and nno = #{nno}
 	</update>
 	
@@ -26,11 +26,11 @@
 	</delete>
 	
 	<!-- 댓글 조회 -->
-  <select id="selectReply" parameterType="int" resultType="com.reserve.seat.reply.ReplyDTO">
+<!--   <select id="selectReply" parameterType="int" resultType="com.reserve.seat.reply.ReplyDTO">
     SELECT * 
     FROM reply 
     WHERE rno = #{rno}
-  </select>
+  </select> -->
   
   
 </mapper>
