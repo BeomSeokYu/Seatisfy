@@ -2,10 +2,12 @@ package com.reserve.seat.qna;
 
 import java.util.List;
 
+import com.reserve.seat.Criteria;
+
 public interface QnaService {
 	public void insertQna(QnaDTO qna);
 	
-	public List<QnaDTO> qnaList();
+	public List<QnaDTO> qnaList(Criteria cri);
 	
 	public void updateQna(QnaDTO qna);
 	
@@ -13,4 +15,5 @@ public interface QnaService {
 	
 	public QnaDTO selectQna(String qno);
 	
+	public int totalCount(Criteria cri);
 }

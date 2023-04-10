@@ -5,7 +5,7 @@
   
 <mapper namespace="com.reserve.seat.mapper.QnaMapper">
   <!-- 쿼리 보관 -->
-<!--   <sql id="criteria">
+   <sql id="criteria">
   	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
 		<foreach collection="typeArr" item="type">
 			<trim prefix="OR">
@@ -20,8 +20,14 @@
 			</trim>
 		</foreach>
 	</trim>
-  </sql> -->
-  
+  </sql> 
+  	 <select id="totalCount" resultType="int">
+ 	   SELECT COUNT(*) 
+ 	   FROM   qna 
+ 	   WHERE  <!-- 보관해 둔 쿼리 사용 -->	
+			  <include refid="criteria"></include>
+	          qno > 0 
+  	</select>
 	<insert id="insertQna">
 	  <![CDATA[
 		  INSERT INTO qna(qtitle, qcontent)

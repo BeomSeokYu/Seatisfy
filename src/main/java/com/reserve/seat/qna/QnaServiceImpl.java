@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.reserve.seat.Criteria;
 import com.reserve.seat.mapper.QnaMapper;
 
 import lombok.AllArgsConstructor;
@@ -20,8 +21,8 @@ public class QnaServiceImpl implements QnaService {
 		qnaMapper.insertQna(qna);
 	}
 	
-	public List<QnaDTO> qnaList(){
-		return qnaMapper.qnaList();
+	public List<QnaDTO> qnaList(Criteria cri){
+		return qnaMapper.qnaList(cri);
 	}
 	
 	public void deleteQna(String qno) {
@@ -33,5 +34,9 @@ public class QnaServiceImpl implements QnaService {
 	}
 	public void updateQna(QnaDTO qna) {
 		qnaMapper.updateQna(qna);
+	}
+
+	public int totalCount(Criteria cri) {
+		return qnaMapper.totalCount(cri);
 	}
 }

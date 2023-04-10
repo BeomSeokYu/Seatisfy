@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.reserve.seat.Criteria;
+
 import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("/qnas")
@@ -39,8 +41,8 @@ public class QnaController {
 	}
 	//목록
 	@GetMapping("/list")
-	public String qnaList(Model model) {
-		List<QnaDTO> qnaList = qnaService.qnaList();
+	public String qnaList(Model model, Criteria cri) {
+		List<QnaDTO> qnaList = qnaService.qnaList(cri);
 		model.addAttribute("qnaList", qnaList);
 		
 		return "qnas/qnaList";
