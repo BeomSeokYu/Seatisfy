@@ -118,14 +118,20 @@
          }
          var imgHTML = '';
          for (var i = 0; i < data.length; i++) {
-            imgHTML += ''
+        	 var regDate = new Date(data[i].regDate); // Date 객체 생성
+             var formatRegDate = regDate.getFullYear() + '-' + ('0' + (regDate.getMonth() + 1)).slice(-2) + '-' + ('0' + regDate.getDate()).slice(-2); // yyyy-MM-dd 형식으로 변환
+            
+             var modDate = new Date(data[i].modDate); // Date 객체 생성
+             var formatModDate = regDate.getFullYear() + '-' + ('0' + (modDate.getMonth() + 1)).slice(-2) + '-' + ('0' + modDate.getDate()).slice(-2); // yyyy-MM-dd 형식으로 변환
+             
+             imgHTML += ''
                   + "<tr>"
             	  +"<td>" + data[i].nno + "</td>"
                   + "<td><a href=\"detail?nno="
                   + data[i].nno	+"'\">"	+ data[i].ntitle + "</a></td>" 
                   +'<td>' + data[i].nwriter+ "</td>"
-                  + '<td>' + data[i].regDate + "</td>"
-                  +"<td>" + data[i].modDate + "</td></tr>"
+                  + '<td>' + formatRegDate  + "</td>"
+                  +"<td>" + formatModDate + "</td></tr>"
          }
          $('#imgList').html(imgHTML);
       }	

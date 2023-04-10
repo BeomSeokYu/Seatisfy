@@ -24,6 +24,9 @@
 		</div>
 	</div>
 	
+	<form action="/notice/list">
+		<input type="submit" value="목록으로" />
+	</form>
 	<a href="/notice/update?nno=${notice.nno}">수정</a>
 	<form method="POST" action="/notice/remove?nno=${notice.nno }">
 		<input type="submit" value="삭제" />
