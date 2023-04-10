@@ -89,7 +89,7 @@
   <!-- 댓글 수 업데이트 -->
     <update id="updateReplyCnt">
 		UPDATE notice
-		SET reply_cnt = reply_cnt + #{num}
+		SET replyCnt = replyCnt + #{num}
 		WHERE nno = #{nno}
 	</update>
   

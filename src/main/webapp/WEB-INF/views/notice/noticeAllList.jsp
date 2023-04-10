@@ -48,7 +48,7 @@
 							</tr>
 						</thead>
 						<tbody id="imgList">
-							
+								
 						</tbody>
 					</table>
 					<button id="regBtn" type="button"
@@ -124,22 +124,23 @@
              var modDate = new Date(data[i].modDate); // Date 객체 생성
              var formatModDate = regDate.getFullYear() + '-' + ('0' + (modDate.getMonth() + 1)).slice(-2) + '-' + ('0' + modDate.getDate()).slice(-2); // yyyy-MM-dd 형식으로 변환
              
-             imgHTML += ''
+              imgHTML += ''
                   + "<tr>"
             	  +"<td>" + data[i].nno + "</td>"
                   + "<td><a href=\"detail?nno="
                   + data[i].nno	+"'\">"	+ data[i].ntitle + "</a></td>" 
                   +'<td>' + data[i].nwriter+ "</td>"
                   + '<td>' + formatRegDate  + "</td>"
-                  +"<td>" + formatModDate + "</td></tr>"
+                  +"<td>" + formatModDate + "</td></tr>" 
          }
-         $('#imgList').html(imgHTML);
+         $('#imgList').html(imgHTML); 
       }	
       
     //등록 버튼 클릭 이벤트 처리
   	$('#regBtn').on('click', function(){
   		self.location = "/notice/add";
   	});
+  
 </script>      
 <script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

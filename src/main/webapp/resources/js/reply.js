@@ -39,7 +39,7 @@
 	function list(param, callback, error) {
 		console.log('reply list()');
 		
-		$.getJSON('/replies/list/' + param.bno + '/' + param.pageNum + '.json',
+		$.getJSON('/reply/list/' + param.nno + '/' + param.offset + '.json',
 					function(result) {
 						if(callback) {
 							callback(result.totalReply, result.list);
@@ -55,11 +55,11 @@
 	
 	
 	//댓글 수정
-	function modify(rvo, callback, error){
+	function modify(reply, callback, error){
 		console.log('reply modify()');
 		$.ajax({
 			type : 'put',
-			url : '/replies/' + rvo.rno,
+			url : '/reply/' + reply.rno,
 			data : JSON.stringify(rvo),
 			contentType : 'application/json; charset=UTF-8',
 			success : function(result){
@@ -76,11 +76,11 @@
 	}	//END modify()
 	
 	//댓글 삭제 
-	function remove(rno, callback, error){
+	function remove(reply, callback, error){
 		console.log('reply remove()');
 		$.ajax({
 			type : 'delete',
-			url : '/replies/' + rno,
+			url : '/reply/' + rno,
 			success : function(result){
 				if(callback){
 					callback(result);
@@ -95,10 +95,10 @@
 	}	//END remove()
 	
 	//댓글 조회
-	function view(rno, callback, error){
+	function view(reply, callback, error){
 		console.log('reply view()');
 		
-		$.get('/replies/' + rno + '.json',
+		$.get('/reply/' + reply + '.json',
 			function(result) {
 				if(callback) {
 					callback(result);

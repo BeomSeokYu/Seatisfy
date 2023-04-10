@@ -14,13 +14,11 @@
 <title>공지 등록</title>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 <body>
-<%-- <form:form modelAttribute="notice" 
+<form:form modelAttribute="notice" 
 			   action="./add?${_csrf.parameterName}=${_csrf.token}"
 	           class="form-horizontal"
 	           method = "post">
@@ -52,27 +50,7 @@
 
 
 	</fieldset>
-	</form:form> --%>
-<form action="./add?${_csrf.parameterName}=${_csrf.token}" method="post" role="form">
-<div class="mb-3">
-  <label for="ntitle" class="form-label">제목</label>
-  <input type="text" class="form-control" id="ntitle" name="ntitle">
-</div>
-<div class="mb-3">
-  <label for="ncontent" class="form-label">내용</label>
-  <textarea class="form-control" id="summernote" name="ncontent" rows="5"></textarea>
-</div>
-<div class="mb-3">
-  <label for="nwriter" class="form-label">작성자</label>
-  <input type="text" class="form-control" id="nwriter" name="nwriter" value="admin">
-</div>
-<button type="button" class="btn btn-warning " onclick="history.back()">뒤로가기</button>
-<button type="submit" class="btn btn-info ">등록</button>
-</form>
-
-
-
-
+	</form:form>
 
 <script>
       $('#summernote').summernote({

@@ -33,31 +33,55 @@ public class NoticeController {
 
 	//공지 등록 조회 폼
 	@GetMapping("/add")
-	public String requestAddNoticeForm(@ModelAttribute("notice") NoticeDTO notice) {
+	public String requestAddNoticeForm() {
 		//url에 /notice/add로 입력 시 notice/noticeAdd.jsp로 이동
 		return "notice/noticeAdd";
 	}
 
 	//공지 등록
 	@PostMapping("/add")
-	public String submitAddNoticeForm(@ModelAttribute("notice") NoticeDTO notice) {
+	public String submitAddNoticeForm(NoticeDTO notice, RedirectAttributes rttr) {
 		
 		//공지를 notice 테이블에 등록하고
 		noticeService.insertNotice(notice);
+		rttr.addFlashAttribute("result", notice.getNno()); //공지 번호를
 		
 		return "redirect:/notice/list";	 //공지 전체 목록으로 response.sendRedirect()처리
 	}
 
 	//공지 전체 목록
 	@GetMapping("/list")
-	public String NoticeList(Model model) {
+	public String NoticeList(Model model, Criteria cri) {
 		
-		List<NoticeDTO> noticeList = noticeService.AllNoticeList();
-		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("list", noticeService.selectAllNotice(cri));
+		
+		int totalCount = noticeService.totalCount(cri);
+		
+//		List<NoticeDTO> noticeList = noticeService.AllNoticeList();
+//		model.addAttribute("noticeList", noticeList);
 
 		return "notice/noticeAllList";
 	}
+	
+	//공지 전체 목록
+	@PostMapping("/list")
+	@ResponseBody
+	public List<NoticeDTO> NoticeListCount(Criteria cri) {
 
+		return noticeService.selectAllNotice(cri);
+	}
+	
+	//페이지 수
+	@PostMapping("/total")
+	@ResponseBody
+	public int NoticeList(Criteria cri) {
+
+		int totalcount = noticeService.totalCount(cri);
+		
+		return totalcount;
+	}
+
+	
 	//공지 상세 보기
 	@GetMapping("/detail")
 	public String requestNoticeByNum(@RequestParam("nno") String nno, Model model) {
@@ -66,13 +90,10 @@ public class NoticeController {
 		model.addAttribute("notice", noticeNum);
 		
 		//댓글 조회
-		List<ReplyDTO> replyList = replyService.AllReplyList(nno); 
-		int cnt = replyList.size();	// 댓글 수
-		model.addAttribute("replyList", replyList);
-		model.addAttribute("cnt", cnt);
-		
-		
-		
+//		List<ReplyDTO> replyList = replyService.AllReplyList(nno); 
+//		int cnt = replyList.size();	// 댓글 수
+//		model.addAttribute("replyList", replyList);
+//		model.addAttribute("cnt", cnt);
 
 		return "notice/noticeDetail";
 	}
@@ -106,24 +127,9 @@ public class NoticeController {
 		return "redirect:/notice/list";
 	}
 	
-	//페이지 수
-	@PostMapping("/total")
-	@ResponseBody
-	public int NoticeList(Criteria cri) {
-
-		int totalcount = noticeService.totalCount(cri);
-		
-		return totalcount;
-		
-	}
 	
-	//공지 전체 목록
-	@PostMapping("/list")
-	@ResponseBody
-	public List<NoticeDTO> NoticeListCount(Criteria cri) {
-
-		return noticeService.selectAllNotice(cri);
-	}
+	
+	
 	
 	
 }
