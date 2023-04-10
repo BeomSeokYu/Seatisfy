@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.reserve.seat.Criteria;
 import com.reserve.seat.reserve.domain.PostDTO;
+import com.reserve.seat.reserve.domain.ReserDTO;
 import com.reserve.seat.reserve.service.ReserService;
 
 import lombok.RequiredArgsConstructor;
@@ -54,24 +56,24 @@ public class ReserController {
 	}
 	
 	@GetMapping("/detail/{pno}")
-	public String detailView(Model model, @PathVariable int pno) {
+	public String detailView(@ModelAttribute ReserDTO reserDTO, Model model, @PathVariable int pno) {
+		model.addAttribute("post", reserService.getPost(pno));
 		model.addAttribute("seats", reserService.getSeatsByPost(pno));
 		model.addAttribute("seatinfo", reserService.getPost(pno).getSeatinfo());
+		
 		return "reserve/postDetail";
 	}
+	
 	
 	@PostMapping("/detail/{pno}")
-	public String reserve(Model model, @PathVariable int pno) {
-		model.addAttribute("seats", reserService.getSeatsByPost(pno));
-		model.addAttribute("seatinfo", reserService.getPost(pno).getSeatinfo());
-		return "reserve/postDetail";
+	public String reserve(@Validated @ModelAttribute ReserDTO reserDTO, 
+			@PathVariable int pno, 
+			RedirectAttributes redirectAttributes) {
+		log.info("{}", reserService.reserveSeat(reserDTO, null));
+		redirectAttributes.addAttribute(reserService.getSeatsByPost(pno));
+		redirectAttributes.addAttribute("seatinfo", reserService.getPost(pno).getSeatinfo());
+		return "redirect: /reserve/detail/{pno}";
 	}
-	
-	
-	
-	
-	
-	
 	
 	@ResponseBody
 	@PostMapping

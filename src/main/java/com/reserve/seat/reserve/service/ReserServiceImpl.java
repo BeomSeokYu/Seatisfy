@@ -3,7 +3,9 @@ package com.reserve.seat.reserve.service;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.ibatis.javassist.compiler.ast.NewExpr;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.reserve.seat.Criteria;
 import com.reserve.seat.mapper.PostMapper;
@@ -108,7 +110,7 @@ public class ReserServiceImpl implements ReserService {
 	}
 	
 	@Override
-	public List<SeatDTO> getSeatsByPost(int pno) {
+	public List<Integer> getSeatsByPost(int pno) {
 		return seatMapper.selectSeatsByPost(pno);
 	}
 
@@ -125,10 +127,20 @@ public class ReserServiceImpl implements ReserService {
 		}
 		
 	}
-
+	
+	@Transactional
 	@Override
-	public boolean editSeat(SeatDTO sdto) {
-		return seatMapper.updateSeat(sdto);
+	public boolean reserveSeat(ReserDTO rdto, String email) {
+		SeatDTO updateSeatDTO = seatMapper.selectSeatLock(
+				new SeatDTO(null, rdto.getSeatnum(), rdto.getPno(), null));
+		if (!updateSeatDTO.getIsreserved()) {
+			reserMapper.insertReser(rdto);
+			updateSeatDTO.setIsreserved(true);
+			return seatMapper.updateSeat(updateSeatDTO);			
+		} else {
+			seatMapper.updateSeat(updateSeatDTO);
+			return false;
+		}
 	}
 
 	@Override

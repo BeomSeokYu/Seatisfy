@@ -17,11 +17,14 @@ public interface SeatMapper {
 	// 전체 가져오기
 	public List<SeatDTO> selectAllSeat(Criteria criteria);
 	
+	// 게시물의 좌석 정보 가져오기
+	public List<Integer> selectSeatsByPost(int pno);
+	
 	// 하나 가져오기
 	public SeatDTO selectSeat(int sno);
 	
-	// 게시물의 좌석 정보 가져오기
-	public List<SeatDTO> selectSeatsByPost(int pno);
+	// 게시물의 좌석 정보 락 걸기
+	public SeatDTO selectSeatLock(SeatDTO seatDTO);
 	
 	// 삽입
 	public void insertSeat(SeatDTO sdto);

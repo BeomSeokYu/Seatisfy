@@ -17,7 +17,7 @@ import lombok.Setter;
 public class ReserDTO {
 	private Integer rno;
 	private Integer pno;
-	private Integer sno;
-	private Integer uno;
+	private Integer seatnum;
+	private String email;
 	private String rdate;
 }

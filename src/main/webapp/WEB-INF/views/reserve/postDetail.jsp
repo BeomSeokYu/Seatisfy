@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <html>
 <%@include file="../include/header.jsp"%>
@@ -64,345 +66,157 @@
   padding: 10px;
   background-color: #808080;
 }
+
+.seat-reserve {
+  text-align: center;
+  border: 1px solid #444444;
+  padding: 10px;
+  background-color: #0067a3;
+}
+
+.seat-reserved-db {
+  text-align: center;
+  border: 1px solid #444444;
+  padding: 10px;
+  background-color: #FF6347;
+}
+
 </style>
 <body>
 <%@include file="../include/navbar.jsp"%>
 <div class="container">
-	<div class="photo-gallery container mb-3">
+	<div class="container mb-3">
 		<div class="row justify-content-center">
 			<h2>예약</h2>
 			<%-- <div class="col-lg-3 d-none d-lg-block">
 				<%@ include file="/include/sidebar4.jsp"%>
 			</div> --%>
+			<div>
+				<table class="table table-bordered">
+					<tr>
+						<th class="col-1 text-center table-light">제목</th>
+						<td class="col-4">${ post.ptitle }</td>
+						<th class="col-1 text-center table-light">작성자</th>
+						<td class="col-2">${ post.pwriter }</td>
+						<th class="col-1 text-center table-light">등록일</th>
+						<td class="col-3">${ post.regdate }</td>
+					</tr>
+					<tr>
+						<th class="col-1 text-center table-light">장소</th>
+						<td class="col-4">${ post.place }</td>
+						<th class="col-1 text-center table-light">주소</th>
+						<td class="col-6" colspan="3">${ post.address }</td>
+					</tr>
+					<tr>
+						<th class="col-2 text-center table-light">예약 가능 시간</th>
+						<td class="col-10" colspan="5">${fn:replace(post.startdate, 'T', ' ')} ~ ${fn:replace(post.enddate, 'T', ' ')}</td>
+					</tr>
+				</table>
 
-			<!-- <div class="col-lg-9"> -->
-			<div class="col-lg-12">
-				<div>
-					<table class="table" id="seatTable">
-					</table>
+				<div class="py-3 px-5">
+					<div class="text-lg">
+						<p>${ post.pcontent }</p>
+						<!-- <p id="ncontent"></p> -->
+					</div>
 				</div>
+				<!-- 이미지 지도를 표시할 div 입니다 -->
+				<div id="map" style="width:100%;height:350px;"></div>  
+			</div>
+			<!-- <div class="col-lg-9"> -->
+			<div class="col-lg-12 text-center mt-5">
+				<button class="btn btn-danger btn-lg" type="button" id="showReserveBtn">예약하기</button>
+				<a class="btn btn-secondary btn-lg" href="/reserve">목록보기</a>
 			</div>
 		</div>
 	</div>
 </div>
 <%@include file="../include/footer.jsp"%>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=앱키&libraries=services"></script>
+
+<!-- Modal -->
+<div class="modal fade" id="postModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="msgModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="ModalLabel">예약</h1>
+      </div>
+      <div class="modal-body" id="ModalBody">
+      	<h5 class="modal-title">예약 좌석 선택</h5>
+      	<table class="table" id="seatTable">
+      	</table>
+      	<form:form action="/reserve/detail/${ post.pno }" method="post" modelAttribute="reserDTO" id="reserFrm">
+   			<form:hidden path="pno" value="${ post.pno }"/>
+   			<form:hidden path="seatnum" id="seatnum"/>
+   			<form:hidden path="email"/>
+   		</form:form>
+      </div>
+      <div class="modal-footer" id="modal-footer">
+      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal" id="reserveBtn">예약</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
-// 마커를 담을 배열입니다
-var markers = [];
 
+$("#showReserveBtn").on("click", function() {
+	$('#postModal').modal('show');
+});
+
+$("#reserveBtn").on("click", function() {
+	$('#reserFrm').submit();
+});
+
+</script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=앱키&libraries=services"></script>
+<script>   
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };  
+mapOption = {
+    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+    level: 3 // 지도의 확대 레벨
+};  
 
-// 지도를 생성합니다    
+//지도를 생성합니다    
 var map = new kakao.maps.Map(mapContainer, mapOption); 
 
-// 장소 검색 객체를 생성합니다
-var ps = new kakao.maps.services.Places();  
-
-// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-
-// 엔터로 장소를 검색합니다
-$('#keyword').on("keypress", function(){
-	if(event.keyCode == 13) {
-		searchPlaces();
-	}
-})
-
-// 키워드 검색을 요청하는 함수입니다
-function searchPlaces() {
-
-    var keyword = document.getElementById('keyword').value;
-
-    if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        alert('키워드를 입력해주세요!');
-        return false;
-    }
-
-    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-    ps.keywordSearch( keyword, placesSearchCB); 
-}
-
-// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
-function placesSearchCB(data, status, pagination) {
-    if (status === kakao.maps.services.Status.OK) {
-
-        // 정상적으로 검색이 완료됐으면
-        // 검색 목록과 마커를 표출합니다
-        displayPlaces(data);
-
-        // 페이지 번호를 표출합니다
-        displayPagination(pagination);
-
-    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-
-        alert('검색 결과가 존재하지 않습니다.');
-        return;
-
-    } else if (status === kakao.maps.services.Status.ERROR) {
-
-        alert('검색 결과 중 오류가 발생했습니다.');
-        return;
-
-    }
-}
-
-// 검색 결과 목록과 마커를 표출하는 함수입니다
-function displayPlaces(places) {
-
-    var listEl = document.getElementById('placesList'), 
-    menuEl = document.getElementById('menu_wrap'),
-    fragment = document.createDocumentFragment(), 
-    bounds = new kakao.maps.LatLngBounds(), 
-    listStr = '';
-    
-    // 검색 결과 목록에 추가된 항목들을 제거합니다
-    removeAllChildNods(listEl);
-
-    // 지도에 표시되고 있는 마커를 제거합니다
-    removeMarker();
-    
-    for ( var i=0; i<places.length; i++ ) {
-
-        // 마커를 생성하고 지도에 표시합니다
-        var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-            marker = addMarker(placePosition, i), 
-            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        bounds.extend(placePosition);
-
-        // 마커와 검색결과 항목에 mouseover 했을때
-        // 해당 장소에 인포윈도우에 장소명을 표시합니다
-        // mouseout 했을 때는 인포윈도우를 닫습니다
-        (function(marker, title) {
-            kakao.maps.event.addListener(marker, 'mouseover', function() {
-                displayInfowindow(marker, title);
-            });
-
-            kakao.maps.event.addListener(marker, 'mouseout', function() {
-                infowindow.close();
-            });
-
-            itemEl.onmouseover =  function () {
-                displayInfowindow(marker, title);
-            };
-
-            itemEl.onmouseout =  function () {
-                infowindow.close();
-            };
-        })(marker, places[i].place_name);
-
-        fragment.appendChild(itemEl);
-    }
-
-    // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
-    listEl.appendChild(fragment);
-    menuEl.scrollTop = 0;
-
-    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-    map.setBounds(bounds);
-}
-
-// 검색결과 항목을 Element로 반환하는 함수입니다
-function getListItem(index, places) {
-
-    var el = document.createElement('li'),
-    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-                '<div class="info">' +
-                '   <h5>' + places.place_name + '</h5>';
-
-    if (places.road_address_name) {
-        itemStr += '    <span onclick="addPlace(\''+places.road_address_name+'\',\''+places.place_name+'\')">' + places.road_address_name + '</span>' +
-                    '   <span onclick="addPlace(\''+places.address_name+'\',\''+places.place_name+'\')" class="jibun gray">' +  places.address_name  + '</span>';
-    } else {
-        itemStr += '    <span onclick="addPlace(\''+places.address_name+'\',\''+places.place_name+'\')">' +  places.address_name  + '</span>'; 
-    }
-                 
-      itemStr += '  <span class="tel">' + places.phone  + '</span>' +
-                '</div>';           
-
-    el.innerHTML = itemStr;
-    el.className = 'item';
-
-    return el;
-}
-
-// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-function addMarker(position, idx, title) {
-    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-        imgOptions =  {
-            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        },
-        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-            marker = new kakao.maps.Marker({
-            position: position, // 마커의 위치
-            image: markerImage 
-        });
-
-    marker.setMap(map); // 지도 위에 마커를 표출합니다
-    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
-
-    return marker;
-}
-
-// 지도 위에 표시되고 있는 마커를 모두 제거합니다
-function removeMarker() {
-    for ( var i = 0; i < markers.length; i++ ) {
-        markers[i].setMap(null);
-    }   
-    markers = [];
-}
-
-// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-function displayPagination(pagination) {
-    var paginationEl = document.getElementById('pagination'),
-        fragment = document.createDocumentFragment(),
-        i; 
-
-    // 기존에 추가된 페이지번호를 삭제합니다
-    while (paginationEl.hasChildNodes()) {
-        paginationEl.removeChild (paginationEl.lastChild);
-    }
-
-    for (i=1; i<=pagination.last; i++) {
-        var el = document.createElement('a');
-        el.href = "#";
-        el.innerHTML = i;
-
-        if (i===pagination.current) {
-            el.className = 'on';
-        } else {
-            el.onclick = (function(i) {
-                return function() {
-                    pagination.gotoPage(i);
-                }
-            })(i);
-        }
-
-        fragment.appendChild(el);
-    }
-    paginationEl.appendChild(fragment);
-}
-
-// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-// 인포윈도우에 장소명을 표시합니다
-function displayInfowindow(marker, title) {
-    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
-
-    infowindow.setContent(content);
-    infowindow.open(map, marker);
-}
-
- // 검색결과 목록의 자식 Element를 제거하는 함수입니다
-function removeAllChildNods(el) {   
-    while (el.hasChildNodes()) {
-        el.removeChild (el.lastChild);
-    }
-}
- 
-// 장소 클릭 시 주소 폼에 삽입
-function addPlace(address, place) {   
-    $("#place").val(place)
-    $("#address").val(address)
-}
-</script>
-
-<script>
-// 주소-좌표 변환 객체를 생성합니다
+//주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
 
-var marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
-    infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+//주소로 좌표를 검색합니다
+geocoder.addressSearch('${ post.address }', function(result, status) {
 
-// 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
-searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-
-// 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
-kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
-        if (status === kakao.maps.services.Status.OK) {
-            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
-            
-            var content = '<div class="bAddr">' +
-                            '<span class="title">주소 정보</span>' + 
-                            detailAddr + 
-                        '</div>';
-		
-            // 마커를 클릭한 위치에 표시합니다 
-            marker.setPosition(mouseEvent.latLng);
-            marker.setMap(map);
-
-            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-            infowindow.setContent(content);
-            infowindow.open(map, marker);
-            
-            // 폼에 입력 함
-            var address = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name
-    		$("#address").val(address);
-        }   
-    });
+	// 정상적으로 검색이 완료됐으면 
+	if (status === kakao.maps.services.Status.OK) {
+	
+	   var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+	   // 결과값으로 받은 위치를 마커로 표시합니다
+	   var marker = new kakao.maps.Marker({
+	       map: map,
+	       position: coords
+	   });
+	
+	   // 인포윈도우로 장소에 대한 설명을 표시합니다
+	   var infowindow = new kakao.maps.InfoWindow({
+	       content: '<div style="width:200px;text-align:center;padding:6px 0;">${ post.place }</div>'
+	   });
+	   infowindow.open(map, marker);
+	
+	   // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	   map.setCenter(coords);
+	} else {
+		// 인포윈도우로 장소에 대한 설명을 표시합니다
+		   var infowindow = new kakao.maps.InfoWindow({
+		       content: '<div style="width:200px;text-align:center;padding:6px 0;">해당 주소에 대한 지도 정보가 없습니다</div>'
+		   });
+		   infowindow.open(map, marker);
+	}
 });
-
-// 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
-kakao.maps.event.addListener(map, 'idle', function() {
-    searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-});
-
-function searchAddrFromCoords(coords, callback) {
-    // 좌표로 행정동 주소 정보를 요청합니다
-    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
-}
-
-function searchDetailAddrFromCoords(coords, callback) {
-    // 좌표로 법정동 상세 주소 정보를 요청합니다
-    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-}
-
-// 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
-function displayCenterInfo(result, status) {
-    if (status === kakao.maps.services.Status.OK) {
-        var infoDiv = document.getElementById('centerAddr');
-
-        for(var i = 0; i < result.length; i++) {
-            // 행정동의 region_type 값은 'H' 이므로
-            if (result[i].region_type === 'H') {
-                infoDiv.innerHTML = result[i].address_name;
-                break;
-            }
-        }
-    }    
-}
-</script>
-
-<script>
-  $('#summernote').summernote({
-    placeholder: '',
-    tabsize: 2,
-    height: 120,
-    toolbar: [
-      ['style', ['style']],
-      ['font', ['bold', 'underline', 'clear']],
-      ['color', ['color']],
-      ['para', ['ul', 'ol', 'paragraph']],
-      ['table', ['table']],
-      ['insert', ['link', 'picture', 'video']],
-      ['view', ['fullscreen', 'codeview', 'help']]
-    ]
-  });
 </script>
 
 <script>
 var SeatInfoList = null;
+var reservationSeat = -1;
+var reservedSeatList = ${ seats };
 
 Array.matrix = function (m, n, initial) {
     var a, i, j, mat = [];
@@ -435,8 +249,8 @@ function addSeatInfoForm(x, y) {
 createSeatTable();
 function createSeatTable() {
 	var seatinfo = '${seatinfo}';
-	var seatNum = 1;
-
+	var cnt = 0;
+	
 	var y = seatinfo.split(" ").length;
 	var row = seatinfo.split(" ");
 	var x = row[0].split(",").length;
@@ -446,59 +260,60 @@ function createSeatTable() {
 		for (var j = 0; j < x; j++) {
 			console.log(col[j]);
 			if (col[j] == 1) {
-				SeatInfoList[i][j] = seatNum++;
+				if (reservedSeatList[cnt] == 1) {
+					SeatInfoList[i][j] = -2;
+				} else {
+					SeatInfoList[i][j] = 0;					
+				}
+				cnt++
 			}
 		}
 	}
 	console.log(SeatInfoList)
 	
+	var seatNum = 1;
 	var seatTable = ""
 	for (var i = 0; i < y; i++) {
 		seatTable += '<tr>' 
 		for (var j = 0; j < x; j++) {
-			if (SeatInfoList[i][j] != -1) {
-				seatTable += '<td class="seat" onclick="changeSeatState(this)" data-x="'+j+'" data-y="'+i+'">'+SeatInfoList[i][j]+'<td>';
-			} else {
+			if (SeatInfoList[i][j] == -2) {
+				SeatInfoList[i][j] = seatNum;
+				seatTable += '<td class="seat-reserved-db" data-x="'+j+'" data-y="'+i+'">'+SeatInfoList[i][j]+'<td>';
+				seatNum++;
+			} else if (SeatInfoList[i][j] == -1) {
 				seatTable += '<td class="seat-disable" data-x="'+j+'" data-y="'+i+'"><td>';
+			} else {
+				SeatInfoList[i][j] = seatNum;
+				seatTable += '<td class="seat" onclick="changeSeatState(this)" data-x="'+j+'" data-y="'+i+'">'+SeatInfoList[i][j]+'<td>';
+				seatNum++;
 			}
 		}
 		seatTable += '</tr>'
 	}
+	
+	
 	$("#seatTable").html(seatTable)
 }
 function changeSeatState(seat) {
-	$(seat).hasClass("seat")
-		? disableSeat(seat)
-		: enableSeat(seat)
-}
-function disableSeat(seat) {
-	$(seat).removeClass("seat")
-		.addClass("seat-disable")
-		.html('')
 	
-	SeatInfoList[$(seat).data('y')][$(seat).data('x')] = 0
-	addSeatInfoForm($("#seatX").val(), $("#seatY").val())
-	
-	console.log(SeatInfoList)
-	var seatNum = 1;
-	var seatList = document.querySelectorAll('.seat');
+	var seatList = document.querySelectorAll('.seat-reserve');
 	seatList.forEach(function(s) {
-		$(s).html(seatNum++);
+		discardSeat($(s))
 	});
+	
+	reserveSeat(seat)
 }
-function enableSeat(seat) {
-	$(seat).removeClass("seat-disable")
-		.addClass("seat");
-	
-	SeatInfoList[$(seat).data('y')][$(seat).data('x')] = 1
-	addSeatInfoForm($("#seatX").val(), $("#seatY").val())
-	
-	console.log(SeatInfoList)
-	var seatNum = 1;
-	var seatList = document.querySelectorAll('.seat');
-	seatList.forEach(function(s) {
-		$(s).html(seatNum++);
-	});
+function reserveSeat(seat) {
+	if (reservationSeat != -1 || reservationSeat != 0) {
+		$(seat).removeClass()
+			.addClass("seat-reserve")
+		$('#seatnum').val(SeatInfoList[$(seat).data('y')][$(seat).data('x')]);
+	}
+}
+function discardSeat(seat) {
+	$(seat).removeClass()
+		.addClass("seat")
+		.html(SeatInfoList[$(seat).data('y')][$(seat).data('x')]);
 }
 
 $("#seatX").on("blur", function() {
@@ -521,7 +336,6 @@ function checkMinMaxRange(TagNameById) {
 		}
 	}
 }
-
 </script>
 
 </body>

@@ -57,11 +57,15 @@
   	WHERE sno = #{sno}
   </select>
   
-  <select id="selectSeatsByPost" resultType="com.reserve.seat.reserve.domain.SeatDTO">
-  	SELECT * 
+  <select id="selectSeatsByPost" resultType="int">
+  	SELECT isreserved
   	FROM seat 
   	WHERE pno = #{pno}
   	ORDER BY seatnum
+  </select>
+  
+  <select id="selectSeatLock" resultType="com.reserve.seat.reserve.domain.SeatDTO">
+    SELECT * FROM seat WHERE seatnum = #{seatnum} AND pno = #{pno} FOR UPDATE
   </select>
   
   <insert id="insertSeat">

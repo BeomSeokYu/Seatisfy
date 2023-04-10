@@ -60,12 +60,12 @@
   <insert id="insertReser">
   	INSERT INTO reservation(  
   		pno, 
-  		sno, 
-  		uno ) 
+  		seatnum, 
+  		email ) 
   	VALUES(
   		#{pno}, 
-  		#{sno}, 
-  		#{uno} )
+  		#{seatnum}, 
+  		#{email} )
   </insert>
   
   <delete id="deleteReser">
@@ -75,8 +75,8 @@
   <update id="updateReser">
   	UPDATE reservation
   	SET pno=#{pno}, 
-  		sno=#{sno}, 
-  		uno=#{uno} 
+  		seatnum=#{seatnum}, 
+  		email=#{email} 
 	WHERE rno = #{rno}
   </update>
 </mapper>

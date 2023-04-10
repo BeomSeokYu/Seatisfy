@@ -18,5 +18,5 @@ public class SeatDTO {
 	private Integer sno;
 	private Integer seatnum;
 	private Integer pno;
-	private boolean isreserved;
+	private Boolean isreserved;
 }

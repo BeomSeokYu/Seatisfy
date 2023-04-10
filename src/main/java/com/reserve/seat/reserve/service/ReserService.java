@@ -47,13 +47,13 @@ public interface ReserService {
 	 */
 	public List<SeatDTO> getSeatList(Criteria criteria);
 	
-	public List<SeatDTO> getSeatsByPost(int pno);
+	public List<Integer> getSeatsByPost(int pno);
 	
 	public SeatDTO getSeat(int sno);
 
 	public void addSeat(String seatinfo, int pno);
 
-	public boolean editSeat(SeatDTO sdto);
+	public boolean reserveSeat(ReserDTO rdto, String email);
 
 	public int removeSeat(int sno);
 
