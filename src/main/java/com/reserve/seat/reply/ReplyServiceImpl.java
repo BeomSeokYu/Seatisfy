@@ -20,20 +20,25 @@ public class ReplyServiceImpl implements ReplyService {
 	
 	@Override
 	//댓글 등록 
-	public void insertReply(ReplyDTO reply) {
-		replyMapper.insertReply(reply);
+	public boolean insertReply(ReplyDTO reply) {
+		return replyMapper.insertReply(reply) == 1 ? true : false;
 	}
 
 	@Override
 	//댓글 수정
-	public void updateReply(ReplyDTO reply) {
-		replyMapper.updateReply(reply);
+	public boolean updateReply(ReplyDTO reply) {
+		return replyMapper.updateReply(reply) == 1 ? true : false;
 	}
 
 	@Override
 	//댓글 삭제
-	public void deleteReply(int rno) {
-		replyMapper.deleteReply(rno);
+	public boolean deleteReply(String rno) {
+		return replyMapper.deleteReply(rno) == 1 ? true : false;
+	}
+	
+	@Override
+	public List<ReplyDTO> AllReplyList(String nno){
+		return replyMapper.AllReplyList(nno);
 	}
 
 //	@Override

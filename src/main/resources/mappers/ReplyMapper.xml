@@ -20,10 +20,19 @@
 	</update>
 	
 	<!-- 댓글 삭제  -->
-	<delete id="deleteReply" parameterType="int">
+	<delete id="deleteReply" parameterType="String">
 		DELETE FROM reply
 		WHERE rno = #{rno}
 	</delete>
+	
+	<!--전체 댓글 목록  -->
+	<select id="AllReplyList" resultType="com.reserve.seat.reply.ReplyDTO" parameterType="String">
+	<![CDATA[
+		SELECT * 
+		FROM reply
+		ORDER BY rno
+	]]>
+</select>
 	
 	<!-- 댓글 조회 -->
 <!--   <select id="selectReply" parameterType="int" resultType="com.reserve.seat.reply.ReplyDTO">

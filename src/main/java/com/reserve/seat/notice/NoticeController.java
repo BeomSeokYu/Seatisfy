@@ -27,6 +27,9 @@ public class NoticeController {
 
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private ReplyService replyService;
 
 	//공지 등록 조회 폼
 	@GetMapping("/add")
@@ -63,10 +66,10 @@ public class NoticeController {
 		model.addAttribute("notice", noticeNum);
 		
 		//댓글 조회
-//		List<ReplyDTO> replyList = replyService.selectReplyList(nno); 
-//		int cnt = replyList.size();	// 댓글 수
-//		model.addAttribute("replyList", replyList);
-//		model.addAttribute("cnt", cnt);
+		List<ReplyDTO> replyList = replyService.AllReplyList(nno); 
+		int cnt = replyList.size();	// 댓글 수
+		model.addAttribute("replyList", replyList);
+		model.addAttribute("cnt", cnt);
 		
 		
 		

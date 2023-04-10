@@ -1,6 +1,8 @@
 package com.reserve.seat.reply;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +21,11 @@ public class ReplyController {
 	private ReplyService replyService;
 	
 	//댓글 등록
-	@PostMapping("/write")
+	@PostMapping(value = "register", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> addReply(@RequestBody ReplyDTO reply) {
 		
-		
-		return replyService.insertReply(reply);
-		
-		
+		return replyService.insertReply(reply) == true ? new ResponseEntity<String>("success", HttpStatus.OK)
+				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	//댓글 조회
