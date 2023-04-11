@@ -27,9 +27,9 @@
 		가입일: <form:input path="udate" value="${user.udate }" class="form-control" readonly="${true}"/>
 		<br>
 		<input type="submit" class="btn btn-primary" value="수정" />
-	
 	</fieldset>
 	</form:form>
+
 
 
 
