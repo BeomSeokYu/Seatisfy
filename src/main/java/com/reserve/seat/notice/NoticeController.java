@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.reserve.seat.Criteria;
 import com.reserve.seat.reply.ReplyDTO;
 import com.reserve.seat.reply.ReplyService;
 

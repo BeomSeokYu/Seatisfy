@@ -61,10 +61,10 @@
   </select> -->
   
   <!-- 전체 댓글 수 조회 totalReply  -->
-  <!-- <select id="totalReply" resultType="String">
+  <select id="replyCnt" resultType="String">
   		SELECT COUNT(rno) 
   		FROM reply
   		WHERE nno = #{nno}
-  </select>  -->
+  </select>  
   
 </mapper>

@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.reserve.seat.Criteria;
 import com.reserve.seat.mapper.NoticeMapper;
 import com.reserve.seat.mapper.ReplyMapper;
-import com.reserve.seat.notice.Criteria;
 
 import lombok.AllArgsConstructor;
 
@@ -44,8 +44,13 @@ public class ReplyServiceImpl implements ReplyService {
 	
 	//전체 댓글 목록
 	@Override
-	public List<ReplyDTO> replyList(String nno){
-		return replyMapper.replyList(nno);
+	public List<ReplyDTO> replyList(ReplyCriteria cri, String nno){
+		return replyMapper.replyList(cri, nno);
+	}
+	
+	@Override
+	public int replyCnt(String nno) {
+		return replyMapper.replyCnt(nno);
 	}
 
 

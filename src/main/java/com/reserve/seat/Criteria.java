@@ -1,4 +1,4 @@
-package com.reserve.seat.notice;
+package com.reserve.seat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

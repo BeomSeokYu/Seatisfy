@@ -1,166 +1,100 @@
-/**	자바스크립트를 하나의 모듈 처럼 구성
- * 
- 	모듈 패턴
- 	관련 함수들을 하나의 모듈처럼 묶음으로 구성
-	자바스크립트의 즉시 실행 함수와 { } 을 이용하여 객체 구성
-	- ( ) 안에 함수를 선언하고
-		바깥쪽에서 실행
-		>> 실행 결과가 선언된 변수에 할당됨.
-	
+/**
+	Javascript reply ajax Module
  */
- 
- console.log('reply.js.....')
- 
- var replyService = (function() { 
-	//즉시 실행 함수
+
+
+// replyService 는 JSON 타입이다. 
+var replyService = (function(){
 	
-	//댓글 등록
-	function register(reply, callback, error){
-		console.log('reply register()');
+	// a라는 결과로 어떻게 할지 모르기 때문에, 이 함수를 사용한 쪽에서 활용하는 것으로 목적을 둔다.
+	// 그리하여 callback 함수를 넣고 리턴한다. 오류가 날 수 있으므로 error를 전달한다.
+	// 필요에 따라 사용하되, 순서는 지키면 된다. 
+	// 댓글 추가
+	function add(reply, callback, error){
+		console.log("add reply........."); 
+		
+		// 자바에서의 메소드는 저장공간이라는 것
 		$.ajax({
-			type : 'post',
-			url : '/reply/register',
-			data : JSON.stringify(reply),
-			contentType : 'application/json; charset=UTF-8',
-			success : function(result){
+			type: "post",
+			url: "/reply/new",
+			data: JSON.stringify(reply), // data는 내가 전달할 데이터이다.
+			// 내가 전달할 데이터의 타입이 무엇인가. 안에 내장된 내용의 타입을 보내는 것. 
+			contentType: "application/json; charset=utf-8",
+			success: function(result){
 				if(callback){
 					callback(result);
-					}
-				},
-				error : function(err){
-					if(error){
-						error(err);
-					}
 				}
-			}); // END ajax()
-	}	//END register()
-	
-	//전체 댓글 목록
-	function list(param, callback, error) {
-		console.log('reply list()');
-		
-		$.getJSON('/reply/list/' + param.nno + '/' + param.offset + '.json',
-					function(result) {
-						if(callback) {
-							callback(result.totalReply, result.list);
-						}				//전체 댓글 수		  댓글 목록
-					}
-			).fail(function(err){
+			},
+			error: function(xhr, status, er){
 				if(error){
-					error(err);
-				}
-			}); //END getJSON
-		
-	} // END list()
-	
-	
-	//댓글 수정
-	function modify(reply, callback, error){
-		console.log('reply modify()');
-		$.ajax({
-			type : 'put',
-			url : '/reply/' + reply.rno,
-			data : JSON.stringify(rvo),
-			contentType : 'application/json; charset=UTF-8',
-			success : function(result){
-				if(callback){
-					callback(result);
-					}
-				},
-				error : function(err){
-					if(error){
-						error(err);
-					}
-				}
-			}); // END ajax()
-	}	//END modify()
-	
-	//댓글 삭제 
-	function remove(reply, callback, error){
-		console.log('reply remove()');
-		$.ajax({
-			type : 'delete',
-			url : '/reply/' + rno,
-			success : function(result){
-				if(callback){
-					callback(result);
-					}
-				},
-				error : function(err){
-					if(error){
-						error(err);
-					}
-				}
-			}); // END ajax()
-	}	//END remove()
-	
-	//댓글 조회
-	function view(reply, callback, error){
-		console.log('reply view()');
-		
-		$.get('/reply/' + reply + '.json',
-			function(result) {
-				if(callback) {
-					callback(result);
+					error(er);
 				}
 			}
-		).fail(function(err){
-		if(error){
-			error(err);
-		}
-	}); // END get
-}	//END view()
-
-
-	//댓글 작성일시 표시
-	//- 당일 작성한 댓글은 '시:분:초' 표시
-	//- 이전날 작성한 댓글은 '연/월/일' 표시
-	function display(regDate){
-		
-		
-		var rDate = new Date(regDate);
-		var yy = rDate.getFullYear();
-		var mm = rDate.getMonth();
-		var dd = rDate.getDate();
-		
-		var today = new Date();
-		
-		if(today.getFullYear() == yy &&
-		   today.getMonth() == mm &&
-		   today.getDate() == dd) {
-		   
-		   return rDate.getHours() + ":" +
-		   		  rDate.getMinutes() + ":" +
-		   		  rDate.getSeconds();
-		   } else{
-		   		return yy + "/" + (mm+1) + "/" + dd;
-		   }		
-		   		
-		
-	}	//END display()
+		});
+	}
 	
-	return { display:display, view:view, remove:remove, modify:modify, 
-			 register:register, list:list }; 
- 
- } ) ();
- 
- //외부에서는
- //replyService.register(객체, 콜백함수) 형태로 호출
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+	// 댓글 목록
+	// 받을 때는 json으로 받는다.
+	function getList(param, callback, error){
+		console.log("get List........");
+		
+		var nno = param.nno;
+		var page = param.page || 1;
+		
+//		$.getJSON("", function(){}.fail(function(){}) // 구조
+		
+		// xml이므로  .json 확장자로 바꾼다.
+		$.getJSON("/reply/pages/"+ nno + "/"+ page +".json",
+			function(data){
+				if(callback){callback(data.replyCnt, data.list);}
+			})
+			.fail(function(xhr, status, err){
+				if(error){
+					error(err);
+				}	
+			})
+		}
+	
+	// 댓글 삭제
+	function remove(rno, callback, error){
+		console.log("remove...........");
+		$.ajax({
+			type: "delete",
+			url: "/reply/" + rno,
+			success: function(result){
+				if(callback){callback(result);}
+			},
+			error: function(xhr, status, err){
+				if(error){error(err);}
+			}
+		});
+	}
+	
+	// 댓글 수정
+	function modify(reply, callback, error){
+		console.log("modify : "+reply.rno);
+		
+		$.ajax({
+			type: "PUT",
+			url: "/reply/" + reply.rno,
+			data: JSON.stringify(reply),
+			contentType: "application/json; charset=utf-8",
+			success: function(result, status, xhr){
+				if(callback){callback(result);}
+			},
+			error: function(xhr, status, err){
+				if(error){error(err);}
+			} 
+		});
+	}
+	
+	// 댓글 조회
+	function get(rno, callback, error){
+		$.get("/reply/"+ rno + ".json", function(result){if(callback){callback(result);}})
+		.fail(function(xhr, status, err){if(error){error(err);}
+		})
+	}
+	
+		
+	return {add: add, getList: getList, remove: remove, modify: modify, get: get};
+})();

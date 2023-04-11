@@ -2,6 +2,8 @@ package com.reserve.seat.notice;
 
 import java.util.List;
 
+import com.reserve.seat.Criteria;
+
 public interface NoticeService {
 
 	public void insertNotice(NoticeDTO notice);	//공지 등록

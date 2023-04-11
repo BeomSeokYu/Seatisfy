@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.reserve.seat.notice.Criteria;
+import com.reserve.seat.Criteria;
 import com.reserve.seat.notice.NoticeDTO;
 
 
