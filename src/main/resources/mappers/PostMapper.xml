@@ -2,54 +2,105 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-<mapper namespace="com.reserve.seat.mapper.QnaMapper">
+ 
+ <!-- 
+작성자 : 유범석 
+작성일 : 03-04-05
+-->
+
+
+<mapper namespace="com.reserve.seat.mapper.PostMapper">
   <!-- 쿼리 보관 -->
-<!--   <sql id="criteria">
+  <sql id="criteria">
   	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
 		<foreach collection="typeArr" item="type">
 			<trim prefix="OR">
 				<choose>
 					<when test="type == 'T'.toString()">
-						qtitle LIKE concat_ws(#{ keyword }, '%', '%') '%' || #{ keyword } || '%'
+						ptitle LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+					</when>
+					<when test="type == 'W'.toString()">
+						pwriter LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
 					</when>
 					<when test="type == 'C'.toString()">
-						qcontent LIKE concat_ws(#{ keyword }, '%', '%') '%' || #{ keyword } || '%'
+						pcontent LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
 					</when>
 				</choose>
 			</trim>
 		</foreach>
 	</trim>
-  </sql> -->
+  </sql>
   
-	<insert id="insertPost">
-	  <![CDATA[
-		  INSERT INTO qna(pwriter, ptitle, pcontent, location, seatinfo, rdate_start, rdate_end)
-		  VALUES(#{pwriter}, #{ptitle}, #{pcontent}, #{location}, #{seatinfo}, #{rdate_start}, #{rdate_end})
-	  	]]>
-	</insert>
-  <!-- 	<select id="ptList"
-	resultType="com.reserve.seat.qna.QnaDTO">
+  <select id="selectAllPost" resultType="com.reserve.seat.reserve.domain.PostDTO">
+  	<![CDATA[
+	  	SELECT *
+	  	FROM post
+	  	WHERE]]>
+	  		<include refid="criteria"/>
 	<![CDATA[
-	  select * from qna order by qno desc
+			2 > 1
+		ORDER BY pno DESC
+	  	LIMIT #{ amount } OFFSET #{ offset }
 	]]>
-	</select>
-	
-	<delete id="deletePost">
-  	DELETE FROM qna WHERE qno = #{qno}
-  	</delete>
-  	
-  	<update id="updatePost">
-  	UPDATE qna
-  	SET
-  		qtitle=#{qtitle},
-  		qcontent=#{qcontent}
-  	WHERE qno = #{qno}
-  	</update>
-  	
-  	<select id="selectPost" resultType="com.reserve.seat.post.PostDTO">
-  	SELECT * FROM qna WHERE qno = #{qno}
-  	</select>
-  	 -->
+  </select>
   
+  <select id="totalCount" resultType="int">
+  	<![CDATA[
+  		SELECT COUNT(*) FROM post WHERE ]]> 
+  			<include refid="criteria"/> 
+  	<![CDATA[ pno > 0 ]]>
+  </select>
+  
+  <select id="selectPost" resultType="com.reserve.seat.reserve.domain.PostDTO">
+  	SELECT * 
+  	FROM post 
+  	WHERE pno = #{pno}
+  </select>
+  
+  <insert id="insertPost" useGeneratedKeys="true" keyProperty="pno">
+  	INSERT INTO post( 
+  		pwriter, 
+  		ptitle, 
+  		pcontent, 
+  		place, 
+  		address, 
+  		seatinfo, 
+  		startdate, 
+  		enddate, 
+  		moddate) 
+  	VALUES(
+  		#{pwriter}, 
+  		#{ptitle}, 
+  		#{pcontent}, 
+  		#{place}, 
+  		#{address}, 
+  		#{seatinfo}, 
+  		#{startdate}, 
+  		#{enddate}, 
+  		#{moddate} )
+  </insert>
+  
+  <delete id="deletePost">
+  	DELETE FROM post WHERE pno = #{pno}
+  </delete>
+  
+  <update id="updatePost">
+  	UPDATE post
+  	SET 
+  		pwriter=#{pwriter}, 
+  		ptitle=#{ptitle}, 
+  		pcontent=#{pcontent}, 
+  		place=#{place}, 
+  		address=#{address}, 
+  		seatinfo=#{seatinfo}, 
+  		startdate=#{startdate}, 
+  		enddate=#{enddate}, 
+  		moddate=NOW() 
+	WHERE pno = #{pno}
+  </update>
+  
+  <update id="updateReplyCnt">
+  	UPDATE tbl_board
+  	SET reply_cnt = #{replyCnt} WHERE bno = #{bno}
+  </update>
 </mapper>

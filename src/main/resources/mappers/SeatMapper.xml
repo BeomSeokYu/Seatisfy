@@ -9,7 +9,7 @@
 -->
 
 
-<mapper namespace="com.reserve.seat.mapper.PostMapper">
+<mapper namespace="com.reserve.seat.mapper.SeatMapper">
   <!-- 쿼리 보관 -->
   <sql id="criteria">
   	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
@@ -31,76 +31,65 @@
 	</trim>
   </sql>
   
-  <select id="selectAllPost" resultType="com.reserve.seat.reserve.domain.PostDTO">
+  <select id="selectAllSeat" resultType="com.reserve.seat.reserve.domain.SeatDTO">
   	<![CDATA[
 	  	SELECT *
-	  	FROM post
+	  	FROM seat
 	  	WHERE]]>
 	  		<include refid="criteria"/>
 	<![CDATA[
 			2 > 1
-		ORDER BY pno DESC
+		ORDER BY sno DESC
 	  	LIMIT #{ amount } OFFSET #{ offset }
 	]]>
   </select>
   
   <select id="totalCount" resultType="int">
   	<![CDATA[
-  		SELECT COUNT(*) FROM post WHERE ]]> 
+  		SELECT COUNT(*) FROM seat WHERE ]]> 
   			<include refid="criteria"/> 
-  	<![CDATA[ pno > 0 ]]>
+  	<![CDATA[ sno > 0 ]]>
   </select>
   
-  <select id="selectPost" resultType="com.reserve.seat.reserve.domain.PostDTO">
+  <select id="selectSeat" resultType="com.reserve.seat.reserve.domain.SeatDTO">
   	SELECT * 
-  	FROM post 
-  	WHERE pno = #{pno}
+  	FROM seat 
+  	WHERE sno = #{sno}
   </select>
   
-  <insert id="insertPost" useGeneratedKeys="true" keyProperty="pno">
-  	INSERT INTO post( 
-  		pwriter, 
-  		ptitle, 
-  		pcontent, 
-  		place, 
-  		address, 
-  		seatinfo, 
-  		startdate, 
-  		enddate, 
-  		moddate) 
+  <select id="selectSeatsByPost" resultType="int">
+  	SELECT isreserved
+  	FROM seat 
+  	WHERE pno = #{pno}
+  	ORDER BY seatnum
+  </select>
+  
+  <select id="selectSeatLock" resultType="com.reserve.seat.reserve.domain.SeatDTO">
+    SELECT * FROM seat WHERE seatnum = #{seatnum} AND pno = #{pno} FOR UPDATE
+  </select>
+  
+  <insert id="insertSeat">
+  	INSERT INTO seat( 
+  		seatnum,
+  		pno,  
+  		isreserved ) 
   	VALUES(
-  		#{pwriter}, 
-  		#{ptitle}, 
-  		#{pcontent}, 
-  		#{place}, 
-  		#{address}, 
-  		#{seatinfo}, 
-  		#{startdate}, 
-  		#{enddate}, 
-  		#{moddate} )
+  		#{seatnum}, 
+  		#{pno}, 
+  		#{isreserved} )
   </insert>
   
-  <delete id="deletePost">
-  	DELETE FROM post WHERE pno = #{pno}
+  <delete id="deleteSeat">
+  	DELETE FROM seat WHERE sno = #{sno}
   </delete>
   
-  <update id="updatePost">
-  	UPDATE post
+  <update id="updateSeat">
+  	UPDATE seat
   	SET 
-  		pwriter=#{pwriter}, 
-  		ptitle=#{ptitle}, 
-  		pcontent=#{pcontent}, 
-  		place=#{place}, 
-  		address=#{address}, 
-  		seatinfo=#{seatinfo}, 
-  		startdate=#{startdate}, 
-  		enddate=#{enddate}, 
-  		moddate=NOW() 
-	WHERE pno = #{pno}
+  		seatnum=#{seatnum},
+  		pno=#{pno}, 
+  		isreserved=#{isreserved} 
+	WHERE sno = #{sno}
   </update>
-  
-  <update id="updateReplyCnt">
-  	UPDATE tbl_board
-  	SET reply_cnt = #{replyCnt} WHERE bno = #{bno}
-  </update>
+
 </mapper>
