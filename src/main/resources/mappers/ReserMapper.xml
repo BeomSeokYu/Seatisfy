@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <!-- 
+작성자 : 유범석 
+작성일 : 03-04-06
+-->
+
+
+<mapper namespace="com.reserve.seat.mapper.ReserMapper">
+  <!-- 쿼리 보관 -->
+  <sql id="criteria">
+  	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+		<foreach collection="typeArr" item="type">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'T'.toString()">
+						rno LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+					</when>
+					<when test="type == 'W'.toString()">
+						sno LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+					</when>
+					<when test="type == 'C'.toString()">
+						pno LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+  </sql>
+  
+  <select id="selectAllReser" resultType="com.reserve.seat.reserve.domain.ReserDTO">
+  	<![CDATA[
+	  	SELECT *
+	  	FROM reservation
+	  	WHERE]]>
+	  		<include refid="criteria"/>
+	<![CDATA[
+			2 > 1
+		ORDER BY rno DESC
+	  	LIMIT #{ amount } OFFSET #{ offset }
+	]]>
+  </select>
+  
+  <select id="totalCount" resultType="int">
+  	<![CDATA[
+  		SELECT COUNT(*) FROM reservation WHERE ]]> 
+  			<include refid="criteria"/> 
+  	<![CDATA[ rno > 0 ]]>
+  </select>
+  
+  <select id="selectReser" resultType="com.reserve.seat.reserve.domain.ReserDTO">
+  	SELECT * 
+  	FROM reservation 
+  	WHERE rno = #{rno}
+  </select>
+  
+  <insert id="insertReser">
+  	INSERT INTO reservation(  
+  		pno, 
+  		seatnum, 
+  		email ) 
+  	VALUES(
+  		#{pno}, 
+  		#{seatnum}, 
+  		#{email} )
+  </insert>
+  
+  <delete id="deleteReser">
+  	DELETE FROM reservation WHERE rno = #{rno}
+  </delete>
+  
+  <update id="updateReser">
+  	UPDATE reservation
+  	SET pno=#{pno}, 
+  		seatnum=#{seatnum}, 
+  		email=#{email} 
+	WHERE rno = #{rno}
+  </update>
+</mapper>

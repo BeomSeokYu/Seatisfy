@@ -18,7 +18,7 @@
           </ul>
         </li>
        <li class="nav-item">
-          <a class="nav-link text-dark" href="/" role="button" aria-expanded="false">
+          <a class="nav-link text-dark" href="/reserve" role="button" aria-expanded="false">
             예약
           </a>
         </li>
@@ -28,13 +28,13 @@
             지원
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/">공지사항</a></li>
-            <li><a class="dropdown-item" href="/">자주 묻는 질문</a></li>
+            <li><a class="dropdown-item" href="/notice/list">공지사항</a></li>
+            <li><a class="dropdown-item" href="/qnas/list">자주 묻는 질문</a></li>
           </ul>
         </li>
         
         <li class="nav-item text-end">
-          <a class="nav-link text-dark" href="/" role="button" aria-expanded="false">
+          <a class="nav-link text-dark" href="/user/login" role="button" aria-expanded="false">
            로그인
           </a>
       	</li>
