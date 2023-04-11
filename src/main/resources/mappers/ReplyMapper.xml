@@ -4,7 +4,7 @@
 
 
 	<!-- 댓글 등록  -->
-	<insert id="insertReply" parameterType="com.reserve.seat.reply.ReplyDTO">
+	<insert id="insertReply" parameterType="hashMap">
 	INSERT 
 	INTO 
 	reply(nno, rcontent, rwriter)
@@ -20,7 +20,7 @@
 	</update>
 	
 	<!-- 댓글 삭제  -->
-	<delete id="deleteReply" parameterType="String">
+	<delete id="deleteReply" parameterType="hashMap">
 		DELETE FROM reply
 		WHERE rno = #{rno}
 	</delete>
@@ -42,7 +42,7 @@
   </select> 
   
   <!--댓글 리스트 -->
-  <select id="replyList" parameterType="String" resultType="com.reserve.seat.reply.ReplyDTO">
+  <select id="replyList" resultType="com.reserve.seat.reply.ReplyDTO">
     SELECT * 
     FROM reply 
     WHERE nno = #{nno}
@@ -66,5 +66,13 @@
   		FROM reply
   		WHERE nno = #{nno}
   </select>  
+  
+  <select id="AllReplyList" resultType="com.reserve.seat.reply.ReplyDTO">
+    <![CDATA[
+    SELECT *
+	FROM reply
+	WHERE nno = #{nno}
+    ]]>
+  </select>
   
 </mapper>

@@ -3,7 +3,6 @@
 
 package com.reserve.seat.notice;
 
-import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 

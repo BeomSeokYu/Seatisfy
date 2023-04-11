@@ -44,6 +44,19 @@ var replyService = (function(){
 //		$.getJSON("", function(){}.fail(function(){}) // 구조
 		
 		// xml이므로  .json 확장자로 바꾼다.
+		// $.ajax({
+		// 	type: "get",
+		// 	url: "/reply/pages" + nno + "/" + page,
+		// 	success: function(result){
+		// 		if(callback){callback(data.replyCnt, data.list);}
+		// 	},
+		// 	error: function(xhr, status, err){
+		// 		if(error){error(err);}
+		// 	}
+		// });
+
+		
+
 		$.getJSON("/reply/pages/"+ nno + "/"+ page +".json",
 			function(data){
 				if(callback){callback(data.replyCnt, data.list);}
