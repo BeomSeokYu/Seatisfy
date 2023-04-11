@@ -16,15 +16,15 @@
       <div class="col-6 col-md-2 mb-3">
         <h5>예약</h5>
         <ul class="nav flex-column" style="text-align: left; margin-top: 8px;">
-          <li class="nav-item mb-2"><a href="/" class="nav-link p-0 text-muted">예약</a></li>
+          <li class="nav-item mb-2"><a href="/reserve" class="nav-link p-0 text-muted">예약</a></li>
         </ul>
       </div>
 
       <div class="col-6 col-md-2 mb-3">
         <h5>지원</h5>
         <ul class="nav flex-column" style="text-align: left; margin-top: 8px;">
-          <li class="nav-item mb-2"><a href="/" class="nav-link p-0 text-muted">공지사항</a></li>
-          <li class="nav-item mb-2"><a href="/" class="nav-link p-0 text-muted">자주 묻는 질문</a></li>
+          <li class="nav-item mb-2"><a href="/notice/list" class="nav-link p-0 text-muted">공지사항</a></li>
+          <li class="nav-item mb-2"><a href="/qnas/list" class="nav-link p-0 text-muted">자주 묻는 질문</a></li>
         </ul>
       </div>
 
