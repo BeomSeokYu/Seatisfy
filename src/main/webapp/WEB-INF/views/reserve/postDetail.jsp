@@ -57,30 +57,55 @@
 .seat {
   text-align: center;
   border: 1px solid #444444;
-  padding: 10px;
 }
 
 .seat-disable {
   text-align: center;
   border: 1px solid #444444;
-  padding: 10px;
   background-color: #808080;
 }
 
 .seat-reserve {
   text-align: center;
   border: 1px solid #444444;
-  padding: 10px;
   background-color: #0067a3;
 }
 
 .seat-reserved-db {
   text-align: center;
   border: 1px solid #444444;
-  padding: 10px;
   background-color: #FF6347;
 }
 
+.table-fixed {
+  width: 100%;
+  min-width: 700px;
+  /* 테이블 전체의 너비를 100%로 설정합니다. */
+  table-layout: fixed;
+  /* 테이블 레이아웃을 고정된(fixed) 모드로 설정합니다. */
+}
+
+.table-fixed th,
+.table-fixed td {
+  /* 각 셀의 높이를 50px로 설정합니다. */
+  height: 50px;
+  /* 각 셀의 너비를 33.33%로 설정합니다. */
+  width: 33.33%;
+  /* 셀의 내용이 너비보다 길 경우, 너비를 넘치는 부분을 생략하고 ...으로 표시합니다. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+   
+}
+.text-of {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.text-table th,
+.text-table td{
+	font-size: 80%;
+}
 </style>
 <body>
 <%@include file="../include/navbar.jsp"%>
@@ -92,30 +117,30 @@
 				<%@ include file="/include/sidebar4.jsp"%>
 			</div> --%>
 			<div>
-				<table class="table table-bordered">
-					<tr>
-						<th class="col-1 text-center table-light">제목</th>
-						<td class="col-4">${ post.ptitle }</td>
-						<th class="col-1 text-center table-light">작성자</th>
-						<td class="col-2">${ post.pwriter }</td>
-						<th class="col-1 text-center table-light">등록일</th>
-						<td class="col-3">${ post.regdate }</td>
+				<table class="table text-nowrap table-bordered text-table">
+					<tr class="row">
+						<th class="col-sm-1 text-center table-light text-of">제목</th>
+						<td class="col-sm-4 text-of">${ post.ptitle }</td>
+						<th class="col-sm-1 text-center table-light text-of">작성자</th>
+						<td class="col-sm-2 text-of">${ post.pwriter }</td>
+						<th class="col-sm-1 text-center table-light text-of">등록일</th>
+						<td class="col-sm-3 text-of">${ post.regdate }</td>
 					</tr>
-					<tr>
-						<th class="col-1 text-center table-light">장소</th>
-						<td class="col-4">${ post.place }</td>
-						<th class="col-1 text-center table-light">주소</th>
-						<td class="col-6" colspan="3">${ post.address }</td>
+					<tr class="row">
+						<th class="col-sm-1 text-center table-light text-of">장소</th>
+						<td class="col-sm-4 text-of">${ post.place }</td>
+						<th class="col-sm-1 text-center table-light text-of">주소</th>
+						<td class="col-sm-6 text-of" colspan="3">${ post.address }</td>
 					</tr>
-					<tr>
-						<th class="col-2 text-center table-light">예약 가능 시간</th>
-						<td class="col-10" colspan="5">${fn:replace(post.startdate, 'T', ' ')} ~ ${fn:replace(post.enddate, 'T', ' ')}</td>
+					<tr class="row">
+						<th class="col-sm-2 text-center table-light text-of">예약 가능 시간</th>
+						<td class="col-sm-10 text-of" colspan="5">${fn:replace(post.startdate, 'T', ' ')} ~ ${fn:replace(post.enddate, 'T', ' ')}</td>
 					</tr>
 				</table>
 
 				<div class="py-3 px-5">
 					<div class="text-lg">
-						<p>${ post.pcontent }</p>
+						<p class="text-lg" style="width: 100%">${ post.pcontent }</p>
 						<!-- <p id="ncontent"></p> -->
 					</div>
 				</div>
@@ -141,8 +166,10 @@
       </div>
       <div class="modal-body" id="ModalBody">
       	<h5 class="modal-title">예약 좌석 선택</h5>
-      	<table class="table" id="seatTable">
-      	</table>
+      	<div class="table-responsive">
+	      	<table class="table table-fixed" id="seatTable">
+	      	</table>
+      	</div>
       	<form:form action="/reserve/detail/${ post.pno }" method="post" modelAttribute="reserDTO" id="reserFrm">
    			<form:hidden path="pno" value="${ post.pno }"/>
    			<form:hidden path="seatnum" id="seatnum"/>
@@ -278,13 +305,13 @@ function createSeatTable() {
 		for (var j = 0; j < x; j++) {
 			if (SeatInfoList[i][j] == -2) {
 				SeatInfoList[i][j] = seatNum;
-				seatTable += '<td class="seat-reserved-db" data-x="'+j+'" data-y="'+i+'">'+SeatInfoList[i][j]+'<td>';
+				seatTable += '<td class="seat-reserved-db" data-x="'+j+'" data-y="'+i+'">'+SeatInfoList[i][j]+'</td>';
 				seatNum++;
 			} else if (SeatInfoList[i][j] == -1) {
-				seatTable += '<td class="seat-disable" data-x="'+j+'" data-y="'+i+'"><td>';
+				seatTable += '<td class="seat-disable" data-x="'+j+'" data-y="'+i+'"></td>';
 			} else {
 				SeatInfoList[i][j] = seatNum;
-				seatTable += '<td class="seat" onclick="changeSeatState(this)" data-x="'+j+'" data-y="'+i+'">'+SeatInfoList[i][j]+'<td>';
+				seatTable += '<td class="seat" onclick="changeSeatState(this)" data-x="'+j+'" data-y="'+i+'">'+SeatInfoList[i][j]+'</td>';
 				seatNum++;
 			}
 		}

@@ -18,7 +18,7 @@
           </ul>
         </li>
        <li class="nav-item">
-          <a class="nav-link text-dark" href="/" role="button" aria-expanded="false">
+          <a class="nav-link text-dark" href="/reserve" role="button" aria-expanded="false">
             예약
           </a>
         </li>
