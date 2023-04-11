@@ -32,9 +32,6 @@
 		<input type="submit" value="삭제" />
 	</form>
 
-
-
-
  <!-- 댓글 시작 -->
 <hr>
 <%-- <div class="card">

@@ -16,5 +16,5 @@ public interface ReplyService {
 	public ReplyDTO selectReply(String rno);		//댓글 조회
 	public List<ReplyDTO> replyList(@Param("cri") ReplyCriteria cri,
             @Param("nno") String nno); //전체 댓글 목록
-	public int replyCnt(String nno);
+	public int getTotal(String nno);
 }

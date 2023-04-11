@@ -49,8 +49,8 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 	
 	@Override
-	public int replyCnt(String nno) {
-		return replyMapper.replyCnt(nno);
+	public int getTotal(String nno) {
+		return replyMapper.getTotal(nno);
 	}
 
 

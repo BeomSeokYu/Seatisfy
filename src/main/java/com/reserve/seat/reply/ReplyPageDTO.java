@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ReplyPageDTO {
-	private int totalReply;
+	private int replyCnt;
 	private List<ReplyDTO> list;
 	
 	

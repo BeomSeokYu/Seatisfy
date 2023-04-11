@@ -61,7 +61,7 @@
   </select> -->
   
   <!-- 전체 댓글 수 조회 totalReply  -->
-  <select id="replyCnt" resultType="String">
+  <select id="getTotal" parameterType="String" resultType="int">
   		SELECT COUNT(rno) 
   		FROM reply
   		WHERE nno = #{nno}

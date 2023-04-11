@@ -16,6 +16,6 @@ public interface ReplyMapper {
 	public ReplyDTO selectReply(String rno);	//특정 댓글 하나 조회
 	public List<ReplyDTO> replyList(@Param("cri") ReplyCriteria cri,
             @Param("nno") String nno);	// 공지사항 하나에 전체 댓글 조회
-	public int replyCnt(String nno);
+	public int getTotal(String nno);
 	
 }

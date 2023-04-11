@@ -22,8 +22,6 @@ import com.reserve.seat.Criteria;
 
 import java.util.List;
 
-
-
 @RestController
 @RequestMapping("/reply")
 public class ReplyController {
