@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 Manifest-Version: 1.0
 Built-By: 82109
@@ -5,9 +6,14 @@ Build-Jdk: 11.0.16.1
 Created-By: Maven Integration for Eclipse
 
 =======
+=======
+>>>>>>> dev
 Manifest-Version: 1.0
 Built-By: 82109
 Build-Jdk: 11.0.16.1
 Created-By: Maven Integration for Eclipse
 
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> dev

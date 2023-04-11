@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.reserve.seat.mapper.ReplyMapper">
+
+
+	<!-- 댓글 등록  -->
+	<insert id="insertReply" parameterType="com.reserve.seat.reply.ReplyDTO">
+	INSERT 
+	INTO 
+	reply(nno, rcontent, rwriter)
+	VALUES
+	(#{nno}, #{rcontent}, #{rwriter})
+	</insert>
+	
+	<!-- 댓글 수정  -->
+	<update id="updateReply" parameterType="com.reserve.seat.reply.ReplyDTO">
+		UPDATE reply
+		SET rcontent = #{rcontent}, modDate = now()
+		WHERE rno = #{rno}
+	</update>
+	
+	<!-- 댓글 삭제  -->
+	<delete id="deleteReply" parameterType="String">
+		DELETE FROM reply
+		WHERE rno = #{rno}
+	</delete>
+	
+	<!--전체 댓글 목록  -->
+	<!-- <select id="AllReplyList" resultType="com.reserve.seat.reply.ReplyDTO" parameterType="String">
+	<![CDATA[
+		SELECT * 
+		FROM reply
+		ORDER BY rno
+	]]>
+</select> -->
+	
+	<!-- 댓글 조회 -->
+  <select id="selectReply" parameterType="String" resultType="com.reserve.seat.reply.ReplyDTO">
+    SELECT * 
+    FROM reply 
+    WHERE rno = #{rno}
+  </select> 
+  
+  <!--댓글 리스트 -->
+  <select id="replyList" parameterType="String" resultType="com.reserve.seat.reply.ReplyDTO">
+    SELECT * 
+    FROM reply 
+    WHERE nno = #{nno}
+    ORDER BY rno
+  </select> 
+  
+  <!-- 전체 댓글  -->
+  <!-- <select id="AllReplyList" resultType="com.reserve.seat.reply.ReplyDTO">
+    <![CDATA[
+    SELECT *
+	FROM reply
+	WHERE nno = #{nno} AND rno > 0
+	ORDER BY regDate DESC, rno DESC
+	LIMIT #{amount} OFFSET #{offset} 
+    ]]>
+  </select> -->
+  
+  <!-- 전체 댓글 수 조회 totalReply  -->
+  <select id="replyCnt" resultType="String">
+  		SELECT COUNT(rno) 
+  		FROM reply
+  		WHERE nno = #{nno}
+  </select>  
+  
+</mapper>

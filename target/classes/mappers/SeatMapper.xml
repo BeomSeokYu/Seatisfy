@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <!-- 
+작성자 : 유범석 
+작성일 : 03-04-05
+-->
+
+
+<mapper namespace="com.reserve.seat.mapper.SeatMapper">
+  <!-- 쿼리 보관 -->
+  <sql id="criteria">
+  	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+		<foreach collection="typeArr" item="type">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'T'.toString()">
+						ptitle LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+					</when>
+					<when test="type == 'W'.toString()">
+						pwriter LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+					</when>
+					<when test="type == 'C'.toString()">
+						pcontent LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+  </sql>
+  
+  <select id="selectAllSeat" resultType="com.reserve.seat.reserve.domain.SeatDTO">
+  	<![CDATA[
+	  	SELECT *
+	  	FROM seat
+	  	WHERE]]>
+	  		<include refid="criteria"/>
+	<![CDATA[
+			2 > 1
+		ORDER BY sno DESC
+	  	LIMIT #{ amount } OFFSET #{ offset }
+	]]>
+  </select>
+  
+  <select id="totalCount" resultType="int">
+  	<![CDATA[
+  		SELECT COUNT(*) FROM seat WHERE ]]> 
+  			<include refid="criteria"/> 
+  	<![CDATA[ sno > 0 ]]>
+  </select>
+  
+  <select id="selectSeat" resultType="com.reserve.seat.reserve.domain.SeatDTO">
+  	SELECT * 
+  	FROM seat 
+  	WHERE sno = #{sno}
+  </select>
+  
+  <select id="selectSeatsByPost" resultType="int">
+  	SELECT isreserved
+  	FROM seat 
+  	WHERE pno = #{pno}
+  	ORDER BY seatnum
+  </select>
+  
+  <select id="selectSeatLock" resultType="com.reserve.seat.reserve.domain.SeatDTO">
+    SELECT * FROM seat WHERE seatnum = #{seatnum} AND pno = #{pno} FOR UPDATE
+  </select>
+  
+  <insert id="insertSeat">
+  	INSERT INTO seat( 
+  		seatnum,
+  		pno,  
+  		isreserved ) 
+  	VALUES(
+  		#{seatnum}, 
+  		#{pno}, 
+  		#{isreserved} )
+  </insert>
+  
+  <delete id="deleteSeat">
+  	DELETE FROM seat WHERE sno = #{sno}
+  </delete>
+  
+  <update id="updateSeat">
+  	UPDATE seat
+  	SET 
+  		seatnum=#{seatnum},
+  		pno=#{pno}, 
+  		isreserved=#{isreserved} 
+	WHERE sno = #{sno}
+  </update>
+
+</mapper>

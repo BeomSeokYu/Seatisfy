@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.reserve.seat.mapper.UserMapper">
+	<!-- 회원 등록  -->
+	<insert id="insertUser">
+		INSERT INTO user(username, password, name, phone)
+		VALUES(#{username}, #{password}, #{name}, #{phone} )
+	</insert>
+		
+	<!-- 회원 찾기  -->
+	<select id="findById" resultType="com.reserve.seat.user.User">
+		SELECT * 
+		FROM user 
+		WHERE username = #{username} 
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePassword">
+		UPDATE user 
+		SET password = #{password}
+		WHERE username = #{username} 
+	</update>
+	
+	<!-- 회원 수정  -->
+	<update id="updateUser">
+		UPDATE user
+		SET name = #{name}, phone = #{phone}
+		WHERE username = #{username}  
+	</update>
+	
+	<!-- 회원 삭제  -->
+	<delete id="deleteUser">
+		DELETE FROM user WHERE uno = #{uno} 
+	</delete>	
+
+	<!-- 전체 회원 목록 -->
+	<select id="listUser" resultType="com.reserve.seat.user.User">
+	<![CDATA[
+		SELECT * 
+		FROM user 
+		WHERE uno > 0 
+		ORDER BY udate DESC
+	]]>
+	</select>
+		
+	<!-- 권한 변경 -->
+	<update id="updateAuthority">
+		UPDATE user 
+		SET authority = #{authority}
+		WHERE username = #{username}
+	</update>
+
+</mapper>
