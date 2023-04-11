@@ -117,6 +117,12 @@
 				<%@ include file="/include/sidebar4.jsp"%>
 			</div> --%>
 			<div>
+				<form:form action="/reserve/detail/${ post.pno }" method="post" modelAttribute="reserDTO" id="reserFrm">
+					<form:errors path="seatnum"/>
+		   			<form:hidden path="seatnum" id="seatnum"/>
+					<form:hidden path="pno" value="${ post.pno }"/>
+		   			<form:hidden path="email"/>
+		   		</form:form>
 				<table class="table text-nowrap table-bordered text-table">
 					<tr class="row">
 						<th class="col-sm-1 text-center table-light text-of">제목</th>
@@ -170,15 +176,10 @@
 	      	<table class="table table-fixed" id="seatTable">
 	      	</table>
       	</div>
-      	<form:form action="/reserve/detail/${ post.pno }" method="post" modelAttribute="reserDTO" id="reserFrm">
-   			<form:hidden path="pno" value="${ post.pno }"/>
-   			<form:hidden path="seatnum" id="seatnum"/>
-   			<form:hidden path="email"/>
-   		</form:form>
       </div>
       <div class="modal-footer" id="modal-footer">
       	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-warning" data-bs-dismiss="modal" id="reserveBtn">예약</button>
+        <button type="button" class="btn btn-warning" id="reserveBtn">예약</button>
       </div>
     </div>
   </div>
@@ -186,7 +187,21 @@
 <script>
 
 $("#showReserveBtn").on("click", function() {
-	$('#postModal').modal('show');
+	fetch("/reserve/isReserve", {
+		method: "post",
+		body: new URLSearchParams({
+			pno: ${ post.pno }
+		})})
+		.then(resp => resp.text())
+		.then(data => {
+			data.trim()
+			console.log(data);
+			if (data == 'true') {
+				$('#postModal').modal('show');				
+			} else {
+				alert('예약 가능 기간이 아닙니다')
+			}
+		})
 });
 
 $("#reserveBtn").on("click", function() {
