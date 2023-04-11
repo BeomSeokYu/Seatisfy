@@ -22,8 +22,7 @@ import com.reserve.seat.HomeController;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	@Autowired
-	private SqlSessionFactory sqlSessionFactory;
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -39,15 +38,7 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		
-		SqlSession sqlSession = sqlSessionFactory.openSession();
 		
-		try{
-			System.out.println(sqlSession.selectOne("test.select").toString());
-		}catch(Exception e){
-		    e.printStackTrace();
-		}finally{
-		    sqlSession.close();
-		}
 		
 		
 		return "home";

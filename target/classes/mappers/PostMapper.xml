@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.reserve.seat.mapper.QnaMapper">
+  <!-- 쿼리 보관 -->
+<!--   <sql id="criteria">
+  	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+		<foreach collection="typeArr" item="type">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'T'.toString()">
+						qtitle LIKE concat_ws(#{ keyword }, '%', '%') '%' || #{ keyword } || '%'
+					</when>
+					<when test="type == 'C'.toString()">
+						qcontent LIKE concat_ws(#{ keyword }, '%', '%') '%' || #{ keyword } || '%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+  </sql> -->
+  
+	<insert id="insertPost">
+	  <![CDATA[
+		  INSERT INTO qna(pwriter, ptitle, pcontent, location, seatinfo, rdate_start, rdate_end)
+		  VALUES(#{pwriter}, #{ptitle}, #{pcontent}, #{location}, #{seatinfo}, #{rdate_start}, #{rdate_end})
+	  	]]>
+	</insert>
+  <!-- 	<select id="ptList"
+	resultType="com.reserve.seat.qna.QnaDTO">
+	<![CDATA[
+	  select * from qna order by qno desc
+	]]>
+	</select>
+	
+	<delete id="deletePost">
+  	DELETE FROM qna WHERE qno = #{qno}
+  	</delete>
+  	
+  	<update id="updatePost">
+  	UPDATE qna
+  	SET
+  		qtitle=#{qtitle},
+  		qcontent=#{qcontent}
+  	WHERE qno = #{qno}
+  	</update>
+  	
+  	<select id="selectPost" resultType="com.reserve.seat.post.PostDTO">
+  	SELECT * FROM qna WHERE qno = #{qno}
+  	</select>
+  	 -->
+  
+</mapper>
