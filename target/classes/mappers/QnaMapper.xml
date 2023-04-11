@@ -30,8 +30,8 @@
   	</select>
 	<insert id="insertQna">
 	  <![CDATA[
-		  INSERT INTO qna(qtitle, qcontent)
-		  VALUES(#{qtitle}, #{qcontent})
+		  INSERT INTO qna(qtitle, qcontent, qdate)
+		  VALUES(#{qtitle}, #{qcontent}, now())
 	  	]]>
 	</insert>
   	<select id="qnaList"
