@@ -1,5 +1,6 @@
 package com.reserve.seat.user;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,12 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("user/")
+@RequestMapping("/user")
 public class UserController {
 	
 	private final UserService userService;
@@ -73,11 +72,11 @@ public class UserController {
 	public String signout(@ModelAttribute("user") User user, 
 			HttpServletRequest request, HttpServletResponse response) {
 		
+		// 로그아웃 처리
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		new SecurityContextLogoutHandler().logout(request, response, auth);
-		System.out.println("로그아웃처리");
+		//회원 탈퇴
 		userService.removeUser(user.getUno());
-		System.out.println("회원탈퇴 DB삭제");
 		return "redirect:/";
 	}
 	
@@ -102,35 +101,25 @@ public class UserController {
 	
 	// 회원 삭제
 	@PostMapping("/remove")
-	public String removeUser(@ModelAttribute("user") User user) {
+	public void removeUser(@ModelAttribute("user") User user) {
 		userService.removeUser(user.getUno());
-		return "redirect:/user/list";
 	}
 
 	// 내 정보 보기
 	@GetMapping("/detail")
-	public String viewUserDetail(Model model) {
-		Object details = SecurityContextHolder.getContext().getAuthentication().getDetails();
-		if (details instanceof WebAuthenticationDetails) {
-		    String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		    
-		    User user = userService.getUserDetail(username);
-		    model.addAttribute("user", user);
-		}
+	public String viewUserDetail(Principal principal, Model model) {
+
+	    User user = userService.getUserDetail(principal.getName());
+	    model.addAttribute("user", user);
 		    
 		return "users/detail";
 	}
 	
 	// 회원 정보 수정 페이지
 	@GetMapping("/edit")
-	public String editForm(Model model) {
-		Object details = SecurityContextHolder.getContext().getAuthentication().getDetails();
-		if (details instanceof WebAuthenticationDetails) {
-		    String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		    
-		    User user = userService.getUserDetail(username);
-		    model.addAttribute("user", user);
-		}
+	public String editForm(Principal principal, Model model) {
+	    User user = userService.getUserDetail(principal.getName());
+	    model.addAttribute("user", user);
 		    
 		return "users/editform";
 	}
@@ -160,14 +149,9 @@ public class UserController {
 	
 	// 비밀번호 변경 페이지
 	@GetMapping("/changepw")
-	public String changePwForm(Model model) {
-		Object details = SecurityContextHolder.getContext().getAuthentication().getDetails();
-		if (details instanceof WebAuthenticationDetails) {
-		    String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		    
-		    User user = userService.getUserDetail(username);
-		    model.addAttribute("user", user);
-		}
+	public String changePwForm(Principal principal, Model model) {
+	    User user = userService.getUserDetail(principal.getName());
+	    model.addAttribute("user", user);
 		    
 		return "users/pwchange";
 	}
