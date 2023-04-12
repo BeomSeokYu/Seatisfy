@@ -39,9 +39,11 @@
 				<table class="table table-hover shadow bg-body rounded">
 					<thead>
 						<tr style="background-color: #999999; color: white;">
-							<th scope="col" class="col-2">no</th>
-							<th scope="col" class="col-6">제목</th>
-							<th scope="col" class="col-2">작성자</th>
+							<th scope="col" class="col-1">no</th>
+							<th scope="col" class="col-4">제목</th>
+							<th scope="col" class="col-1">작성자</th>
+							<th scope="col" class="col-3">예약 기간</th>
+							<th scope="col" class="col-1">상태</th>
 							<th scope="col" class="col-2">작성일</th>
 						</tr>
 					</thead>
@@ -90,11 +92,24 @@
 	</div>
 </div>
 	
-
 <%@ include file="../include/footer.jsp"%>	
+<%@ include file="../include/scriptUtil.jsp"%>	
 <script src="/resources/js/page.js"></script>
 <script>
 
+</script>
+<script>
+onload = function() {
+	switch ('${param.result}') {
+	  case 'rmsuccess':
+	  	popModal('삭제 성공', '게시물이 삭제되었습니다');
+	    break;
+	  case 'rmfail':
+	  	popModal('삭제 실패', '삭제에 실패하였습니다');
+	    break;
+	}
+	pageObj.pageCal(cri);
+}
 	/*
 	 [form id 이걸로 하셈]
 
@@ -126,13 +141,32 @@
 		}
 		var imgHTML = '';
 		for (var i = 0; i < data.length; i++) {
+			var status = getDateStatus(data[i].startdate, data[i].enddate)
 			imgHTML += ''
-					+ "<tr onclick=\"location.href='/reserve/detail/"
-					+ data[i].pno + "'\"><td>" + data[i].pno + "</td>"
-					+ '<td>' + data[i].ptitle + "</td>" + '<td id="td'+i+'">'
-					+ getName(data[i].pwriter, i) + "</td><td>" + data[i].regdate + "</td></a></tr>"
+					+ '<tr onclick="location.href=\'/reserve/detail/'
+					+ data[i].pno + '\'"><td>' + data[i].pno + '</td>'
+					+ '<td>' + data[i].ptitle + '</td>' + '<td id="td'+i+'">'
+					+ getName(data[i].pwriter, i) + '</td>'
+					+ '<td>' + data[i].startdate.replace('T',' ') + ' 부터<br>'
+					+ data[i].enddate.replace('T',' ') +' 까지</td>'
+					+ '<td>' + status +'</td>'
+					+ '<td>' + data[i].regdate + '</td></a></tr>';
 		}
 		$('#imgList').html(imgHTML);
+	}
+	
+	function getDateStatus(sdate, edate) {
+		const now = new Date(); // 현재 시각
+		const startDateTime = new Date(sdate); // 시작일시를 Date 객체로 변환
+		const endDateTime = new Date(edate); // 종료일시를 Date 객체로 변환
+
+		if (now.getTime() < startDateTime.getTime()) {
+			return '시작 전';
+		} else if (now.getTime() >= startDateTime.getTime() && now.getTime() <= endDateTime.getTime()) {
+			return '진행중';
+		} else {
+			return '종료';
+		}
 	}
 	
 	$(function(){
@@ -163,7 +197,8 @@
 				$('#td'+i).html(data.name);
 			})
 	}
+	
+	removeAllParam();
 </script>
-
 </body>
 </html>

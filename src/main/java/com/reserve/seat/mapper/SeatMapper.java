@@ -7,6 +7,7 @@ package com.reserve.seat.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 
 import com.reserve.seat.Criteria;
 import com.reserve.seat.reserve.domain.SeatDTO;
@@ -30,10 +31,13 @@ public interface SeatMapper {
 	public void insertSeat(SeatDTO sdto);
 	
 	// 수정
-	public boolean updateSeat(SeatDTO sdto);
+	public int updateSeat(
+			@Param("seatnum")int seatnum, 
+			@Param("pno")int pno, 
+			@Param("isreserved")boolean isreserved);
 	
 	// 삭제
-	public int deleteSeat(int sno);
+	public int deleteSeatByPost(@Param("username")int seatnum, @Param("pno")int pno);
 	
 	// 예약 수 가져오기
 	public int totalCount(Criteria criteria);

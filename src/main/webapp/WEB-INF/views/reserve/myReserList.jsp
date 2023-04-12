@@ -121,7 +121,7 @@
 		//TODO: 리스트 출력 처리 하세요
 		if (data.length < 1) {
 			var noneStr = '';
-			noneStr ='<div>등록된 게시물이 없습니다.<div>'
+			noneStr ='<div>예약된 좌석의 게시물이 없습니다.<div>'
 			$("#none").html(noneStr);
 		}
 		var imgHTML = '';

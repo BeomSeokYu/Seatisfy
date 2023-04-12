@@ -77,6 +77,12 @@
   background-color: #FF6347;
 }
 
+.seat-reserved-mine {
+  text-align: center;
+  border: 1px solid #444444;
+  background-color: #B0FF66;
+}
+
 .table-fixed {
   width: 100%;
   min-width: 700px;
@@ -128,7 +134,7 @@
 						<th class="col-sm-1 text-center table-light text-of">제목</th>
 						<td class="col-sm-4 text-of">${ post.ptitle }</td>
 						<th class="col-sm-1 text-center table-light text-of">작성자</th>
-						<td class="col-sm-2 text-of">${ post.pwriter }</td>
+						<td class="col-sm-2 text-of">${ name }</td>
 						<th class="col-sm-1 text-center table-light text-of">등록일</th>
 						<td class="col-sm-3 text-of">${ post.regdate }</td>
 					</tr>
@@ -140,7 +146,9 @@
 					</tr>
 					<tr class="row">
 						<th class="col-sm-2 text-center table-light text-of">예약 가능 시간</th>
-						<td class="col-sm-10 text-of" colspan="5">${fn:replace(post.startdate, 'T', ' ')} ~ ${fn:replace(post.enddate, 'T', ' ')}</td>
+						<td class="col-sm-6 text-of" colspan="3">${fn:replace(post.startdate, 'T', ' ')} ~ ${fn:replace(post.enddate, 'T', ' ')}</td>
+						<th class="col-sm-2 text-center table-light text-of" colspan="1">진행 상태</th>
+						<td class="col-sm-2 text-of" colspan="1" id="status"></td>
 					</tr>
 				</table>
 
@@ -151,12 +159,33 @@
 					</div>
 				</div>
 				<!-- 이미지 지도를 표시할 div 입니다 -->
-				<div id="map" style="width:100%;height:350px;"></div>  
+				<div class="row">
+					<div class="col-sm-6" id="map" style="width:50%;height:350px;"></div>
+					<div class="col-sm-6 table-responsive">
+						<table class="table" id="seatMiniTable" style="width:100%;height:100%;">
+			      		</table>
+		      		</div>
+	      		</div>
 			</div>
 			<!-- <div class="col-lg-9"> -->
 			<div class="col-lg-12 text-center mt-5">
-				<button class="btn btn-danger btn-lg" type="button" id="showReserveBtn">예약하기</button>
+			<c:choose>
+				<c:when test="${ myreser != null }">
+					<button class="btn btn-info btn-lg" type="button" id="showReserveBtn">예약확인</button>
+				</c:when>
+				<c:otherwise>
+					<button class="btn btn-danger btn-lg" type="button" id="showReserveBtn">예약하기</button>
+				</c:otherwise>
+			</c:choose>
 				<a class="btn btn-secondary btn-lg" href="/reserve">목록보기</a>
+			</div>
+			<div class="col-lg-12 text-center mt-5">
+			<c:choose>
+				<c:when test="${ post.pwriter == username }">
+					<button class="btn btn-info btn-lg" type="button" id="editBtn">수정하기</button>
+					<button class="btn btn-danger btn-lg" type="button" id="removeBtn">삭제하기</button>
+				</c:when>
+			</c:choose>
 			</div>
 		</div>
 	</div>
@@ -165,7 +194,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="postModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="msgModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5">예약</h1>
@@ -177,23 +206,57 @@
 	      	</table>
       	</div>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer text-center justify-content-center">
       	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-warning" id="reserveBtn">예약</button>
+        <c:choose>
+			<c:when test="${ myreser != null }">
+				<button type="button" class="btn btn-warning" id="reserveCancelBtn">예약 취소</button>
+			</c:when>
+			<c:otherwise>
+				<button type="button" class="btn btn-warning" id="reserveBtn">예약</button>
+			</c:otherwise>
+		</c:choose>
       </div>
     </div>
   </div>
 </div>
 <%@include file="../include/scriptUtil.jsp"%>
 <script>
-var msgHeader = '${msgHeader}';
-var msgBody = '${msgBody}';
 onload = function() {
-	if(msgHeader != '' && msgBody != '') {
-		popModal(msgHeader, msgBody);
-		msgHeader = '';
-		msgBody = '';
-	}		
+	switch ('${param.result}') {
+	  case 'success':
+	  	popModal('예약 성공', '예약에 성공했습니다');
+	    break;
+	  case 'fail':
+	  	popModal('예약 실패', '작성자는 예약이 불가능합니다');
+	    break;
+	  case 'dupli':
+	  	popModal('중복 예약 불가', '이미 예약된 회원입니다 <br> 자리 변경을 원하시면 취소 후 다시 이용해 주세요');
+	    break;
+	  case 'ccsuccess':
+	  	popModal('예약 취소 성공', '예약이 취소되었습니다');
+	    break;
+	  case 'ccfail':
+	  	popModal('예약 취소 실패', '예약 취소에 실패하였습니다');
+	  case 'nosn':
+	  	popModal('좌석 미선택', '예약할 좌석을 선택해 주세요');
+	    break;
+	}
+	$('#status').html(getDateStatus('${post.startdate}', '${post.enddate}'));
+}
+
+function getDateStatus(sdate, edate) {
+	const now = new Date(); // 현재 시각
+	const startDateTime = new Date(sdate); // 시작일시를 Date 객체로 변환
+	const endDateTime = new Date(edate); // 종료일시를 Date 객체로 변환
+
+	if (now.getTime() < startDateTime.getTime()) {
+		return '시작 전';
+	} else if (now.getTime() >= startDateTime.getTime() && now.getTime() <= endDateTime.getTime()) {
+		return '진행중';
+	} else {
+		return '종료';
+	}
 }
 
 $("#showReserveBtn").on("click", function() {
@@ -219,7 +282,38 @@ $("#showReserveBtn").on("click", function() {
 });
 
 $("#reserveBtn").on("click", function() {
+	//action="/reserve/detail/${ post.pno }"
+	$('#reserFrm').attr('action', "/reserve/detail/${ post.pno }")
 	$('#reserFrm').submit();
+});
+
+$("#reserveCancelBtn").on("click", function() {
+	$('#reserFrm').attr('action', "/reserve/detail/${ post.pno }/cancel")
+	$('#reserFrm').submit();
+});
+
+$("#editBtn").on("click", function() {
+	location.href = '/reserve/edit/${post.pno}';
+});
+
+$("#removeBtn").on("click", function() {
+	if(confirm('정말로 삭제하시겠습니까?')) {
+		fetch("/reserve/remove", {
+			method: "post",
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'X-CSRF-TOKEN': '${ _csrf.token }'
+			},
+			body: new URLSearchParams({
+				pno: ${ post.pno }
+			})})
+			.then(resp => resp.text())
+			.then(data => {
+				data.trim()
+				console.log(data);
+				location.href = data;
+			})
+	}
 });
 
 </script>
@@ -305,6 +399,7 @@ function addSeatInfoForm(x, y) {
 createSeatTable();
 function createSeatTable() {
 	var seatinfo = '${seatinfo}';
+	var mySeatNum = ${myreser.seatnum == null ? -1 : myreser.seatnum}-1;
 	var cnt = 0;
 	
 	var y = seatinfo.split(" ").length;
@@ -316,7 +411,9 @@ function createSeatTable() {
 		for (var j = 0; j < x; j++) {
 			console.log(col[j]);
 			if (col[j] == 1) {
-				if (reservedSeatList[cnt] == 1) {
+				if (cnt == mySeatNum) {
+					SeatInfoList[i][j] = -3;
+				} else if (reservedSeatList[cnt] == 1) {
 					SeatInfoList[i][j] = -2;
 				} else {
 					SeatInfoList[i][j] = 0;					
@@ -328,27 +425,39 @@ function createSeatTable() {
 	console.log(SeatInfoList)
 	
 	var seatNum = 1;
-	var seatTable = ""
+	var seatTable = "";
+	var seatMiniTable = ""
 	for (var i = 0; i < y; i++) {
 		seatTable += '<tr>' 
+		seatMiniTable += '<tr>' 
 		for (var j = 0; j < x; j++) {
-			if (SeatInfoList[i][j] == -2) {
+			if (SeatInfoList[i][j] == -3) {
+				SeatInfoList[i][j] = seatNum;
+				seatTable += '<td class="seat-reserved-mine" data-x="'+j+'" data-y="'+i+'">'+SeatInfoList[i][j]+'</td>';
+				seatMiniTable += '<td class="seat-reserved-mine" data-x="'+j+'" data-y="'+i+'"> </td>';
+				seatNum++;
+			} else if (SeatInfoList[i][j] == -2) {
 				SeatInfoList[i][j] = seatNum;
 				seatTable += '<td class="seat-reserved-db" data-x="'+j+'" data-y="'+i+'">'+SeatInfoList[i][j]+'</td>';
+				seatMiniTable += '<td class="seat-reserved-db" data-x="'+j+'" data-y="'+i+'"> </td>';
 				seatNum++;
 			} else if (SeatInfoList[i][j] == -1) {
-				seatTable += '<td class="seat-disable" data-x="'+j+'" data-y="'+i+'"></td>';
+				seatTable += '<td class="seat-disable" data-x="'+j+'" data-y="'+i+'">X</td>';
+				seatMiniTable += '<td class="seat-disable" data-x="'+j+'" data-y="'+i+'"> </td>';
 			} else {
 				SeatInfoList[i][j] = seatNum;
 				seatTable += '<td class="seat" onclick="changeSeatState(this)" data-x="'+j+'" data-y="'+i+'">'+SeatInfoList[i][j]+'</td>';
+				seatMiniTable += '<td class="seat" data-x="'+j+'" data-y="'+i+'"> </td>';
 				seatNum++;
 			}
 		}
 		seatTable += '</tr>'
+		seatMiniTable += '</tr>'
 	}
 	
 	
 	$("#seatTable").html(seatTable)
+	$("#seatMiniTable").html(seatMiniTable)
 }
 function changeSeatState(seat) {
 	
@@ -392,6 +501,8 @@ function checkMinMaxRange(TagNameById) {
 		}
 	}
 }
+
+removeAllParam();
 </script>
 
 </body>

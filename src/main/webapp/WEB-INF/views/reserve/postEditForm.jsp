@@ -96,14 +96,14 @@
 
 			<!-- <div class="col-lg-9"> -->
 			<div class="col-lg-12">
-				<form:form action="/reserve/add" method="post" modelAttribute="postDTO" id="postFrm">
+				<form:form action="/reserve/edit/${ post.pno }" method="post" modelAttribute="postDTO" id="postFrm">
 					<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }"/>
-					제목 : <form:input path="ptitle" /><br>
+					제목 : <form:input path="ptitle" value="${ post.ptitle }" /><br>
 					<form:errors path="ptitle"/><br>
-					장소 : <form:input path="place" id="place" /><br>
+					장소 : <form:input path="place" id="place" value="${ post.place }" /><br>
 					<form:errors path="place"/><br>
-					주소 : <form:input path="address" id="address" /><br>
-					<form:errors path="address"/><br>
+					주소 : <form:input path="address" id="address" value="${ post.address }" /><br>
+					<form:errors path="address" /><br>
 					<div class="map_wrap">
 					    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 					
@@ -124,18 +124,18 @@
 					        <span id="centerAddr"></span>
 					    </div>
 					</div>
-					자리 배치 정보 (수정이 불가하니 신중하게 해라) : <input id="seatX" type="number" min="1" max="20" value="10"/>
-					X <input id="seatY" type="number" min="1" max="20" value="10"/>
-					<button id="seatTableBtn" type="button">만들기</button><br>
-					<form:hidden path="seatinfo"/><br>
+					<input id="seatX" type="hidden" />
+					<input id="seatY" type="hidden" />
+					자리 배치 정보 (수정 불가)
+					<form:hidden path="seatinfo" value="${ post.seatinfo }"/><br>
 					<div class="table-responsive">
 						<table class="table table-fixed table-responsive" id="seatTable">
 						</table>
 					</div>
 					<form:errors path="seatinfo"/><br>
-					시작일 : <form:input id="sdate" path="startdate" type="datetime-local" /><br>
+					시작일 : <form:input id="sdate" path="startdate" type="datetime-local" value="${ post.startdate }" /><br>
 					<form:errors path="startdate"/><br>
-					종료일 : <form:input id="edate" path="enddate" type="datetime-local" /><br>
+					종료일 : <form:input id="edate" path="enddate" type="datetime-local" value="${ post.enddate }" /><br>
 					<form:errors path="enddate"/><br>
 					내용 : <form:textarea path="pcontent" id="summernote"/><br>
 					<form:errors path="pcontent"/><br>
@@ -460,11 +460,12 @@ function displayCenterInfo(result, status) {
       ['view', ['fullscreen', 'codeview', 'help']]
     ]
   });
+  
+  $('#summernote').summernote('code', '${ post.pcontent }');
 </script>
 
 <script>
 var SeatInfoList = null;
-var seatInfoformData = '';
 
 Array.matrix = function (m, n, initial) {
     var a, i, j, mat = [];
@@ -478,25 +479,9 @@ Array.matrix = function (m, n, initial) {
     return mat;
 };
 
-function addSeatInfoForm(x, y) {
-	seatInfoformData = ''
-	for (var i = 0; i < y; i++) {
-		seatInfoformData += (i == 0)
-		? ''
-		: ' '
-		for (var j = 0; j < x; j++) {
-			seatInfoformData += (j == 0)
-			? '' + SeatInfoList[i][j]
-			: ',' + SeatInfoList[i][j]
-		}
-	}
-	console.log(seatInfoformData)
-	//$("#seatinfo").val(formData);
-}
-
 function errorsSeatTable() {
 	console.log('validation');
-	var seatinfo = '['+$("#seatinfo").val()+']';
+	var seatinfo = $("#seatinfo").val();
 	var seatNum = 1;
 	
 	var y = seatinfo.split(" ").length;
@@ -519,9 +504,9 @@ function createSeatTable() {
 	var seatNum = 1
 	var x = $("#seatX").val()
 	var y = $("#seatY").val()
-	
+	$('#seatinfo').val('${ post.seatinfo }');
 	console.log($("#seatinfo").val());
-	if ($("#seatinfo").val() != '') {
+	if ($('#seatinfo').val() != '') {
 		errorsSeatTable();
 		x = $("#seatX").val()
 		y = $("#seatY").val()
@@ -549,40 +534,6 @@ function createSeatTable() {
 		$("#seatTable").html(seatTable)
 	}
 }
-function changeSeatState(seat) {
-	$(seat).hasClass("seat")
-		? disableSeat(seat)
-		: enableSeat(seat)
-}
-function disableSeat(seat) {
-	$(seat).removeClass("seat")
-		.addClass("seat-disable")
-		.html('');
-	
-	SeatInfoList[$(seat).data('y')][$(seat).data('x')] = 0
-	addSeatInfoForm($("#seatX").val(), $("#seatY").val())
-	
-	console.log(SeatInfoList)
-	var seatNum = 1;
-	var seatList = document.querySelectorAll('.seat');
-	seatList.forEach(function(s) {
-		$(s).html(seatNum++);
-	});
-}
-function enableSeat(seat) {
-	$(seat).removeClass("seat-disable")
-		.addClass("seat");
-	
-	SeatInfoList[$(seat).data('y')][$(seat).data('x')] = 1
-	addSeatInfoForm($("#seatX").val(), $("#seatY").val())
-	
-	console.log(SeatInfoList)
-	var seatNum = 1;
-	var seatList = document.querySelectorAll('.seat');
-	seatList.forEach(function(s) {
-		$(s).html(seatNum++);
-	});
-}
 
 $("#seatX").on("blur", function() {
 	checkMinMaxRange("#seatX")
@@ -606,10 +557,6 @@ function checkMinMaxRange(TagNameById) {
 }
 
 $("#submitBtn").on('click', function() {
-	if (seatInfoformData != '') {
-		$("#seatinfo").val(seatInfoformData);
-		console.log($("#seatinfo").val());
-	}
 	$("#postFrm").submit();
 });
 
@@ -622,18 +569,13 @@ $("#seatTableBtn").on('click', function() {
 <script>
 //현재 날짜와 시간을 가져옵니다.
 $(function() {
-	var date = new Date().toISOString().slice(0, -8);
-
-	// 입력 필드의 min 속성을 설정합니다.
-	$("#sdate").val(date)
-	$("#sdate").attr('min', date);
-	$("#edate").val(date)
-	$("#edate").attr('min', date);
+	$("#sdate").attr('min', '${ post.startdate }');
+	$("#edate").attr('min', '${ post.startdate }');
 });
 
 $("#sdate").on('change', function() {
 	$("#edate").attr('min', $("#sdate").val());
-	$("#edate").val($("#sdate").val())
+	$("#edate").val($("#sdate").val());
 });
 </script>
 </body>
