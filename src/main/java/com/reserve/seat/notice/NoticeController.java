@@ -8,6 +8,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,10 +38,14 @@ public class NoticeController {
 
 	//공지 등록
 	@PostMapping("/add")
-	public String submitAddNoticeForm(NoticeDTO notice) {
+	public String submitAddNoticeForm(@Validated NoticeDTO notice, BindingResult br) {
+		
+		if(br.hasErrors()) {
+			return "notice/noticeAdd";
+		}
 		
 		//공지를 notice 테이블에 등록하고
-		noticeService.insertNotice(notice);
+				noticeService.insertNotice(notice);
 		
 		return "redirect:/notice/list";	 //공지 전체 목록으로 response.sendRedirect()처리
 	}
