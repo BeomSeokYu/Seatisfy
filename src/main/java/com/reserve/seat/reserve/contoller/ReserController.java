@@ -2,6 +2,7 @@
 
 package com.reserve.seat.reserve.contoller;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,7 +23,8 @@ import com.reserve.seat.Criteria;
 import com.reserve.seat.reserve.domain.PostDTO;
 import com.reserve.seat.reserve.domain.ReserDTO;
 import com.reserve.seat.reserve.service.ReserService;
-import com.reserve.seat.reserve.validator.DateTimeLocal;
+import com.reserve.seat.user.User;
+import com.reserve.seat.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ReserController {
 	private final ReserService reserService;
+	private final UserService userService;
 	
 	@GetMapping
 	public String reserList(Model model, @ModelAttribute Criteria criteria) {
@@ -40,7 +43,7 @@ public class ReserController {
 //		model.addAttribute("list", list);
 //		int totalCount = reserMapper.totalCount(criteria);
 //		model.addAttribute("pageDTO", new PageDTO(criteria, totalCount));
-		return "reserve/reserList";
+		return "reserve/postList";
 	}
 	
 	@GetMapping("/add")
@@ -49,7 +52,7 @@ public class ReserController {
 	}
 	
 	@PostMapping("/add")
-	public String addForm(@Validated @ModelAttribute PostDTO postDTO, BindingResult bindingResult) {
+	public String addForm(@Validated @ModelAttribute PostDTO postDTO, BindingResult bindingResult, Principal principal) {
 		
 		if (bindingResult.hasErrors()) {
 	        return "/reserve/postForm";
@@ -65,17 +68,24 @@ public class ReserController {
 			}
         }
 		
+		User user = userService.getUserDetail(principal.getName());
+		if (user == null) {
+			return "redirect:/user/login";
+		}
+		postDTO.setPwriter(principal.getName());
 		reserService.addPost(postDTO);
 		reserService.addSeat(postDTO.getSeatinfo(), postDTO.getPno());
 		return "redirect:/reserve";
 	}
 	
 	@GetMapping("/detail/{pno}")
-	public String detailView(@ModelAttribute ReserDTO reserDTO, Model model, @PathVariable int pno) {
-		model.addAttribute("post", reserService.getPost(pno));
+	public String detailView(@ModelAttribute ReserDTO reserDTO, Model model, @PathVariable int pno, Principal principal) {
+		PostDTO postDTO = reserService.getPost(pno);
+		postDTO.setPwriter(userService.getUserDetail(principal.getName()).getName());
+		model.addAttribute("post", postDTO);
 		model.addAttribute("seats", reserService.getSeatsByPost(pno));
 		model.addAttribute("seatinfo", reserService.getPost(pno).getSeatinfo());
-		
+		model.addAttribute("reser", reserService.getReserById(principal.getName()));
 		return "reserve/postDetail";
 	}
 	
@@ -85,46 +95,38 @@ public class ReserController {
 	@PostMapping("/detail/{pno}")
 	public String reserve(@Validated @ModelAttribute ReserDTO reserDTO, 
 			@PathVariable int pno, 
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes,
+			Principal principal) {
 		
 		PostDTO post = reserService.getPost(pno);
 		LocalDateTime nowTime = LocalDateTime.now();
 		LocalDateTime startDate = LocalDateTime.parse(post.getStartdate());
 		LocalDateTime endDate = LocalDateTime.parse(post.getEnddate());
 		if (nowTime.isAfter(startDate) && nowTime.isBefore(endDate)) {
-			reserService.reserveSeat(reserDTO, null);				
+			ReserDTO rdto = reserService.getReserByIdAndPno(principal.getName(), pno);
+			User user = userService.getUserDetail(principal.getName());
+			if (user == null) {
+				return "redirect:/user/login";
+			}
+			if (rdto == null && post.getPwriter().equals(user.getName())) {
+				reserService.reserveSeat(reserDTO, null);								
+			} else {
+				
+			}
 		}
 		redirectAttributes.addAttribute(reserService.getSeatsByPost(pno));
 		redirectAttributes.addAttribute("seatinfo", reserService.getPost(pno).getSeatinfo());
 		return "redirect: /reserve/detail/{pno}";
 	}
 	
-	@ResponseBody
-	@PostMapping("/isReserve")
-	public boolean isReserve(@RequestParam int pno) {
-		PostDTO post = reserService.getPost(pno);
-		LocalDateTime nowTime = LocalDateTime.now();
-		LocalDateTime startDate = LocalDateTime.parse(post.getStartdate());
-		LocalDateTime endDate = LocalDateTime.parse(post.getEnddate());
-		if (!nowTime.isAfter(startDate)) {
-			return false;
-		} else if (!nowTime.isBefore(endDate)){
-			return false;
-		} else {
-			return true;				
-		}
+	
+	@GetMapping("/myreser")
+	public String myReserList() {
+		return "reserve/myReserList";
 	}
 	
-	@ResponseBody
-	@PostMapping
-	public List<PostDTO> reserListAPI(@ModelAttribute Criteria criteria) {
-		return reserService.getPostList(criteria);
+	@GetMapping("/mypost")
+	public String myPostList() {
+		return "reserve/myPostList";
 	}
-	
-	@ResponseBody
-	@PostMapping("/total")
-	public int reserListtotalCountAPI(@ModelAttribute Criteria criteria) {
-		return reserService.getPostTotalCount(criteria);
-	}
-	
 }

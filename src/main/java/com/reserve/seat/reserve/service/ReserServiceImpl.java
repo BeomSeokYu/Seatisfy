@@ -31,13 +31,23 @@ public class ReserServiceImpl implements ReserService {
 	 * ReserService -----------------------------------
 	 */
 	@Override
-	public List<ReserDTO> getReserList(Criteria criteria) {
-		return reserMapper.selectAllReser(criteria);
+	public List<ReserDTO> getMyReserList(int amount, int offset, String username) {
+		return reserMapper.selectAllReserById(amount, offset, username);
 	}
 
 	@Override
 	public ReserDTO getReser(int rno) {
 		return reserMapper.selectReser(rno);
+	}
+
+	@Override
+	public ReserDTO getReserById(String username) {
+		return reserMapper.selectReserById(username);
+	}
+	
+	@Override
+	public ReserDTO getReserByIdAndPno(String username, int pno) {
+		return reserMapper.selectReserByIdAndPno(username, pno);
 	}
 
 	@Override
@@ -56,8 +66,8 @@ public class ReserServiceImpl implements ReserService {
 	}
 
 	@Override
-	public int getReserTotalCount(Criteria criteria) {
-		return reserMapper.totalCount(criteria);
+	public int getReserTotalCount() {
+		return reserMapper.totalCount();
 	}
 	
 	
@@ -68,6 +78,11 @@ public class ReserServiceImpl implements ReserService {
 	@Override
 	public List<PostDTO> getPostList(Criteria criteria) {
 		return postMapper.selectAllPost(criteria);
+	}
+	
+	@Override
+	public List<PostDTO> getPostListById(int amount, int offset, String[] typeArr, String keyword, String pwriter) {
+		return postMapper.selectAllPostById(amount, offset, typeArr, keyword, pwriter);
 	}
 
 	@Override
@@ -93,6 +108,11 @@ public class ReserServiceImpl implements ReserService {
 	@Override
 	public int getPostTotalCount(Criteria criteria) {
 		return postMapper.totalCount(criteria);
+	}
+	
+	@Override
+	public int getPostTotalCountById(int amount, int offset, String[] typeArr, String keyword, String pwriter) {
+		return postMapper.totalCountById(amount, offset, typeArr, keyword, pwriter);
 	}
 	
 	

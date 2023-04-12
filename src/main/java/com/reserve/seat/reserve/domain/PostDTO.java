@@ -22,6 +22,8 @@ import lombok.Setter;
 public class PostDTO {
 	private Integer pno;
 	
+	private String email;
+	
 	private String pwriter;
 	
 	@NotBlank(message = "제목을 비워둘 순 업습니다")

@@ -25,24 +25,18 @@
 	</trim>
   </sql>
   
-  <select id="selectAllReser" resultType="com.reserve.seat.reserve.domain.ReserDTO">
+  <select id="selectAllReserById" resultType="com.reserve.seat.reserve.domain.ReserDTO">
   	<![CDATA[
 	  	SELECT *
 	  	FROM reservation
-	  	WHERE]]>
-	  		<include refid="criteria"/>
-	<![CDATA[
-			2 > 1
+	  	WHERE email = #{ username }
 		ORDER BY rno DESC
 	  	LIMIT #{ amount } OFFSET #{ offset }
 	]]>
   </select>
   
   <select id="totalCount" resultType="int">
-  	<![CDATA[
-  		SELECT COUNT(*) FROM reservation WHERE ]]> 
-  			<include refid="criteria"/> 
-  	<![CDATA[ rno > 0 ]]>
+  		SELECT COUNT(*) FROM reservation
   </select>
   
   <select id="selectReser" resultType="com.reserve.seat.reserve.domain.ReserDTO">
@@ -51,11 +45,23 @@
   	WHERE rno = #{rno}
   </select>
   
+  <select id="selectReserById" resultType="com.reserve.seat.reserve.domain.ReserDTO">
+  	SELECT * 
+  	FROM reservation 
+  	WHERE email = #{username}
+  </select>
+  
+  <select id="selectReserByIdAndPno" resultType="com.reserve.seat.reserve.domain.ReserDTO">
+  	SELECT * 
+  	FROM reservation 
+  	WHERE email = #{username} AND pno = #{pno}
+  </select>
+  
   <insert id="insertReser">
-  	INSERT INTO reservation(  
-  		pno, 
-  		seatnum, 
-  		email ) 
+  	INSERT INTO reservation(
+  		pno,
+  		seatnum,
+  		email )
   	VALUES(
   		#{pno}, 
   		#{seatnum}, 

@@ -118,6 +118,7 @@
 			</div> --%>
 			<div>
 				<form:form action="/reserve/detail/${ post.pno }" method="post" modelAttribute="reserDTO" id="reserFrm">
+					<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }"/>
 					<form:errors path="seatnum"/>
 		   			<form:hidden path="seatnum" id="seatnum"/>
 					<form:hidden path="pno" value="${ post.pno }"/>

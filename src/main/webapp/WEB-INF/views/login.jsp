@@ -42,7 +42,7 @@
                     
 					<h4 style="color :red">${error }</h4>
 					<h4 style="color :red">${logout }</h4>
-                        <form role="form" action="/user/login" method="post">
+                        <form role="form" action="/user/login" method="post" accept-charset="UTF-8">
                             <fieldset>
                                 <div class="form-group">
                                 <!--반드시 name에 username을 써야함.  -->
