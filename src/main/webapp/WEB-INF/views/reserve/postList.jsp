@@ -126,12 +126,11 @@
 		}
 		var imgHTML = '';
 		for (var i = 0; i < data.length; i++) {
-			var name = getName(data[i].pwriter);
 			imgHTML += ''
 					+ "<tr onclick=\"location.href='/reserve/detail/"
 					+ data[i].pno + "'\"><td>" + data[i].pno + "</td>"
-					+ '<td>' + data[i].ptitle + "</td>" + '<td>'
-					+ data[i].pwriter + "</td><td>" + data[i].regdate + "</td></a></tr>"
+					+ '<td>' + data[i].ptitle + "</td>" + '<td id="td'+i+'">'
+					+ getName(data[i].pwriter, i) + "</td><td>" + data[i].regdate + "</td></a></tr>"
 		}
 		$('#imgList').html(imgHTML);
 	}
@@ -147,8 +146,22 @@
 	   }
 	});
 	
-	function getName(ea) {
-		fetch()
+	function getName(email, i) {
+		fetch("/uname", {	
+			method: "post",
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'X-CSRF-TOKEN': '${ _csrf.token }'
+			},
+			body: new URLSearchParams({
+					username: email
+				})
+	        })
+			.then(resp => resp.json())
+			.then(data => {
+				console.log(data.name);
+				$('#td'+i).html(data.name);
+			})
 	}
 </script>
 
