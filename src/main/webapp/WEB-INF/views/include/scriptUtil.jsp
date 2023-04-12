@@ -21,6 +21,7 @@
 <!-- modal script -->
 <script type="text/javascript">
 
+//제목 내용 있는 모달
 function popModal(head, body) {
    $('#msgModalLabel').text(head);
    $('#msgModalBody').html(body);
@@ -29,6 +30,7 @@ function popModal(head, body) {
    $('#msgModal').modal('show');
 }
  
+//url이동 시킬수 있는 모달 
 function popModalMove(head, body, url) {
    $('#msgModalLabel').text(head);
    $('#msgModalBody').html(body);
@@ -37,6 +39,7 @@ function popModalMove(head, body, url) {
    $('#msgModal').modal('show');
 }
 
+//닫기 버튼 있는 모달 
 function popModalMove2(head, body, url) {
    $('#msgModalLabel').text(head);
    $('#msgModalBody').html(body);

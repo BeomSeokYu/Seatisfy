@@ -105,18 +105,20 @@
 
       /* 전체 게시물 수 가져오기 위해 처리한 jsp URL 입력해주세요 */
       
-      function getCsrfToken(){
-         return '${_csrf.token}';
-      } 
+      
       
       function getTotalCountUrl() {
-         return '/user/total'
+         return '/notice/total'
       }
       /* 게시물 가져오기 위해 처리한 jsp URL 입력해주세요 */
       function getListUrl() {
-         return '/user/list'
+         return '/notice/list'
       }
 
+      function getCsrfToken(){
+          return '${_csrf.token}';
+       } 
+      
       function printList(data) {
          //TODO: 리스트 출력 처리 하세요
          if (data.length < 1) {
