@@ -4,6 +4,46 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.reserve.seat.mapper.UserMapper">
+
+<!-- 쿼리 보관 -->
+   <sql id="criteria">
+  	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+		<foreach collection="typeArr" item="type">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'E'.toString()">
+						username LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+					</when>
+					<when test="type == 'N'.toString()">
+						name LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+  </sql>
+
+	<!-- 전체 회원 목록 -->
+	<select id="listUser" resultType="com.reserve.seat.user.User">
+	<![CDATA[
+		SELECT * 
+		FROM user 
+		WHERE]]>
+	  		<include refid="criteria"/>
+	<![CDATA[
+			2 > 1
+		ORDER BY udate DESC
+	  	LIMIT #{ amount } OFFSET #{ offset }
+	]]>
+	</select>
+
+	<select id="totalCount" resultType="int">
+	<![CDATA[
+		SELECT COUNT(*) FROM user WHERE ]]> 
+			<include refid="criteria"/> 
+	<![CDATA[ uno > 0 ]]>
+	</select>
+  
 	<!-- 회원 등록  -->
 	<insert id="insertUser">
 		INSERT INTO user(username, password, name, phone)
@@ -15,6 +55,13 @@
 		SELECT * 
 		FROM user 
 		WHERE username = #{username} 
+	</select>
+	
+	<!-- 아이디 찾기  -->
+	<select id="findIdByName" resultType="String">
+		SELECT username 
+		FROM user 
+		WHERE name = #{name} AND phone = #{phone}
 	</select>
 	
 	<!-- 비밀번호 변경 -->
@@ -35,16 +82,6 @@
 	<delete id="deleteUser">
 		DELETE FROM user WHERE uno = #{uno} 
 	</delete>	
-
-	<!-- 전체 회원 목록 -->
-	<select id="listUser" resultType="com.reserve.seat.user.User">
-	<![CDATA[
-		SELECT * 
-		FROM user 
-		WHERE uno > 0 
-		ORDER BY udate DESC
-	]]>
-	</select>
 		
 	<!-- 권한 변경 -->
 	<update id="updateAuthority">

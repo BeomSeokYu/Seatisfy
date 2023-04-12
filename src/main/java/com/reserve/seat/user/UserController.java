@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.reserve.seat.Criteria;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +37,10 @@ public class UserController {
 
 	// 로그인 페이지
 	@GetMapping("/login")
-	public String loginForm(Model model) {
+	public String loginForm(Model model, String error) {
+		if(error != null) {
+			model.addAttribute("error", "아아디 또는 비밀번호가 맞지 않습니다.");
+		}
 		return "login";
 	}
 	
@@ -46,13 +52,13 @@ public class UserController {
 	
 	// 회원가입 처리
 	@PostMapping("/join")
-	public String joinUser(@Validated @ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String joinUser(@Validated @ModelAttribute("user") User user, BindingResult bindingResult) {
 		if (!user.getPassword().equals(user.getPasswordConfirm())) {
 		    bindingResult.rejectValue("passwordConfirm", "pwConfirm", "비밀번호가 일치하지 않습니다.");
 		}
 		 
 		if (bindingResult.hasErrors()) {
-			log.info("errors={}", bindingResult);
+//			log.info("errors={}", bindingResult);
 			return "users/joinform";
 		}
 		
@@ -85,18 +91,66 @@ public class UserController {
 	public String findPw(Model model) {
 		return "users/pwfind";
 	}
+	
+	// 아이디 찾기 폼
+	@GetMapping("/findid")
+	public String findIdForm(@ModelAttribute("user") User user) {
+		return "users/idfind";
+	}
+	// 아이디 찾기
+	@PostMapping("/findid")
+	public String findId(@ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		String IdFound = "";
+		if (user.getName().isEmpty() || user.getPhone().isEmpty()) {
+		    bindingResult.reject("error", "이름과 전화번호를 모두 입력해주세요.");
+		} else if( (IdFound = userService.findId(user)) == null ) {
+			bindingResult.reject("error", "해당 회원을 찾을 수 없습니다.");
+		}
+		 
+		if (bindingResult.hasErrors()) {
+//			log.info("errors={}", bindingResult);
+			return "users/idfind";
+		}
+		
+		// 이메일 일부 *처리
+		int atIndex = IdFound.indexOf("@");
+	    String maskedId = IdFound.substring(0, 4);
+	    for (int i = 4; i < atIndex; i++) {
+	    	maskedId += "*";
+	    }
+	    maskedId += IdFound.substring(atIndex);
+	    
+		//성공 로직
+		redirectAttributes.addFlashAttribute("idFound", maskedId);
+		
+		return "redirect:/user/findid";
+	}
+	
 	// 전체 회원 목록
 	@GetMapping("/list")
-	public String listUser(Model model) {
-		List<User> userList = userService.getAllUser();
-	    model.addAttribute("userList", userList);
+	public String listPage(Model model) {
 		return "users/list";
 	}
+	
 	// 회원 권한 변경
 	@PostMapping("/list")
 	public String changeAuth(@ModelAttribute("user") User user) {
 		userService.changeAutority(user);
 		return "redirect:/user/list";
+	}
+	
+	//페이지 수
+	@PostMapping("/total")
+	@ResponseBody
+	public int ListUserCount(@ModelAttribute("cri") Criteria cri) {
+		return userService.totalCount(cri);
+	}
+	
+	// 회원 목록 ajax 출력
+	@PostMapping("/listAjax")
+	@ResponseBody
+	public List<User> ListUser(@ModelAttribute("cri") Criteria cri) {
+		return userService.getAllUser(cri);
 	}
 	
 	// 회원 삭제
@@ -126,7 +180,7 @@ public class UserController {
 	
 	// 회원 정보 수정
 	@PostMapping("/edit")
-	public String editUser(@ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String editUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
 		
 		if(user.getName().trim().isEmpty()) {
 			bindingResult.rejectValue("name", "blankName", "이름은 비워둘 수 없습니다.");
@@ -137,7 +191,7 @@ public class UserController {
 		}
 		
 		if (bindingResult.hasErrors()) {
-			log.info("errors={}", bindingResult);
+//			log.info("errors={}", bindingResult);
 			return "users/editform";
 		}
 		
@@ -167,7 +221,7 @@ public class UserController {
 		}
 		
 		if (bindingResult.hasErrors()) {
-			log.info("errors={}", bindingResult);
+//			log.info("errors={}", bindingResult);
 			return "users/pwchange";
 		}
 		
