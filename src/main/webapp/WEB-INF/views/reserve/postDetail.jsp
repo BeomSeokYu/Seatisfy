@@ -122,7 +122,6 @@
 					<form:errors path="seatnum"/>
 		   			<form:hidden path="seatnum" id="seatnum"/>
 					<form:hidden path="pno" value="${ post.pno }"/>
-		   			<form:hidden path="email"/>
 		   		</form:form>
 				<table class="table text-nowrap table-bordered text-table">
 					<tr class="row">
@@ -169,27 +168,41 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="ModalLabel">예약</h1>
+        <h1 class="modal-title fs-5">예약</h1>
       </div>
-      <div class="modal-body" id="ModalBody">
+      <div class="modal-body">
       	<h5 class="modal-title">예약 좌석 선택</h5>
       	<div class="table-responsive">
 	      	<table class="table table-fixed" id="seatTable">
 	      	</table>
       	</div>
       </div>
-      <div class="modal-footer" id="modal-footer">
+      <div class="modal-footer">
       	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
         <button type="button" class="btn btn-warning" id="reserveBtn">예약</button>
       </div>
     </div>
   </div>
 </div>
+<%@include file="../include/scriptUtil.jsp"%>
 <script>
+var msgHeader = '${msgHeader}';
+var msgBody = '${msgBody}';
+onload = function() {
+	if(msgHeader != '' && msgBody != '') {
+		popModal(msgHeader, msgBody);
+		msgHeader = '';
+		msgBody = '';
+	}		
+}
 
 $("#showReserveBtn").on("click", function() {
-	fetch("/reserve/isReserve", {
+	fetch("/reser/isReserve", {
 		method: "post",
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'X-CSRF-TOKEN': '${ _csrf.token }'
+		},
 		body: new URLSearchParams({
 			pno: ${ post.pno }
 		})})

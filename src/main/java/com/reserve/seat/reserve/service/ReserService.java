@@ -23,7 +23,9 @@ public interface ReserService {
 	
 	public ReserDTO getReserById(String username);
 	
-	public ReserDTO getReserByIdAndPno(String username, int pno);
+	public ReserDTO getReserByIdAndPno(
+			@Param("username") String username, 
+			@Param("pno")int pno);
 
 	public void addReser(ReserDTO rdto);
 

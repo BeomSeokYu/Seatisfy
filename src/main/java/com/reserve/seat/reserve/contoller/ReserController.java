@@ -78,14 +78,21 @@ public class ReserController {
 		return "redirect:/reserve";
 	}
 	
-	@GetMapping("/detail/{pno}")
-	public String detailView(@ModelAttribute ReserDTO reserDTO, Model model, @PathVariable int pno, Principal principal) {
+	public Model addModelPostDetail(Model model, int pno, Principal principal) {
 		PostDTO postDTO = reserService.getPost(pno);
 		postDTO.setPwriter(userService.getUserDetail(principal.getName()).getName());
 		model.addAttribute("post", postDTO);
 		model.addAttribute("seats", reserService.getSeatsByPost(pno));
 		model.addAttribute("seatinfo", reserService.getPost(pno).getSeatinfo());
 		model.addAttribute("reser", reserService.getReserById(principal.getName()));
+		model.addAttribute("username", principal.getName());
+		model.addAttribute("name", principal.getName());
+		return model;
+	}
+	
+	@GetMapping("/detail/{pno}")
+	public String detailView(@ModelAttribute ReserDTO reserDTO, Model model, @PathVariable int pno, Principal principal) {
+		model = addModelPostDetail(model, pno, principal);
 		return "reserve/postDetail";
 	}
 	
@@ -96,6 +103,7 @@ public class ReserController {
 	public String reserve(@Validated @ModelAttribute ReserDTO reserDTO, 
 			@PathVariable int pno, 
 			RedirectAttributes redirectAttributes,
+			Model model,
 			Principal principal) {
 		
 		PostDTO post = reserService.getPost(pno);
@@ -108,17 +116,29 @@ public class ReserController {
 			if (user == null) {
 				return "redirect:/user/login";
 			}
-			if (rdto == null && post.getPwriter().equals(user.getName())) {
-				reserService.reserveSeat(reserDTO, null);								
-			} else {
+			if (rdto != null) {
+				model = addModelPostDetail(model, pno, principal);
+				model.addAttribute("msgHeader", "중복 예약");
+				model.addAttribute("msgBody", "이미 예약된 회원입니다. <br> 자리 변경을 원하시면 취소 후 다시 이용해 주세요");
+				return "reserve/postDetail";
 				
+			} else if (post.getPwriter().equals(principal.getName())) {
+				model = addModelPostDetail(model, pno, principal);
+				model.addAttribute("msgHeader", "예약 실패");
+				model.addAttribute("msgBody", "작성자는 예약이 불가능합니다.");
+				return "reserve/postDetail";
+			} else {
+				reserService.reserveSeat(reserDTO, principal.getName());			// 예약 실행
+				model = addModelPostDetail(model, pno, principal);
+				model.addAttribute("msgHeader", "예약 성공");
+				model.addAttribute("msgBody", "예약에 성공했습니다");
+				return "reserve/postDetail";
 			}
 		}
 		redirectAttributes.addAttribute(reserService.getSeatsByPost(pno));
 		redirectAttributes.addAttribute("seatinfo", reserService.getPost(pno).getSeatinfo());
 		return "redirect: /reserve/detail/{pno}";
 	}
-	
 	
 	@GetMapping("/myreser")
 	public String myReserList() {
