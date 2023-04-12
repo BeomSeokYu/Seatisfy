@@ -3,11 +3,13 @@
 package com.reserve.seat.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.reserve.seat.Criteria;
 import com.reserve.seat.notice.NoticeDTO;
+import com.reserve.seat.reply.ReplyDTO;
 
 
 public interface NoticeMapper {
@@ -27,11 +29,14 @@ public interface NoticeMapper {
 	
 	public int totalCount(Criteria cri);	// 전체 게시물 수
 	
-	public void updateReplyCnt(@Param("nno") int nno,		//두 개 이상 보낼때는 param을 붙여야 한다.
-			  				   @Param("num") int num);		//댓글 수정
+	public void insertReply(Map map);	//댓글 등록
 	
+	public void updateReply(Map map);	//댓글 수정
 	
+	public void deleteReply(int rno); //댓글 삭제
 
+	public ReplyDTO selectReply(String rno);	//특정 댓글 하나 조회
 	
+	public List<ReplyDTO> AllReplyList(String nno); //전체 댓글 조회
 	
 }

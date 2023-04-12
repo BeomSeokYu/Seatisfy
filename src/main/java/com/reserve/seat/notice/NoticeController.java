@@ -3,6 +3,7 @@
 package com.reserve.seat.notice;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.reserve.seat.Criteria;
+import com.reserve.seat.mapper.NoticeMapper;
 import com.reserve.seat.reply.ReplyDTO;
-import com.reserve.seat.reply.ReplyService;
-
 
 @Controller
 @RequestMapping("/notice")
@@ -28,24 +28,24 @@ public class NoticeController {
 
 	@Autowired
 	private NoticeService noticeService;
-	
-	@Autowired
-	private ReplyService replyService;
 
 	//공지 등록 조회 폼
 	@GetMapping("/add")
 	public String requestAddNoticeForm() {
-		//url에 /notice/add로 입력 시 notice/noticeAdd.jsp로 이동
+		
 		return "notice/noticeAdd";
 	}
 
 	//공지 등록
 	@PostMapping("/add")
-	public String submitAddNoticeForm(NoticeDTO notice, RedirectAttributes rttr) {
+	public String submitAddNoticeForm(@Validated NoticeDTO notice, BindingResult br) {
+		
+		if(br.hasErrors()) {
+			return "notice/noticeAdd";
+		}
 		
 		//공지를 notice 테이블에 등록하고
-		noticeService.insertNotice(notice);
-		rttr.addFlashAttribute("result", notice.getNno()); //공지 번호를
+				noticeService.insertNotice(notice);
 		
 		return "redirect:/notice/list";	 //공지 전체 목록으로 response.sendRedirect()처리
 	}
@@ -56,7 +56,7 @@ public class NoticeController {
 		
 		model.addAttribute("list", noticeService.selectAllNotice(cri));
 		
-		int totalCount = noticeService.totalCount(cri);
+//		int totalCount = noticeService.totalCount(cri);
 		
 //		List<NoticeDTO> noticeList = noticeService.AllNoticeList();
 //		model.addAttribute("noticeList", noticeList);
@@ -91,10 +91,10 @@ public class NoticeController {
 		model.addAttribute("notice", noticeNum);
 		
 		//댓글 조회
-//		List<ReplyDTO> replyList = replyService.AllReplyList(nno); 
-//		int cnt = replyList.size();	// 댓글 수
-//		model.addAttribute("replyList", replyList);
-//		model.addAttribute("cnt", cnt);
+		List<ReplyDTO> replyList = noticeService.AllReplyList(nno); 
+		int cnt = replyList.size();	// 댓글 수
+		model.addAttribute("replyList", replyList);
+		model.addAttribute("cnt", cnt);
 
 		return "notice/noticeDetail";
 	}
@@ -128,7 +128,30 @@ public class NoticeController {
 		return "redirect:/notice/list";
 	}
 	
+	//댓글 등록
+	@PostMapping("/addReply")
+  	@ResponseBody
+  	public void addReply(@RequestParam Map<String, Object> map) {
+  		
+  		noticeService.insertReply(map);
+  	}
 	
+	//댓글 수정
+	@PostMapping("/updateReply")
+	@ResponseBody
+	public void updateReply(@RequestParam Map<String, Object> map) {
+		
+		noticeService.updateReply(map);
+	}
+	
+	
+	//댓글 삭제
+  	@PostMapping("/removeReply")
+  	@ResponseBody
+  	public void removeReply(@RequestParam("rno") int rno) {
+  		
+  		noticeService.deleteReply(rno);
+  	}
 	
 	
 	
