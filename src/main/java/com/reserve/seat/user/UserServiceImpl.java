@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.reserve.seat.Criteria;
 import com.reserve.seat.mapper.UserMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -54,8 +55,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<User> getAllUser() {
-		return userMapper.listUser();
+	public List<User> getAllUser(Criteria cri) {
+		return userMapper.listUser(cri);
 	}
 
 	@Override
@@ -76,6 +77,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public boolean editUser(User user) {
 		return (userMapper.updateUser(user) != 0) ? true : false;
+	}
+
+	@Override
+	public int totalCount(Criteria cri) {
+		return userMapper.totalCount(cri);
 	}
 
 

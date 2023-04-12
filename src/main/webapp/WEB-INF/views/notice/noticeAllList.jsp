@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 전체 목록</title>
+<title>회원 전체 목록</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -102,11 +102,11 @@
 
       /* 전체 게시물 수 가져오기 위해 처리한 jsp URL 입력해주세요 */
       function getTotalCountUrl() {
-         return '/notice/total'
+         return '/user/total'
       }
       /* 게시물 가져오기 위해 처리한 jsp URL 입력해주세요 */
       function getListUrl() {
-         return '/notice/list'
+         return '/user/list'
       }
 
       function printList(data) {

@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.reserve.seat.Criteria;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +37,10 @@ public class UserController {
 
 	// 로그인 페이지
 	@GetMapping("/login")
-	public String loginForm(Model model) {
+	public String loginForm(Model model, String error) {
+		if(error != null) {
+			model.addAttribute("error", "아아디 또는 비밀번호가 맞지 않습니다.");
+		}
 		return "login";
 	}
 	
@@ -46,7 +52,7 @@ public class UserController {
 	
 	// 회원가입 처리
 	@PostMapping("/join")
-	public String joinUser(@Validated @ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String joinUser(@Validated @ModelAttribute("user") User user, BindingResult bindingResult) {
 		if (!user.getPassword().equals(user.getPasswordConfirm())) {
 		    bindingResult.rejectValue("passwordConfirm", "pwConfirm", "비밀번호가 일치하지 않습니다.");
 		}
@@ -85,18 +91,34 @@ public class UserController {
 	public String findPw(Model model) {
 		return "users/pwfind";
 	}
+	
 	// 전체 회원 목록
 	@GetMapping("/list")
-	public String listUser(Model model) {
-		List<User> userList = userService.getAllUser();
-	    model.addAttribute("userList", userList);
+	public String listPage(Model model) {
+//		List<User> userList = userService.getAllUser();
+//	    model.addAttribute("userList", userList);
 		return "users/list";
 	}
+	
 	// 회원 권한 변경
 	@PostMapping("/list")
 	public String changeAuth(@ModelAttribute("user") User user) {
 		userService.changeAutority(user);
 		return "redirect:/user/list";
+	}
+	
+	//페이지 수
+	@PostMapping("/total")
+	@ResponseBody
+	public int ListUserCount(@ModelAttribute("cri") Criteria cri) {
+		return userService.totalCount(cri);
+	}
+	
+	// 회원 목록 ajax 출력
+	@PostMapping("/listAjax")
+	@ResponseBody
+	public List<User> ListUser(@ModelAttribute("cri") Criteria cri) {
+		return userService.getAllUser(cri);
 	}
 	
 	// 회원 삭제
