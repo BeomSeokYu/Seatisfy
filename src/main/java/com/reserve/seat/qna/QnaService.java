@@ -7,7 +7,9 @@ import com.reserve.seat.Criteria;
 public interface QnaService {
 	public void insertQna(QnaDTO qna);
 	
-	public List<QnaDTO> qnaList(Criteria cri);
+	public List<QnaDTO> qnaList();
+	
+	public List<QnaDTO> qnaAllList(Criteria cri);
 	
 	public void updateQna(QnaDTO qna);
 	

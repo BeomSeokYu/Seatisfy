@@ -14,7 +14,7 @@ public class Criteria {
 	private String keyword;		// 검색어
 	
 	public Criteria() {		// 값을 지정하지 않은 경우 기본값
-		this(10, 0);			// 한 페이지에 게시물 8개, 페이지 번호는 1
+		this(5, 0);			// 한 페이지에 게시물 8개, 페이지 번호는 1
 	}
 	
 	public Criteria(int amount, int offset) {

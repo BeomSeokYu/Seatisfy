@@ -9,7 +9,7 @@ public interface QnaMapper {
 	
 	void insertQna(QnaDTO qna);
 	
-	List<QnaDTO> qnaList(Criteria cri);
+	List<QnaDTO> qnaAllList(Criteria cri);
 	
 	void updateQna(QnaDTO qna);
 	
@@ -18,4 +18,6 @@ public interface QnaMapper {
 	QnaDTO selectQna(String qno);
 
 	int totalCount(Criteria cri);
+
+	List<QnaDTO> qnaList();
 }
