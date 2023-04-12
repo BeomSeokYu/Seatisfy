@@ -1,48 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<div class="container border-bottom">
-  <header class="d-flex flex-wrap justify-content-center py-3 mb-4">
-  
-      <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none" href="/">
-      <img src="/resources/img/Python.png" alt="" height="50">
-      </a>
-
-    <ul class="nav nav-pills nav-main">
-      <li class="nav-item dropdown">
-          <a class="nav-link text-dark" href="/" role="button" aria-expanded="false">
-            소개
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/">서비스 소개</a></li>
-            <li><a class="dropdown-item" href="/">이용 방법</a></li>
-          </ul>
-        </li>
-       <li class="nav-item">
-          <a class="nav-link text-dark" href="/reserve" role="button" aria-expanded="false">
-            예약
-          </a>
-        </li>
-        
-        <li class="nav-item dropdown">
-          <a class="nav-link text-dark" href="/" role="button" aria-expanded="false">
-            지원
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/notice/list">공지사항</a></li>
-            <li><a class="dropdown-item" href="/qnas/list"><font style="vertical-align: inherit;">Q&A</font></a></li>
-          </ul>
-        </li>
-        
-        <li class="nav-item text-end">
-          <a class="nav-link text-dark" href="/user/login" role="button" aria-expanded="false">
-           로그인
-          </a>
-      	</li>
-    </ul>
-  </header>
-  
-</div>
-
-</div>
-</html>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            	메뉴
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/reserve">예약</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/notice">공지사항</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/qnas">Q&A</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/user/login">로그인</a></li>
+                <li class="nav-item dropdown">
+				    <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				        회원 아이디
+				    </a>
+				    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+				        <li><a class="dropdown-item" href="/user/detail">마이페이지</a></li>
+				        <li><a class="dropdown-item" href="#">내 게시글 보기</a></li>
+				        <li><a class="dropdown-item" href="#">내 예약 보기</a></li>
+				        <li><a class="dropdown-item" href="#">로그아웃</a></li>
+				    </ul>
+				</li>
+            </ul>
+        </div>
+    </div>
+</nav>

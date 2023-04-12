@@ -51,7 +51,7 @@ public class NoticeController {
 	}
 
 	//공지 전체 목록
-	@GetMapping("/list")
+	@GetMapping
 	public String NoticeList(Model model, Criteria cri) {
 		
 		model.addAttribute("list", noticeService.selectAllNotice(cri));
