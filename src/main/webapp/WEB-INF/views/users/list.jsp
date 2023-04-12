@@ -41,10 +41,13 @@
 						<thead>
 							<tr style="background-color: #999999; color: white;">
 								<th scope="col" class="col-2">번호</th>
-								<th scope="col" class="col-6">이메일</th>
-								<th scope="col" class="col-6">이름</th>
+								<th scope="col" class="col-2">이메일</th>
+								<th scope="col" class="col-2">이름</th>
 								<th scope="col" class="col-2">전화번호</th>
+								<th scope="col" class="col-2">권한</th>
 								<th scope="col" class="col-2">가입일</th>
+								<th scope="col" class="col-2">관리</th>
+								
 							</tr>
 						</thead>
 						<tbody id="imgList">
@@ -130,15 +133,72 @@
                   + data[i].uno	+"'\">"	+ data[i].username + "</a></td>" 
                   +'<td>' + data[i].name+ "</td>"
                   + '<td>' + data[i].phone  + "</td>"
-                  +"<td>" + data[i].udate + "</td></tr>" 
+                  +	"<td><select "
+                  +	"class='form-select form-select-sm	 aria-label='.form-select-sm example'>"
+                  +		"<option selected>" +data[i].authority + "</option>"
+                  +		"<option disabled>---------</option>"
+                  +		"<option value='ROLE_USER'>ROLE_USER</option>"
+                  +		"<option value='ROLE_ADMIN'>ROLE_ADMIN</option>"
+                  +		"</select></td>"
+                  +"<td>" + data[i].udate + "</td>" 
+                  +"<td><a href=\"javascript:removeUser("+ data[i].uno+")\"	class=\"btn btn-danger btn-sm\">삭제</a></td>"
+                  +"</tr>"
          }
          $('#imgList').html(imgHTML); 
       }	
+      
       
     //등록 버튼 클릭 이벤트 처리
   	$('#regBtn').on('click', function(){
   		self.location = "/user/join";
   	});
+    
+    // 회원 삭제 버튼
+  	function removeUser(uno) {
+		$.ajax({
+			type : "POST",
+			url : "/user/remove",
+			data : {
+				uno : uno
+			},
+			beforeSend : function(xhr) { /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
+			success : function(result) {
+				alert("회원이 삭제되었습니다.");
+			},
+			error : function(request, status, error) {
+				alert(request.status + " " + request.responseText);
+			}
+		})
+
+		window.location.reload();
+	}
+
+    //권한 변경 
+	function updateAuth(username, e) {
+		$.ajax({
+			type : "POST",
+			url : "/user/list",
+			data : {
+				username : username,
+				authority : e.value
+			},
+			beforeSend : function(xhr) { /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
+			success : function(result) {
+				alert("권한 정보 변경이 완료되었습니다.")
+				window.location.assign('/user/list');
+			},
+			error : function(request, status, error) {
+				alert(request.status + " " + request.responseText);
+			}
+		})
+
+		/* window.location.reload(); */
+		window.location.assign('/user/list');
+	}
   
 </script>      
 <script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

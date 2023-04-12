@@ -10,6 +10,7 @@ public interface UserMapper {
 	public void insertUser(User user);
 
 	public User findById(String username);
+	public String findIdByName(User user);
 	
 	public int updatePassword(User user);
 	

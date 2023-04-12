@@ -84,5 +84,10 @@ public class UserServiceImpl implements UserService{
 		return userMapper.totalCount(cri);
 	}
 
+	@Override
+	public String findId(User user) {
+		return userMapper.findIdByName(user);
+	}
+
 
 }

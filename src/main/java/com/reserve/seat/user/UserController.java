@@ -58,7 +58,7 @@ public class UserController {
 		}
 		 
 		if (bindingResult.hasErrors()) {
-			log.info("errors={}", bindingResult);
+//			log.info("errors={}", bindingResult);
 			return "users/joinform";
 		}
 		
@@ -92,11 +92,43 @@ public class UserController {
 		return "users/pwfind";
 	}
 	
+	// 아이디 찾기 폼
+	@GetMapping("/findid")
+	public String findIdForm(@ModelAttribute("user") User user) {
+		return "users/idfind";
+	}
+	// 아이디 찾기
+	@PostMapping("/findid")
+	public String findId(@ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		String IdFound = "";
+		if (user.getName().isEmpty() || user.getPhone().isEmpty()) {
+		    bindingResult.reject("error", "이름과 전화번호를 모두 입력해주세요.");
+		} else if( (IdFound = userService.findId(user)) == null ) {
+			bindingResult.reject("error", "해당 회원을 찾을 수 없습니다.");
+		}
+		 
+		if (bindingResult.hasErrors()) {
+//			log.info("errors={}", bindingResult);
+			return "users/idfind";
+		}
+		
+		// 이메일 일부 *처리
+		int atIndex = IdFound.indexOf("@");
+	    String maskedId = IdFound.substring(0, 4);
+	    for (int i = 4; i < atIndex; i++) {
+	    	maskedId += "*";
+	    }
+	    maskedId += IdFound.substring(atIndex);
+	    
+		//성공 로직
+		redirectAttributes.addFlashAttribute("idFound", maskedId);
+		
+		return "redirect:/user/findid";
+	}
+	
 	// 전체 회원 목록
 	@GetMapping("/list")
 	public String listPage(Model model) {
-//		List<User> userList = userService.getAllUser();
-//	    model.addAttribute("userList", userList);
 		return "users/list";
 	}
 	
@@ -148,7 +180,7 @@ public class UserController {
 	
 	// 회원 정보 수정
 	@PostMapping("/edit")
-	public String editUser(@ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String editUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
 		
 		if(user.getName().trim().isEmpty()) {
 			bindingResult.rejectValue("name", "blankName", "이름은 비워둘 수 없습니다.");
@@ -159,7 +191,7 @@ public class UserController {
 		}
 		
 		if (bindingResult.hasErrors()) {
-			log.info("errors={}", bindingResult);
+//			log.info("errors={}", bindingResult);
 			return "users/editform";
 		}
 		
@@ -189,7 +221,7 @@ public class UserController {
 		}
 		
 		if (bindingResult.hasErrors()) {
-			log.info("errors={}", bindingResult);
+//			log.info("errors={}", bindingResult);
 			return "users/pwchange";
 		}
 		

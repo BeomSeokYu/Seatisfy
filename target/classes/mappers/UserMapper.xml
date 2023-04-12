@@ -57,6 +57,13 @@
 		WHERE username = #{username} 
 	</select>
 	
+	<!-- 아이디 찾기  -->
+	<select id="findIdByName" resultType="String">
+		SELECT username 
+		FROM user 
+		WHERE name = #{name} AND phone = #{phone}
+	</select>
+	
 	<!-- 비밀번호 변경 -->
 	<update id="updatePassword">
 		UPDATE user 

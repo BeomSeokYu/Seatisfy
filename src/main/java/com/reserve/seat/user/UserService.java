@@ -9,6 +9,7 @@ public interface UserService {
 
 	public boolean changeTmpPw(User user);
 	public boolean changePw(User user);
+	public String findId(User user);
 	
 	public List<User> getAllUser(Criteria cri);
 	

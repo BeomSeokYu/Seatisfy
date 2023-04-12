@@ -56,14 +56,23 @@
                                         <input name="remember" type="checkbox" value="Remember Me">Remember Me
                                     </label>
                                 </div>
+                                 
+                                 <button class="btn btn-lg btn-info btn-block">Login</button> 
+                                 
+                                 <a href="javascript:kakaoLogin()">
+                                 	<img src="/resources/img/kakaologin.png" height="50" width="100">
+                                 </a>
+                                 
+                                 <hr>
+                                <div class="form-group">
+                                    <a href="/user/findid">아이디 찾기</a>
+                                </div>
                                  <div class="form-group">
                                     <a href="/user/findpw">비밀번호 찾기</a>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <!-- <a href="index.html" class="btn btn-lg btn-info btn-block">Login</a> -->
-                                 
-                                 <button class="btn btn-lg btn-info btn-block">Login</button> 
-                                 
+			
                                  <!-- 토큰 전송 -->
 		                         <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"> 
                             </fieldset>
