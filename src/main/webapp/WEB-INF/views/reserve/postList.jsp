@@ -126,6 +126,7 @@
 		}
 		var imgHTML = '';
 		for (var i = 0; i < data.length; i++) {
+			var name = getName(data[i].pwriter);
 			imgHTML += ''
 					+ "<tr onclick=\"location.href='/reserve/detail/"
 					+ data[i].pno + "'\"><td>" + data[i].pno + "</td>"
@@ -145,6 +146,10 @@
 	      popModal("오류 발생", "오류가 발생하였습니다. 다시 시도해주세요.")
 	   }
 	});
+	
+	function getName(ea) {
+		fetch()
+	}
 </script>
 
 </body>
