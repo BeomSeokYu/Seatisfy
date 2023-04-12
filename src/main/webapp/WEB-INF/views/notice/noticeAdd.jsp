@@ -12,14 +12,11 @@
 <head>
 <meta charset="UTF-8">
 <title>공지 등록</title>
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<%@include file="../include/header.jsp"%>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-</head>
 <body>
+<%@include file="../include/navbar.jsp"%>
 <%-- <form:form modelAttribute="notice" 
 			   action="./add?${_csrf.parameterName}=${_csrf.token}"
 	           class="form-horizontal"
@@ -73,7 +70,7 @@
 
 
 
-
+<%@include file="../include/footer.jsp"%>
 <script>
       $('#summernote').summernote({
         placeholder: 'Hello stand alone ui',

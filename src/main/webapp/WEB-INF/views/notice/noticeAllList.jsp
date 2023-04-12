@@ -90,7 +90,10 @@
 						
 					
 	<script src="/resources/js/page.js"></script>
-<script>				
+<script>		
+
+
+
 /*
        [form id 이걸로 하셈]
 
@@ -101,6 +104,11 @@
        */
 
       /* 전체 게시물 수 가져오기 위해 처리한 jsp URL 입력해주세요 */
+      
+      function getCsrfToken(){
+         return '${_csrf.token}';
+      } 
+      
       function getTotalCountUrl() {
          return '/notice/total'
       }
@@ -141,6 +149,8 @@
   		self.location = "/notice/add";
   	});
   
+    
+  	    
 </script>      
 <script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

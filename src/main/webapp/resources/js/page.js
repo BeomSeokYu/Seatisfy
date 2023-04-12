@@ -1,7 +1,7 @@
 /**
  * 페이지네이션 스크립트
  */
- 
+
 /* Criteria 객체 */
 var cri = {
 		amount : $('#selectAmount').val(),							// 한 페이지에 표시 할 목록 갯수
@@ -19,14 +19,20 @@ var pageObj = {
 		
 		pageCal : function(cri){
 			var total = 0;
+			var csrfToken = getCsrfToken();
 			fetch(getTotalCountUrl(), {	
 				method: "post",
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'X-CSRF-TOKEN': csrfToken
+				},
 				body: new URLSearchParams({
 						amount: cri.amount,
 						pageNum: cri.pageNum,
 						offset: cri.amount * (cri.pageNum - 1),
 						keyword: cri.keyword,
-						type: cri.type
+						type: cri.type,
+						csrfName: csrfToken // CSRF 토큰 값
 					})
 		        })
 				.then(resp => resp.text())
@@ -133,14 +139,20 @@ onload = function() {
 }
 
 function getList() {
+	var csrfToken = getCsrfToken();
 	fetch(getListUrl(), {	
 		method: "post",
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'X-CSRF-TOKEN': csrfToken
+		},
 		body: new URLSearchParams({
 				amount: cri.amount,
 				pageNum: cri.pageNum,
 				offset: cri.amount * (cri.pageNum - 1),
 				keyword: cri.keyword,
-				type: cri.type
+				type: cri.type,
+				csrfName: csrfToken // CSRF 토큰 값
 			})
         })
 		.then(resp => resp.json())
