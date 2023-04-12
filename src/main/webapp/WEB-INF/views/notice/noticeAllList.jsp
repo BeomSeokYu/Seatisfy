@@ -110,11 +110,11 @@
       } 
       
       function getTotalCountUrl() {
-         return '/user/total'
+         return '/notice/total'
       }
       /* 게시물 가져오기 위해 처리한 jsp URL 입력해주세요 */
       function getListUrl() {
-         return '/user/list'
+         return '/notice/list'
       }
 
       function printList(data) {

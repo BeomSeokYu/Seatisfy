@@ -43,7 +43,7 @@ public class QnaController {
         }
 	}
 	//목록
-	@GetMapping("/list")
+	@GetMapping
 	public String qnaList(Model model,@ModelAttribute Criteria cri) {
 //		List<QnaDTO> qnaList = qnaService.qnaList();
 //		model.addAttribute("qnaList", qnaList);
