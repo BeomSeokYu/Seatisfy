@@ -3,6 +3,7 @@
 
 <div class="container border-bottom">
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4">
+  
       <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none" href="/">
       <img src="/resources/img/Python.png" alt="" height="50">
       </a>
@@ -29,7 +30,7 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/notice/list">공지사항</a></li>
-            <li><a class="dropdown-item" href="/qnas/list">자주 묻는 질문</a></li>
+            <li><a class="dropdown-item" href="/qnas/list"><font style="vertical-align: inherit;">Q&A</font></a></li>
           </ul>
         </li>
         
@@ -40,4 +41,5 @@
       	</li>
     </ul>
   </header>
+  
 </div>

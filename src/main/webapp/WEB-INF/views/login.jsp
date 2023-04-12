@@ -63,6 +63,7 @@
                                 <!-- <a href="index.html" class="btn btn-lg btn-info btn-block">Login</a> -->
                                  
                                  <button class="btn btn-lg btn-info btn-block">Login</button> 
+                                 <button class="btn btn-lg btn-info btn-block">회원가입</button>
                                  
                                  <!-- 토큰 전송 -->
 		                         <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"> 
