@@ -1,5 +1,4 @@
-Manifest-Version: 1.0
-Built-By: BeomSeok
-Build-Jdk: 11.0.16.1
+Built-By: doo
+Build-Jdk: 1.8.0_361
 Created-By: Maven Integration for Eclipse
 
