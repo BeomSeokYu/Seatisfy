@@ -12,14 +12,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.reserve.seat.HomeController;
+import com.reserve.seat.reserve.service.ReserService;
+import com.reserve.seat.user.UserService;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
+	private final UserService userService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	/**
@@ -36,12 +44,13 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		
-		
-		
 		return "home";
+	}
 	
-	
+	@ResponseBody
+	@PostMapping("/uname")
+	public String getUserName(String username) {
+		return userService.getUserDetail(username).getName();
 	}
 	
 }

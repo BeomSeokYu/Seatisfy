@@ -2,6 +2,8 @@
 
 package com.reserve.seat.reserve.contoller;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,6 +23,8 @@ import com.reserve.seat.Criteria;
 import com.reserve.seat.reserve.domain.PostDTO;
 import com.reserve.seat.reserve.domain.ReserDTO;
 import com.reserve.seat.reserve.service.ReserService;
+import com.reserve.seat.user.User;
+import com.reserve.seat.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ReserController {
 	private final ReserService reserService;
+	private final UserService userService;
 	
 	@GetMapping
 	public String reserList(Model model, @ModelAttribute Criteria criteria) {
@@ -37,7 +43,7 @@ public class ReserController {
 //		model.addAttribute("list", list);
 //		int totalCount = reserMapper.totalCount(criteria);
 //		model.addAttribute("pageDTO", new PageDTO(criteria, totalCount));
-		return "reserve/reserList";
+		return "reserve/postList";
 	}
 	
 	@GetMapping("/add")
@@ -46,72 +52,81 @@ public class ReserController {
 	}
 	
 	@PostMapping("/add")
-	public String addForm(@Validated @ModelAttribute PostDTO postDTO, BindingResult bindingResult) {
+	public String addForm(@Validated @ModelAttribute PostDTO postDTO, BindingResult bindingResult, Principal principal) {
+		
 		if (bindingResult.hasErrors()) {
 	        return "/reserve/postForm";
 	    }
+		
+		if (postDTO.getStartdate() != null && postDTO.getEnddate() != null) {
+			LocalDateTime startDate = LocalDateTime.parse(postDTO.getStartdate());
+			LocalDateTime endDate = LocalDateTime.parse(postDTO.getEnddate());
+			
+			if (!endDate.isAfter(startDate)) {
+            	bindingResult.rejectValue("enddate", "startDate.after.endDate", "시작일보다 종료일이 먼저일 수 없습니다");
+            	return "/reserve/postForm";
+			}
+        }
+		
+		User user = userService.getUserDetail(principal.getName());
+		if (user == null) {
+			return "redirect:/user/login";
+		}
+		postDTO.setPwriter(principal.getName());
 		reserService.addPost(postDTO);
 		reserService.addSeat(postDTO.getSeatinfo(), postDTO.getPno());
 		return "redirect:/reserve";
 	}
 	
 	@GetMapping("/detail/{pno}")
-	public String detailView(@ModelAttribute ReserDTO reserDTO, Model model, @PathVariable int pno) {
-		model.addAttribute("post", reserService.getPost(pno));
+	public String detailView(@ModelAttribute ReserDTO reserDTO, Model model, @PathVariable int pno, Principal principal) {
+		PostDTO postDTO = reserService.getPost(pno);
+		postDTO.setPwriter(userService.getUserDetail(principal.getName()).getName());
+		model.addAttribute("post", postDTO);
 		model.addAttribute("seats", reserService.getSeatsByPost(pno));
 		model.addAttribute("seatinfo", reserService.getPost(pno).getSeatinfo());
-		
+		model.addAttribute("reser", reserService.getReserById(principal.getName()));
 		return "reserve/postDetail";
 	}
 	
-	
+	/**
+	 *  예약 실행 
+	 *  */
 	@PostMapping("/detail/{pno}")
 	public String reserve(@Validated @ModelAttribute ReserDTO reserDTO, 
 			@PathVariable int pno, 
-			RedirectAttributes redirectAttributes) {
-		log.info("{}", reserService.reserveSeat(reserDTO, null));
+			RedirectAttributes redirectAttributes,
+			Principal principal) {
+		
+		PostDTO post = reserService.getPost(pno);
+		LocalDateTime nowTime = LocalDateTime.now();
+		LocalDateTime startDate = LocalDateTime.parse(post.getStartdate());
+		LocalDateTime endDate = LocalDateTime.parse(post.getEnddate());
+		if (nowTime.isAfter(startDate) && nowTime.isBefore(endDate)) {
+			ReserDTO rdto = reserService.getReserByIdAndPno(principal.getName(), pno);
+			User user = userService.getUserDetail(principal.getName());
+			if (user == null) {
+				return "redirect:/user/login";
+			}
+			if (rdto == null && post.getPwriter().equals(user.getName())) {
+				reserService.reserveSeat(reserDTO, null);								
+			} else {
+				
+			}
+		}
 		redirectAttributes.addAttribute(reserService.getSeatsByPost(pno));
 		redirectAttributes.addAttribute("seatinfo", reserService.getPost(pno).getSeatinfo());
 		return "redirect: /reserve/detail/{pno}";
 	}
 	
-	@ResponseBody
-	@PostMapping
-	public List<PostDTO> reserListAPI(@ModelAttribute Criteria criteria) {
-		return reserService.getPostList(criteria);
+	
+	@GetMapping("/myreser")
+	public String myReserList() {
+		return "reserve/myReserList";
 	}
 	
-	@ResponseBody
-	@PostMapping("/total")
-	public int reserListtotalCountAPI(@ModelAttribute Criteria criteria) {
-		return reserService.getPostTotalCount(criteria);
+	@GetMapping("/mypost")
+	public String myPostList() {
+		return "reserve/myPostList";
 	}
-	
-	
-	
-	
-	
-	@GetMapping("test")
-	public void reserTest() {
-		log.info("{}", "get start");
-		
-//		log.info("{}", reserMapper.selectPost(1).getPcontent());
-//		reserMapper.insertPost(new PostDTO(null, "asdf", "asdf", "asdf", "asdf", "asdf", "asdf", "asdf", null, "asdf"));
-//		reserMapper.updatePost(new PostDTO(2, "zxcv", "zxcv", "zxcv", "zxcv", "zxcv", "zxcv", "zxcv", "zxcv", null));
-//		reserMapper.deletePost(2);
-//		log.info("{}", reserMapper.selectAllPost(new Criteria()));
-//		reserService.addReser(new ReserDTO(null, 1, 1, 1, "2023-01-01"));
-//		log.info("{}", reserService.getReser(1).getPno());
-//		reserService.editReser(new ReserDTO(1, 2, 1, 1, "2023-01-01"));
-//		reserService.removeReser(1);
-		
-//		seatService.addSeat(new SeatDTO(null, 3, true));
-//		log.info("{}", seatService.getSeat(2).getPno());
-//		seatService.editSeat(new SeatDTO(2, 10, false));
-//		seatService.removeSeat(2);
-		
-		
-		log.info("{}", "end");
-	}
-	
 }

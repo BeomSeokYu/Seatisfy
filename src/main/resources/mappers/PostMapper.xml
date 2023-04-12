@@ -2,12 +2,6 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
- <!-- 
-작성자 : 유범석 
-작성일 : 03-04-05
--->
-
 
 <mapper namespace="com.reserve.seat.mapper.PostMapper">
   <!-- 쿼리 보관 -->
@@ -44,11 +38,31 @@
 	]]>
   </select>
   
+  <select id="selectAllPostById" resultType="com.reserve.seat.reserve.domain.PostDTO">
+  	<![CDATA[
+	  	SELECT *
+	  	FROM post
+	  	WHERE]]>
+	  		<include refid="criteria"/>
+	<![CDATA[
+			pwriter = #{ pwriter }
+		ORDER BY pno DESC
+	  	LIMIT #{ amount } OFFSET #{ offset }
+	]]>
+  </select>
+  
   <select id="totalCount" resultType="int">
   	<![CDATA[
   		SELECT COUNT(*) FROM post WHERE ]]> 
   			<include refid="criteria"/> 
   	<![CDATA[ pno > 0 ]]>
+  </select>
+  
+    <select id="totalCountById" resultType="int">
+  	<![CDATA[
+  		SELECT COUNT(*) FROM post WHERE ]]> 
+  			<include refid="criteria"/> 
+  	<![CDATA[ pwriter = #{ pwriter } ]]>
   </select>
   
   <select id="selectPost" resultType="com.reserve.seat.reserve.domain.PostDTO">
@@ -59,7 +73,7 @@
   
   <insert id="insertPost" useGeneratedKeys="true" keyProperty="pno">
   	INSERT INTO post( 
-  		pwriter, 
+  		pwriter,
   		ptitle, 
   		pcontent, 
   		place, 
@@ -68,7 +82,7 @@
   		startdate, 
   		enddate, 
   		moddate) 
-  	VALUES(
+  	VALUES( 
   		#{pwriter}, 
   		#{ptitle}, 
   		#{pcontent}, 

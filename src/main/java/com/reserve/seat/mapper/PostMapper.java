@@ -7,6 +7,7 @@ package com.reserve.seat.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 
 import com.reserve.seat.Criteria;
 import com.reserve.seat.reserve.domain.PostDTO;
@@ -16,6 +17,14 @@ public interface PostMapper {
 	
 	// 게시물 전체 가져오기
 	public List<PostDTO> selectAllPost(Criteria criteria);
+	
+	// 작성자로 게시물 전체 가져오기
+	public List<PostDTO> selectAllPostById(
+			@Param("amount") int amount,
+			@Param("offset") int offset,
+			@Param("typeArr") String[] typeArr,
+			@Param("keyword") String keyword,
+			@Param("pwriter") String pwriter);
 	
 	// 게시물 하나 가져오기
 	public PostDTO selectPost(int pno);
@@ -31,4 +40,12 @@ public interface PostMapper {
 	
 	// 게시물 수 가져오기
 	public int totalCount(Criteria criteria);
+	
+	// 작성자로 게시물 수 가져오기
+	public int totalCountById(
+			@Param("amount") int amount,
+			@Param("offset") int offset,
+			@Param("typeArr") String[] typeArr,
+			@Param("keyword") String keyword,
+			@Param("pwriter") String pwriter);
 }

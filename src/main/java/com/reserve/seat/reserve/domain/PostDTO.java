@@ -7,8 +7,6 @@ package com.reserve.seat.reserve.domain;
 
 import javax.validation.constraints.NotBlank;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.reserve.seat.reserve.validator.DateTimeLocal;
 import com.reserve.seat.reserve.validator.SeatInfo;
 
@@ -24,15 +22,17 @@ import lombok.Setter;
 public class PostDTO {
 	private Integer pno;
 	
+	private String email;
+	
 	private String pwriter;
 	
-	@NotBlank
+	@NotBlank(message = "제목을 비워둘 순 업습니다")
 	private String ptitle;
-	@NotBlank
+	@NotBlank(message = "내용을 비워둘 순 업습니다")
 	private String pcontent;
-	@NotBlank
+	@NotBlank(message = "장소를 비워둘 순 업습니다")
 	private String place;
-	@NotBlank
+	@NotBlank(message = "주소를 비워둘 순 업습니다")
 	private String address;
 	
 	@SeatInfo
@@ -43,6 +43,7 @@ public class PostDTO {
 	
 	@DateTimeLocal
 	private String enddate;
+	
 	private String regdate;
 	private String moddate;
 }

@@ -12,7 +12,7 @@
 <div class="container">
 	<div class="photo-gallery container mb-3">
 		<div class="row justify-content-center">
-			<h2>예약</h2>
+			<h2>내 예약 목록</h2>
 			<%-- <div class="col-lg-3 d-none d-lg-block">
 				<%@ include file="/include/sidebar4.jsp"%>
 			</div> --%>
@@ -30,7 +30,7 @@
 					</div>
 					<div class="col-9 text-end">
 					<%-- <% if (sid != null) { // 세션 처리 %> --%>
-						<a href="/reserve/add" class="btn btn-sm btn-outline-success">예약 등록 </a>
+						<a href="/reserve" class="btn btn-sm btn-outline-success">예약 하러 가기 </a>
 					<%-- <%} %> --%>
 					</div>
 				</div>
@@ -92,10 +92,9 @@
 	
 
 <%@ include file="../include/footer.jsp"%>	
-
 <script src="/resources/js/page.js"></script>
-
 <script>
+
 	/*
 	 [form id 이걸로 하셈]
 
@@ -104,16 +103,20 @@
 	 검색 선택 셀렉트 : selectType
 	 게시글 표시 갯수 셀렉트 : selectAmount
 	 */
-
+	
 	/* 전체 게시물 수 가져오기 위해 처리한 jsp URL 입력해주세요 */
 	function getTotalCountUrl() {
-		return '/reserve/total'
+		return '/reser/myreser/total'
 	}
 	/* 게시물 가져오기 위해 처리한 jsp URL 입력해주세요 */
 	function getListUrl() {
-		return '/reserve'
+		return '/reser/myreser'
 	}
-
+	
+	function getCsrfToken() {
+		return '${_csrf.token}';
+	}
+	
 	function printList(data) {
 		//TODO: 리스트 출력 처리 하세요
 		if (data.length < 1) {
