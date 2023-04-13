@@ -27,6 +27,7 @@
 </style>
 <body>
 
+<%@include file="../include/navbar.jsp"%>
 	 <%-- <form:form modelAttribute="updateNotice"
 		action="./update?nno=${notice.nno}" class="form-horizontal"
 		method="post">
@@ -63,9 +64,9 @@
 
 		</fieldset>
 	</form:form>  --%>
-<%@include file="../include/navbar.jsp"%>
 
- <div class="col-lg-8 mx-auto p-4 py-md-5">
+
+  <div class="col-lg-8 mx-auto p-4 py-md-5">
 <form action="./update?nno=${notice.nno}" class="form-horizontal" method="post">
 	   <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 		<fieldset>
@@ -119,8 +120,7 @@
 		</fieldset>
 		
 	</form>
-</div>
-
+</div> 
 
 
 <script>

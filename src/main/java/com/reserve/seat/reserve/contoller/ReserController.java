@@ -277,7 +277,6 @@ public class ReserController {
 		reserService.updateReply(replyDTO);
 	}
 	
-	
 	//댓글 삭제
   	@PostMapping("/removeReply")
   	@ResponseStatus(code = HttpStatus.OK)
