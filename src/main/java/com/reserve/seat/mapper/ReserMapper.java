@@ -41,5 +41,5 @@ public interface ReserMapper {
 			@Param("pno")int pno);
 	
 	// 예약 수 가져오기
-	public int totalCount();
+	public int totalCount(String username);
 }

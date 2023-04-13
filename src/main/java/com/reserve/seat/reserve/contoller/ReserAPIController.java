@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reserve.seat.Criteria;
+import com.reserve.seat.reply.ReplyDTO;
 import com.reserve.seat.reserve.domain.PostDTO;
 import com.reserve.seat.reserve.domain.ReserDTO;
 import com.reserve.seat.reserve.service.ReserService;
@@ -86,7 +87,17 @@ public class ReserAPIController {
 	}
 	
 	@PostMapping("/myreser/total")
-	public int myReserListtotalCountAPI() {
-		return reserService.getReserTotalCount();
+	public int myReserListtotalCountAPI(Principal principal) {
+		return reserService.getReserTotalCount(principal.getName());
+	}
+	
+	@PostMapping("/reply")
+	public List<ReplyDTO> replyListAPI(int amount, int offset, int pno) {
+		return reserService.AllReplyList(amount, offset , pno);
+	}
+	
+	@PostMapping("/reply/total")
+	public int replyListtotalCountAPI(int pno) {
+		return reserService.getReplyTotalCount(pno);
 	}
 }

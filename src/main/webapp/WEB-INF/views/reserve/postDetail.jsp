@@ -3,7 +3,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <html>
 <%@include file="../include/header.jsp"%>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -200,52 +199,32 @@
 	</div>
 </div>
 
+<div class="container mt-5">
 <!-- 댓글 시작 -->
  <hr>
  <div>
 
-		<div class="post_reply">
-			
-			<textarea class="form-control col-sm-5" rows="5" id="rcontent" name="rcontent"></textarea>
-			<div class="replyinsert_wrap">
-				<input type="hidden" name="pno" id="pno" value="${post.pno }">
-				<button class="btn btn-primary" onclick="replyNewFunction()">답변등록</button>
-			</div>
+		<div class="post_reply row p-5">
+			<textarea class="col-sm-10 rounded" rows="2" id="rcontent" name="rcontent"></textarea>
+			<button class="btn btn-primary col-sm-2" onclick="replyNewFunction()">답변등록</button>
 		</div>
 
 	</div>   
  
  
 <hr>
-
-
+<div id="cnt" class="px-1 py-3"></div>
 <div class="card">
-  <b>${cnt }개의 답변이 있습니다.</b>
-   <c:forEach items="${replyList}" var="reply">
-   
-    <div class="card">
-      <div class="card-header">작성자 : <b>${user.name}</b></div>
-      <div class="card-body">
-        <blockquote class="blockquote mb-0">
-          <p id="${reply.rno}">${reply.rcontent}</p>
-          <div class="d-flex justify-content-end">
-          
-            <footer class="blockquote-footer" id="regDate${reply.rno }">${reply.regDate}</footer>
-            
-            <button type="button" class='btn btn-primary' style='display:none' id="replyUpdateBtn${reply.rno }" onclick="updateReply(${reply.rno})">완료</button>
-            <button type="button" class='btn btn-secondary' style='display:none' id="cancelBtn${reply.rno }" onclick="cancel(${reply.rno})">취소</button>
-            <button type="button" class="btn btn-warning" id="modifyReplyBtn${reply.rno }"  onclick="modifyReply(${reply.rno})">수정</button>
-            <button type="button" class="btn btn-danger" id="deleteReplyBtn${reply.rno }" onclick="deleteReply(${reply.rno})">삭제</button>
-          </div>
-        </blockquote>
-      </div>
-    </div>
-  </c:forEach> 
+  <div id="imgList">
+  </div>
+  <ul class="pagination justify-content-center" id="pagination">
+
+	</ul>
   </div>
   
 						
 					<hr> 
- 
+ </div>
 
 
 
@@ -288,74 +267,115 @@
 
 
 
-
+<input type="text" id="selectAmount" value="5">
 
 <%@include file="../include/scriptUtil.jsp"%>
+<script src="/resources/js/page.js"></script>
 <script>
 
-var csrfToken = getCsrfToken();
+/* 전체 게시물 수 가져오기 위해 처리한 jsp URL 입력해주세요 */
+function getTotalCountUrl() {
+	return '/reser/reply/total';
+}
+/* 게시물 가져오기 위해 처리한 jsp URL 입력해주세요 */
+function getListUrl() {
+	return '/reser/reply';
+}
 
-function getCsrfToken(){
-    return '${_csrf.token}';
+function getCsrfToken() {
+	return '${_csrf.token}';
+}
+
+function printList(data) {
+	console.log(data);
+	//TODO: 리스트 출력 처리 하세요
+	var imgHTML = '';
+	if (data.length < 1) {
+		imgHTML ='<div class="card text-center"><div class="card-header">등록된 댓글이 없습니다.</div></div>'
+	}
+	for (var i = 0; i < data.length; i++) {
+		imgHTML += ''
+				+ '<div class="card">'
+      			+ '<div class="card-header row">'
+      			+ '<span class="col-8">'
+      				+'작성자 : <b id="'+i+'">'+ data[i].rwriter+ '</b>'
+      			+ '</span>'
+      			+ '<span class="col-4 text-end">';
+      			if ('${username}' == data[i].rwriter) {
+      				imgHTML += '<button type="button" class="btn btn-sm btn-primary" style="display:none" id="replyUpdateBtn'+data[i].rno +'" onclick="updateReply(\''+data[i].rno+'\')">완료</button>'
+		            + '<button type="button" class="btn btn-sm btn-secondary" style="display:none" id="cancelBtn'+data[i].rno +'" onclick="cancel(\''+data[i].rno+'\')">취소</button>'
+		            + '<button type="button" class="btn btn-sm btn-warning" id="modifyReplyBtn'+data[i].rno+'"  onclick="modifyReply(\''+data[i].rno+'\')">수정</button>'
+		            + '<button type="button" class="btn btn-sm btn-danger" id="deleteReplyBtn'+data[i].rno+'" onclick="deleteReply(\''+data[i].rno+'\')">삭제</button>';
+      			}
+      			imgHTML += '</span>'
+      			+ '</div>'
+	      		+ '<div class="card-body">'
+	        	+ '<blockquote class="blockquote mb-0">'
+	          	+ '<p id="'+data[i].rno+'">'+  data[i].rcontent +'</p>'
+	          	+ '<div class="d-flex justify-content-end">'
+	            + '<footer class="blockquote-footer" id="regDate'+data[i].rno+'">'+data[i].regDate+'</footer>'
+	          	+ '</div></blockquote></div></div>';
+	          	getName(data[i].rwriter, i)
+	}
+	$('#imgList').html(imgHTML);
 }
 
 function replyNewFunction() {
-	var pno = document.getElementById('pno').value;
 	/* var rwriter = document.getElementById('rwriter').value; */
-	var rwriter = "admin";
+	var rwriter = '${username}';
 	var rcontent = document.getElementById('rcontent').value;
 	
-	console.log(pno);
 	console.log(rcontent);
 	console.log(rwriter);
 	
-	$.ajax({
-		type:"POST",
+	
+	fetch("/reserve/addReply", {
+		method: "post",
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded',
-			'X-CSRF-TOKEN': csrfToken
+			'X-CSRF-TOKEN': '${_csrf.token}'
 		},
-		url:"/reserve/addReply",
-		data:{
-			pno : pno,
-			csrfName: csrfToken,
+		body: new URLSearchParams({
+			pno : '${ post.pno }',
 			rwriter : rwriter,
 			rcontent : rcontent
-		},
-		success:function(result) {
-			window.location.reload();
-		},
-		error:function(request, status, error) {
-			alert(request.status + " " +request.responseText);
-		}
-	});
+		})})
+		.then(resp => resp.text())
+		.then(data => {
+			data.trim()
+			console.log(data);
+			$('#rcontent').val('')
+			pageObj.pageCal(cri);
+		})
 }
 
 function deleteReply(rno) {
-	
-  $.ajax({
-    type: "POST",
-    headers: {
-		'Content-Type': 'application/x-www-form-urlencoded',
-		'X-CSRF-TOKEN': csrfToken
-	},
-    url: "/reserve/removeReply",
-    data: { rno: rno, 
-    	csrfName: csrfToken
-    },
-    success: function (result) {
-      // 삭제가 성공하면 댓글 목록을 갱신한다.
-      location.reload();
-    },
-    error: function (request, status, error) {
-      alert(request.status + " " + request.responseText);
-    },
-  });
+	rno.trim();
+	if(confirm('정말로 삭제하시겠습니까?')) {
+	  $.ajax({
+	    type: "POST",
+	    headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'X-CSRF-TOKEN': '${_csrf.token}'
+		},
+	    url: "/reserve/removeReply",
+	    data: { 
+	    	rno: rno, 
+	    },
+	    success: function (result) {
+	      // 삭제가 성공하면 댓글 목록을 갱신한다.
+	    	pageObj.pageCal(cri);
+	    },
+	    error: function (request, status, error) {
+	      alert(request.status + " " + request.responseText);
+	    },
+	  });
+	}
 }
 
 //수정 버튼을 누르면
 function modifyReply(rno){
-	
+	rno.trim();
 		  const replyContent = document.getElementById(rno).innerText; // 해당 댓글의 내용을 가져옴
 		  const replyElement = document.getElementById(rno); // 해당 댓글의 p 요소
 		  const textarea = document.createElement('textarea'); // 새로운 textarea 요소 생성
@@ -383,6 +403,7 @@ function modifyReply(rno){
 
 //완료 버튼을 누르면
 function updateReply(rno) {
+	rno.trim();
 	  // 댓글 수정 완료 후 처리 로직
 	  // 수정된 댓글 내용 가져오기
   var modifiedContent = document.getElementById(rno).value;
@@ -391,12 +412,11 @@ function updateReply(rno) {
     type: "POST",
     headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
-		'X-CSRF-TOKEN': csrfToken
+		'X-CSRF-TOKEN': '${_csrf.token}'
 	},
     url: "/reserve/updateReply",
     data: {
       rno : rno,
-      csrfName: csrfToken,
       rcontent: modifiedContent
     },
     success: function(result) {
@@ -421,7 +441,7 @@ function updateReply(rno) {
       replyUpdateBtn.style.display = "none";
       cancelBtn.style.display = "none";
       
-      location.reload();
+      pageObj.pageCal(cri);
     },
     error: function(xhr, status, error) {
       // 에러 처리 로직
@@ -734,6 +754,181 @@ function checkMinMaxRange(TagNameById) {
 
 removeAllParam();
 </script>
+<script>
+/**
+ * 페이지네이션 스크립트
+ */
 
+/* Criteria 객체 */
+var cri = {
+		amount : $('#selectAmount').val(),							// 한 페이지에 표시 할 목록 갯수
+		pageNum : 1,
+		type : null,
+		keyword : null
+}
+/* Pagination 정보 객체 */
+var pageObj = {
+		NUM_PER_PAGE : 5.0,					// 한 페이지에 표시 할 페이지 번호 수
+		start : 1,							// 시작 페이지 번호
+		end : this.NUM_PER_PAGE,			// 끝 페이지 번호
+		isPrevious : false,					// 이전
+		isNext : false,						// 다음
+		
+		pageCal : function(cri){
+			var total = 0;
+			var csrfToken = getCsrfToken();
+			fetch(getTotalCountUrl(), {	
+				method: "post",
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'X-CSRF-TOKEN': csrfToken
+				},
+				body: new URLSearchParams({
+						pno : '${ post.pno }'
+					})
+		        })
+				.then(resp => resp.text())
+				.then(data => {
+					data.trim()
+					console.log(data);
+					total = data*1
+					setPage(total, cri, this);
+					$('#cnt').html(total+'개의 답변이 있습니다.');
+				})
+		}
+}
+
+// 페이지네이션 설정 함수
+function setPage(total, cri, pageObj) {
+	var pages = Math.ceil(total / cri.amount);
+	pageObj.end = (Math.ceil(cri.pageNum / pageObj.NUM_PER_PAGE) * pageObj.NUM_PER_PAGE);
+	pageObj.start = (pageObj.end - (pageObj.NUM_PER_PAGE - 1));
+	pageObj.end = pageObj.end >= pages ? pages : pageObj.end;	// 실제 끝 페이지 번호 확인
+	pageObj.isPrevious = pageObj.start > 1;
+	pageObj.isNext = pageObj.end < pages;
+	
+	
+	var pageHTML = '';
+	//<!-- previous -->
+	if (pageObj.isPrevious) {
+		pageHTML += ''
+		+'<li class="page-item">'
+			+'<button type="button" class="page-link" onclick="previous()" aria-label="Previous">'
+				+'<span aria-hidden="true">&laquo;</span>'
+				+'<span class="sr-only">이전</span>'
+			+'</button>'
+		+'</li>'
+	}
+	//<!-- page -->
+	for (var i = pageObj.start; i <= pageObj.end; i++) {
+		pageHTML += ''
+		+'<li class="page-item ' + (cri.pageNum == i ? 'active disabled' : '') +'">'
+			+'<button class="page-link" onclick="pageBtn('+i+')">'+i+'</button>'
+		+'</li>'
+	}
+	//!-- next -->
+	if (pageObj.isNext) {
+		pageHTML += ''
+		+'<li class="page-item">'
+			+'<button type="button" class="page-link" onclick="next()" aria-label="Next">'
+				+'<span class="sr-only">다음</span>'
+				+'<span aria-hidden="true">&raquo;</span>'
+			+'</button>'
+		+'</li>'
+	}
+	console.log(pageHTML)
+	$('#pagination').html(pageHTML);
+	getList();
+}
+
+/* 현재 버튼 클릭 시 실행 함수 */
+function pageBtn(pageNum) {
+	cri.pageNum = pageNum;
+	pageObj.pageCal(cri);
+}
+/* 이전 버튼 클릭 시 실행 함수 */
+function previous() {
+	pageObj.start -= 1;
+	cri.pageNum = pageObj.start
+	pageObj.pageCal(cri);
+}
+/* 다음 버튼 클릭 시 실행 함수 */
+function next() {
+	pageObj.end += 1;
+	cri.pageNum = pageObj.end
+	pageObj.pageCal(cri);
+}
+
+//-------------- 게시글 표시 갯수 변경 ---------------
+$('#selectAmount').on('change', function(){
+	cri.amount = $(this).val();
+	cri.pageNum = 1;
+	pageObj.start = 1;
+	pageObj.end = pageObj.NUM_PER_PAGE
+	pageObj.pageCal(cri);
+});
+
+
+// -------------- 검색 관련 ---------------
+$('#searchBtn').on('click', function(){
+	searchExe();
+});
+$('#keyword').on("keypress", function(){
+	if(event.keyCode == 13) {
+		searchExe();
+	}
+})
+
+function searchExe() {
+
+	cri.pageNum = 1
+	cri.keyword = $('#keyword').val()
+	cri.type = $('#selectType').val()
+	pageObj.pageCal(cri);
+}
+
+onload = function() {
+	pageObj.pageCal(cri);
+}
+
+function getList() {
+	var csrfToken = getCsrfToken();
+	fetch(getListUrl(), {	
+		method: "post",
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'X-CSRF-TOKEN': csrfToken
+		},
+		body: new URLSearchParams({
+				amount: cri.amount,
+				offset: cri.amount * (cri.pageNum - 1),
+				pno : '${ post.pno }'
+			})
+        })
+		.then(resp => resp.json())
+		.then(data => {
+			console.log(data);
+			printList(data);
+		})
+}
+
+function getName(email, i) {
+	fetch("/uname", {	
+		method: "post",
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'X-CSRF-TOKEN': '${ _csrf.token }'
+		},
+		body: new URLSearchParams({
+				username: email
+			})
+        })
+		.then(resp => resp.json())
+		.then(data => {
+			console.log(data.name);
+			$('#'+i).html(data.name);
+		})
+}
+</script>
 </body>
 </html>

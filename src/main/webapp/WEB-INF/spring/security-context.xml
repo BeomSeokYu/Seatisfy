@@ -14,10 +14,11 @@
 		<security:intercept-url pattern="/qnas/add" access="hasRole('ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/qnas/update" access="hasRole('ROLE_ADMIN')"/>
 		
-		<security:intercept-url pattern="/user/*" access="isAuthenticated()"/>
-		<security:intercept-url pattern="/reserve/*" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/user/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/reserve" access="permitAll"/>
+		<security:intercept-url pattern="/reserve/**" access="isAuthenticated()"/>
 								
-		<security:intercept-url pattern="/*" access="permitAll"/>
+		<security:intercept-url pattern="/**" access="permitAll"/>
 		
 		<security:intercept-url pattern="/login" access="isAnonymous()"  />
 		<security:intercept-url pattern="/join" access="isAnonymous()"  />

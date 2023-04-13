@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mysql.cj.log.Log;
 import com.reserve.seat.Criteria;
 import com.reserve.seat.reply.ReplyDTO;
 import com.reserve.seat.reserve.domain.PostDTO;
@@ -153,6 +156,7 @@ public class ReserController {
 			@PathVariable int pno, 
 			Principal principal
 			) {
+		
 		PostDTO postDTO = reserService.getPost(pno);
 		String name = userService.getUserDetail(postDTO.getPwriter()).getName();
 		if (name != null) {
@@ -165,10 +169,10 @@ public class ReserController {
 		model.addAttribute("username", principal.getName());
 		
 		//댓글 조회
-		List<ReplyDTO> replyList = reserService.AllReplyList(String.valueOf(pno)); 
-		int cnt = replyList.size();	// 댓글 수
-		model.addAttribute("replyList", replyList);
-		model.addAttribute("cnt", cnt);
+//		List<ReplyDTO> replyList = reserService.AllReplyList(String.valueOf(pno)); 
+//		int cnt = replyList.size();	// 댓글 수
+//		model.addAttribute("replyList", replyList);
+//		model.addAttribute("cnt", cnt);
 		
 		return "reserve/postDetail";
 	}
@@ -257,25 +261,27 @@ public class ReserController {
 	
 	//댓글 등록
 	@PostMapping("/addReply")
-  	@ResponseBody
-  	public void addReply(@RequestParam Map<String, Object> map) {
-  		
-  		reserService.insertReply(map);
+  	@ResponseStatus(code = HttpStatus.OK)
+  	public void addReply(@ModelAttribute ReplyDTO replyDTO) {
+		System.out.println(replyDTO.getPno());
+		System.out.println(replyDTO.getRcontent());
+		System.out.println(replyDTO.getRwriter());
+  		reserService.insertReply(replyDTO);
   	}
 	
 	//댓글 수정
 	@PostMapping("/updateReply")
-	@ResponseBody
-	public void updateReply(@RequestParam Map<String, Object> map) {
+	@ResponseStatus(code = HttpStatus.OK)
+	public void updateReply(@ModelAttribute ReplyDTO replyDTO) {
 		
-		reserService.updateReply(map);
+		reserService.updateReply(replyDTO);
 	}
 	
 	
 	//댓글 삭제
   	@PostMapping("/removeReply")
-  	@ResponseBody
-  	public void removeReply(@RequestParam("rno") int rno) {
+  	@ResponseStatus(code = HttpStatus.OK)
+  	public void removeReply(int rno) {
   		
   		reserService.deleteReply(rno);
   	}

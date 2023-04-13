@@ -14,6 +14,7 @@ import com.reserve.seat.mapper.NoticeMapper;
 import com.reserve.seat.mapper.PostMapper;
 import com.reserve.seat.mapper.ReserMapper;
 import com.reserve.seat.mapper.SeatMapper;
+import com.reserve.seat.mapper.ReplyMapper;
 import com.reserve.seat.reply.ReplyDTO;
 import com.reserve.seat.reserve.domain.PostDTO;
 import com.reserve.seat.reserve.domain.ReserDTO;
@@ -29,6 +30,7 @@ public class ReserServiceImpl implements ReserService {
 	private final PostMapper postMapper;
 	private final ReserMapper reserMapper;
 	private final SeatMapper seatMapper;
+	private final ReplyMapper replyMapper;
 
 
 	/**
@@ -60,8 +62,8 @@ public class ReserServiceImpl implements ReserService {
 	}
 
 	@Override
-	public int getReserTotalCount() {
-		return reserMapper.totalCount();
+	public int getReserTotalCount(String username) {
+		return reserMapper.totalCount(username);
 	}
 	
 	
@@ -182,28 +184,34 @@ public class ReserServiceImpl implements ReserService {
 	}
 	
 		//댓글 등록
-		public void insertReply(Map map) {
-			postMapper.insertReply(map);
+		public void insertReply(ReplyDTO replyDTO) {
+			replyMapper.insertReply(replyDTO);
 		}
 		
 		//댓글 수정
-		public void updateReply(Map map) {
-			postMapper.updateReply(map);
+		public void updateReply(ReplyDTO replyDTO) {
+			replyMapper.updateReply(replyDTO);
 		}
 		
 		//댓글 삭제
 		public void deleteReply(int rno) {
-			postMapper.deleteReply(rno);;
+			replyMapper.deleteReply(rno);;
 		}
 
 		//특정 댓글 하나 조회
 		public ReplyDTO selectReply(String rno) {
-			return postMapper.selectReply(rno);
+			return replyMapper.selectReply(rno);
 		}
 		
 		//전체 댓글 조회
-		public List<ReplyDTO> AllReplyList(String pno){
-			return postMapper.AllReplyList(pno);
+		public List<ReplyDTO> AllReplyList(int amount, int offset, int pno){
+			System.out.println(amount +" / "+ offset +" / "+ pno);
+			return replyMapper.AllReplyList(amount, offset, pno);
+		}
+
+		@Override
+		public int getReplyTotalCount(int pno) {
+			return replyMapper.totalCount(pno);
 		}
 	
 }

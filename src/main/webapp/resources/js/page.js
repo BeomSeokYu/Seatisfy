@@ -28,11 +28,9 @@ var pageObj = {
 				},
 				body: new URLSearchParams({
 						amount: cri.amount,
-						pageNum: cri.pageNum,
 						offset: cri.amount * (cri.pageNum - 1),
 						keyword: cri.keyword,
-						type: cri.type,
-						csrfName: csrfToken // CSRF 토큰 값
+						type: cri.type
 					})
 		        })
 				.then(resp => resp.text())
@@ -148,11 +146,9 @@ function getList() {
 		},
 		body: new URLSearchParams({
 				amount: cri.amount,
-				pageNum: cri.pageNum,
 				offset: cri.amount * (cri.pageNum - 1),
 				keyword: cri.keyword,
-				type: cri.type,
-				csrfName: csrfToken // CSRF 토큰 값
+				type: cri.type
 			})
         })
 		.then(resp => resp.json())
