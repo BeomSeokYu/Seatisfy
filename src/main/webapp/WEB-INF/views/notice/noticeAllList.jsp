@@ -139,6 +139,8 @@
                   + data[i].nno + "'\">"		  
             	  +"<td>" + data[i].nno + "</td>"
                   + "<td>" + data[i].ntitle + "</td>"
+                  + '<td id=' + i +'>'
+				  + getName(data[i].nwriter, i) + '</td>'
                   + '<td>' + formatRegDate  + "</td>"
                   +"<td>" + formatModDate + "</td></a></tr>" 
          }
@@ -150,6 +152,23 @@
   		self.location = "/notice/add";
   	});
   
+  	function getName(email, i) {
+		fetch("/uname", {	
+			method: "post",
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'X-CSRF-TOKEN': '${ _csrf.token }'
+			},
+			body: new URLSearchParams({
+					username: email
+				})
+	        })
+			.then(resp => resp.json())
+			.then(data => {
+				console.log(data.name);
+				$('#'+i).html(data.name);
+			})
+	}
     
   	    
 </script>      

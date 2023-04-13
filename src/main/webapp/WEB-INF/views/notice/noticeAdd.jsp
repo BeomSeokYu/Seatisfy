@@ -39,7 +39,7 @@
 						<form:textarea class="form-control" id="summernote" path="ncontent"	rows="5" />
 						<form:errors path="ncontent"/>
 					</div>
-					<form:input type="hidden" path="nwriter" value="${user.name}" />
+					<form:input type="hidden" path="nwriter" value="${user.username}" />
 				</div>
 				<div style="text-align: right;">
 							<!-- 토큰 전송 -->

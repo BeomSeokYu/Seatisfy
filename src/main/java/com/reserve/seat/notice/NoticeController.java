@@ -92,9 +92,10 @@ public class NoticeController {
 	public String requestNoticeByNum(@RequestParam("nno") String nno, Model model, Principal principal) {
 		
 		//폼을 띄우기 전에 조회수 하나 증가
+		model.addAttribute("username", principal.getName());
 		
-		User user = userService.getUserDetail(principal.getName());
-		model.addAttribute("user", user);
+//		User user = userService.getUserDetail(principal.getName());
+//		model.addAttribute("user", user);
 		
 		NoticeDTO noticeNum = noticeService.detailNotice(nno);
 		model.addAttribute("notice", noticeNum);
