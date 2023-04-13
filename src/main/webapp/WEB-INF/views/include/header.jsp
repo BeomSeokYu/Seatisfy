@@ -40,3 +40,14 @@
  
  
 </head>
+<style>
+.table-rounded {
+    border-radius: 10px;
+    overflow: hidden;
+}
+.sidebar {
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	height: 100%;
+}
+</style>

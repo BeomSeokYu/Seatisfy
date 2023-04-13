@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.reserve.seat.Criteria;
+import com.reserve.seat.mapper.SeatMapper;
 import com.reserve.seat.reserve.domain.PostDTO;
 import com.reserve.seat.reserve.domain.ReserDTO;
 import com.reserve.seat.reserve.service.ReserService;
@@ -38,11 +39,10 @@ public class ReserController {
 	private final UserService userService;
 	
 	@GetMapping
-	public String reserList(Model model, @ModelAttribute Criteria criteria) {
-//		List<PostDTO> list = reserService.getListAll(criteria != null ? criteria : new Criteria());
-//		model.addAttribute("list", list);
-//		int totalCount = reserMapper.totalCount(criteria);
-//		model.addAttribute("pageDTO", new PageDTO(criteria, totalCount));
+	public String reserList(@ModelAttribute Criteria criteria,
+			Model model,
+			Principal principal) {
+		model.addAttribute("username", principal.getName());
 		return "reserve/postList";
 	}
 	
@@ -78,14 +78,93 @@ public class ReserController {
 		return "redirect:/reserve";
 	}
 	
+	@GetMapping("/edit/{pno}")
+	public String editView(@ModelAttribute PostDTO postDTO,
+			@PathVariable int pno, 
+			Model model,
+			Principal principal) {
+		
+		postDTO = reserService.getPost(pno);
+		model.addAttribute("post", postDTO);
+		if (!principal.getName().equals(postDTO.getPwriter())) { // 작성자 확인 처리
+			return "redirect: /reserve";
+		}
+		return "reserve/postEditForm";
+	}
+	
+	@PostMapping("/edit/{pno}")
+	public String editForm(@Validated @ModelAttribute PostDTO postDTO, 
+			@PathVariable int pno,
+			BindingResult bindingResult, 
+			Principal principal) {
+		
+		PostDTO pdto = reserService.getPost(pno);
+		if (!principal.getName().equals(pdto.getPwriter())) { // 작성자 확인 처리
+			return "redirect: /reserve";
+		}
+		User user = userService.getUserDetail(principal.getName());
+		if (user == null) {
+			return "redirect: /user/login";
+		}
+		
+		if (bindingResult.hasErrors()) {
+	        return "/reserve/postEditForm";
+	    }
+		
+		if (postDTO.getStartdate() != null && postDTO.getEnddate() != null) {
+			LocalDateTime startDate = LocalDateTime.parse(postDTO.getStartdate());
+			LocalDateTime endDate = LocalDateTime.parse(postDTO.getEnddate());
+			
+			if (!endDate.isAfter(startDate)) {
+            	bindingResult.rejectValue("enddate", "startDate.after.endDate", "시작일보다 종료일이 먼저일 수 없습니다");
+            	return "/reserve/postEditForm";
+			}
+        }
+		
+		postDTO.setPwriter(principal.getName());
+		reserService.editPost(postDTO);
+		return "redirect: /reserve/detail/{pno}";
+	}
+	
+	@ResponseBody
+	@PostMapping("/remove")
+	public String removePost(
+			@RequestParam int pno, 
+			RedirectAttributes redirectAttributes,
+			Principal principal) {
+		String result = "";
+		PostDTO pdto = reserService.getPost(pno);
+		if (!principal.getName().equals(pdto.getPwriter())) { // 작성자 확인 처리
+			return "/reserve?result=rmfail";
+		}
+		User user = userService.getUserDetail(principal.getName());
+		if (user == null) {
+			return "/user/login";
+		}
+		
+		if (reserService.removePost(pno) == 1) {
+			result = "rmsuccess";
+		} else {
+			result = "rmfail";
+		}
+		return "/reserve?result=" + result;
+	}
+	
 	@GetMapping("/detail/{pno}")
-	public String detailView(@ModelAttribute ReserDTO reserDTO, Model model, @PathVariable int pno, Principal principal) {
+	public String detailView(@ModelAttribute ReserDTO reserDTO, 
+			Model model, 
+			@PathVariable int pno, 
+			Principal principal) {
 		PostDTO postDTO = reserService.getPost(pno);
-		postDTO.setPwriter(userService.getUserDetail(principal.getName()).getName());
+		String name = userService.getUserDetail(postDTO.getPwriter()).getName();
+		if (name != null) {
+			model.addAttribute("name", name);
+		}
 		model.addAttribute("post", postDTO);
 		model.addAttribute("seats", reserService.getSeatsByPost(pno));
 		model.addAttribute("seatinfo", reserService.getPost(pno).getSeatinfo());
-		model.addAttribute("reser", reserService.getReserById(principal.getName()));
+		model.addAttribute("myreser", reserService.getReserByIdAndPno(principal.getName(), pno));
+		model.addAttribute("username", principal.getName());
 		return "reserve/postDetail";
 	}
 	
@@ -97,6 +176,10 @@ public class ReserController {
 			@PathVariable int pno, 
 			RedirectAttributes redirectAttributes,
 			Principal principal) {
+		if (reserDTO.getSeatnum() == null) {
+			redirectAttributes.addAttribute("result", "nosn");
+			return "redirect: /reserve/detail/{pno}";
+		}
 		
 		PostDTO post = reserService.getPost(pno);
 		LocalDateTime nowTime = LocalDateTime.now();
@@ -108,10 +191,16 @@ public class ReserController {
 			if (user == null) {
 				return "redirect:/user/login";
 			}
-			if (rdto == null && post.getPwriter().equals(user.getName())) {
-				reserService.reserveSeat(reserDTO, null);								
-			} else {
-				
+			if (rdto != null) {
+				redirectAttributes.addAttribute("result", "dupli");
+			} 
+//			else if (post.getPwriter().equals(principal.getName())) {
+//				redirectAttributes.addAttribute("result", "fail");
+//			} 
+			else {
+				reserDTO.setEmail(principal.getName());
+				reserService.reserveSeat(reserDTO);			// 예약 실행
+				redirectAttributes.addAttribute("result", "success");
 			}
 		}
 		redirectAttributes.addAttribute(reserService.getSeatsByPost(pno));
@@ -119,6 +208,32 @@ public class ReserController {
 		return "redirect: /reserve/detail/{pno}";
 	}
 	
+	/**
+	 *  예약 취소
+	 *  */
+	@PostMapping("/detail/{pno}/cancel")
+	public String reserveCancel(@Validated @ModelAttribute ReserDTO reserDTO, 
+			@PathVariable int pno, 
+			RedirectAttributes redirectAttributes,
+			Principal principal) {
+		
+		PostDTO post = reserService.getPost(pno);
+		LocalDateTime nowTime = LocalDateTime.now();
+		LocalDateTime startDate = LocalDateTime.parse(post.getStartdate());
+		LocalDateTime endDate = LocalDateTime.parse(post.getEnddate());
+		if (nowTime.isAfter(startDate) && nowTime.isBefore(endDate)) {
+			int seatnum = reserService.getReserByIdAndPno(principal.getName(), pno).getSeatnum();
+			boolean cancelResult = reserService.cancelReser(seatnum, principal.getName(), pno);
+			if (cancelResult) {
+				redirectAttributes.addAttribute("result", "ccsuccess");
+			} else {
+				redirectAttributes.addAttribute("result", "ccfail");
+			}
+		}
+		redirectAttributes.addAttribute(reserService.getSeatsByPost(pno));
+		redirectAttributes.addAttribute("seatinfo", reserService.getPost(pno).getSeatinfo());
+		return "redirect: /reserve/detail/{pno}";
+	}
 	
 	@GetMapping("/myreser")
 	public String myReserList() {
@@ -128,5 +243,10 @@ public class ReserController {
 	@GetMapping("/mypost")
 	public String myPostList() {
 		return "reserve/myPostList";
+	}
+	
+	@GetMapping("/test")
+	public String test() {
+		return "reserve/test";
 	}
 }

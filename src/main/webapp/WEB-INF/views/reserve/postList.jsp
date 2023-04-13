@@ -9,16 +9,15 @@
 <%@ include file="../include/header.jsp"%>
 <body>
 <%@ include file="../include/navbar.jsp"%>
-<div class="container">
-	<div class="photo-gallery container mb-3">
+<div class="container mt-5">
+	<div class="container">
 		<div class="row justify-content-center">
-			<h2>예약</h2>
-			<%-- <div class="col-lg-3 d-none d-lg-block">
-				<%@ include file="/include/sidebar4.jsp"%>
-			</div> --%>
-
-			<!-- <div class="col-lg-9"> -->
-			<div class="col-lg-12">
+			<h2 class="mb-5">예약</h2>
+			<div class="col-lg-3 d-none d-lg-block">
+				<%@ include file="../include/sidebar_reser.jsp"%>
+			</div>
+			
+			<div class="col-lg-9">
 				<div class="row">
 					<div class="col-3 text-muted">
 						<select class="form-select form-select-sm w-50 d-inline"
@@ -29,19 +28,21 @@
 						</select> <span class="d-inline">개씩 보기</span>
 					</div>
 					<div class="col-9 text-end">
-					<%-- <% if (sid != null) { // 세션 처리 %> --%>
-						<a href="/reserve/add" class="btn btn-sm btn-outline-success">예약 등록 </a>
-					<%-- <%} %> --%>
+					<c:if test="${ username != null }">
+						<a href="/reserve/add" class="btn btn-sm btn-outline-secondary">예약 등록 </a>
+					</c:if>
 					</div>
 				</div>
 				<hr class="my-4">
 
-				<table class="table table-hover shadow bg-body rounded">
+				<table class="table table-hover table-rounded shadow-sm bg-body rounded">
 					<thead>
-						<tr style="background-color: #999999; color: white;">
-							<th scope="col" class="col-2">no</th>
-							<th scope="col" class="col-6">제목</th>
-							<th scope="col" class="col-2">작성자</th>
+						<tr style="background-color: #888888; color: white;">
+							<th scope="col" class="col-1">no</th>
+							<th scope="col" class="col-4">제목</th>
+							<th scope="col" class="col-1">작성자</th>
+							<th scope="col" class="col-3">예약 기간</th>
+							<th scope="col" class="col-1">상태</th>
 							<th scope="col" class="col-2">작성일</th>
 						</tr>
 					</thead>
@@ -78,7 +79,7 @@
 								<option value="TCW">제목/내용/작성자</option>
 							</select> <input class="form-control form-control-sm" type="search"
 								placeholder="검색어" id="keyword">
-							<button class="btn btn-sm btn-outline-success" type="button"
+							<button class="btn btn-sm btn-outline-secondary" type="button"
 								id="searchBtn">
 								<i class="bi bi-search"></i>
 							</button>
@@ -90,11 +91,24 @@
 	</div>
 </div>
 	
-
 <%@ include file="../include/footer.jsp"%>	
+<%@ include file="../include/scriptUtil.jsp"%>	
 <script src="/resources/js/page.js"></script>
 <script>
 
+</script>
+<script>
+onload = function() {
+	switch ('${param.result}') {
+	  case 'rmsuccess':
+	  	popModal('삭제 성공', '게시물이 삭제되었습니다');
+	    break;
+	  case 'rmfail':
+	  	popModal('삭제 실패', '삭제에 실패하였습니다');
+	    break;
+	}
+	pageObj.pageCal(cri);
+}
 	/*
 	 [form id 이걸로 하셈]
 
@@ -126,13 +140,32 @@
 		}
 		var imgHTML = '';
 		for (var i = 0; i < data.length; i++) {
+			var status = getDateStatus(data[i].startdate, data[i].enddate)
 			imgHTML += ''
-					+ "<tr onclick=\"location.href='/reserve/detail/"
-					+ data[i].pno + "'\"><td>" + data[i].pno + "</td>"
-					+ '<td>' + data[i].ptitle + "</td>" + '<td id="td'+i+'">'
-					+ getName(data[i].pwriter, i) + "</td><td>" + data[i].regdate + "</td></a></tr>"
+					+ '<tr onclick="location.href=\'/reserve/detail/'
+					+ data[i].pno + '\'"><td>' + data[i].pno + '</td>'
+					+ '<td>' + data[i].ptitle + '</td>' + '<td id="td'+i+'">'
+					+ getName(data[i].pwriter, i) + '</td>'
+					+ '<td>' + data[i].startdate.replace('T',' ') + ' 부터<br>'
+					+ data[i].enddate.replace('T',' ') +' 까지</td>'
+					+ '<td>' + status +'</td>'
+					+ '<td>' + data[i].regdate + '</td></a></tr>';
 		}
 		$('#imgList').html(imgHTML);
+	}
+	
+	function getDateStatus(sdate, edate) {
+		const now = new Date(); // 현재 시각
+		const startDateTime = new Date(sdate); // 시작일시를 Date 객체로 변환
+		const endDateTime = new Date(edate); // 종료일시를 Date 객체로 변환
+
+		if (now.getTime() < startDateTime.getTime()) {
+			return '시작 전';
+		} else if (now.getTime() >= startDateTime.getTime() && now.getTime() <= endDateTime.getTime()) {
+			return '진행중';
+		} else {
+			return '종료';
+		}
 	}
 	
 	$(function(){
@@ -163,7 +196,8 @@
 				$('#td'+i).html(data.name);
 			})
 	}
+	
+	removeAllParam();
 </script>
-
 </body>
 </html>

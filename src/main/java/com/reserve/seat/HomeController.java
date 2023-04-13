@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
  * Handles requests for the application home page.
  */
 
-@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
@@ -53,7 +52,6 @@ public class HomeController {
 	@PostMapping("/uname")
 	public User getUserName(@ModelAttribute User user) {
 		user.setName(userService.getUserDetail(user.getUsername()).getName());
-		log.info("{}", user.getName());
 		return user;
 	}
 	
