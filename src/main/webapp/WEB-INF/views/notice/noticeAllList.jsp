@@ -73,7 +73,7 @@
 									<option value="TCW">제목/내용/작성자</option>
 								</select> <input class="form-control form-control-sm" type="search"
 									placeholder="검색어" id="keyword">
-								<button class="btn btn-sm btn-outline-secondary" type="button"
+								<button class="btn btn-sm btn-outline-success" type="button"
 									id="searchBtn">
 									<i class="bi bi-search"></i>
 								</button>
