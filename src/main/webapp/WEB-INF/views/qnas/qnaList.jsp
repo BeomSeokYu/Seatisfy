@@ -122,7 +122,7 @@
              imgHTML += ''
                  + "<tr>"
                  + "<td style='line-height: 100px;'>" + data[i].qno + "</td>"
-                 + "<td style='line-height: 100px;'><a href=\"qnas/select?qno="
+                 + "<td class='open' style='line-height: 100px;'><a href=\"qnas/select?qno="
                  + data[i].qno	+"'\">"	+ data[i].qtitle + "</a></td>"
                  + "<td class='qcon' style='display:none'>" + data[i].qcontent + "</td>"
                  + "<td style='line-height: 100px;'>" + qDateString + "</td>" // "YYYY-MM-DD" 형식의 날짜 문자열 추가
