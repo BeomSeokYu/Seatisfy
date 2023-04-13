@@ -27,7 +27,7 @@
 </style>
 <body>
 
-	<%-- <form:form modelAttribute="updateNotice"
+	 <%-- <form:form modelAttribute="updateNotice"
 		action="./update?nno=${notice.nno}" class="form-horizontal"
 		method="post">
 		<fieldset>
@@ -62,9 +62,10 @@
 
 
 		</fieldset>
-	</form:form> --%>
+	</form:form>  --%>
 <%@include file="../include/navbar.jsp"%>
-<div class="col-lg-8 mx-auto p-4 py-md-5">
+
+ <div class="col-lg-8 mx-auto p-4 py-md-5">
 <form action="./update?nno=${notice.nno}" class="form-horizontal" method="post">
 	   <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 		<fieldset>
@@ -79,6 +80,13 @@
 			</div>
 			<div class="col-lg-9">
 			<div class="pb-3 mb-5">
+			<div class="form-group">
+				<label for="nwriter">작성자</label>
+				<input name="nwriter" value="${notice.nwriter }"
+					class="form-control" readonly />
+
+			</div>
+			
 				<div class="mb-3">
 				<label for="ntitle" class="form-label">제목</label>
 				<input name="ntitle" value="${notice.ntitle }"
@@ -94,12 +102,7 @@
 				</textarea>
 			</div>
 
-			<div class="form-group">
-				<label for="nwriter">작성자</label>
-				<input name="nwriter" value="${notice.nwriter }"
-					class="form-control" readonly="true" />
-
-			</div>
+			
 
 			<div class="row">
 				<div class="col-lg-12 text-end mt-5">
@@ -111,26 +114,28 @@
 </div>
 </div>
 </div>
-
+</div>
 		</fieldset>
+		
 	</form>
+	</div>
 
 
 
-	<script>
-		$('#summernote').summernote(
-				{
-					placeholder : '내용을 입력하세요',
-					tabsize : 2,
-					height : 400,
-					toolbar : [ [ 'style', [ 'style' ] ],
-							[ 'font', [ 'bold', 'underline', 'clear' ] ],
-							[ 'color', [ 'color' ] ],
-							[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
-							[ 'table', [ 'table' ] ],
-							[ 'insert', [ 'link', 'picture', 'video' ] ],
-							[ 'view', [ 'fullscreen', 'codeview', 'help' ] ] ]
-				});
-	</script>	
+<script>
+	$('#summernote').summernote(
+			{
+				placeholder : '내용을 입력하세요',
+				tabsize : 2,
+				height : 400,
+				toolbar : [ [ 'style', [ 'style' ] ],
+						[ 'font', [ 'bold', 'underline', 'clear' ] ],
+						[ 'color', [ 'color' ] ],
+						[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
+						[ 'table', [ 'table' ] ],
+						[ 'insert', [ 'link', 'picture', 'video' ] ],
+						[ 'view', [ 'fullscreen', 'codeview', 'help' ] ] ]
+			});
+</script>	
 </body>
 </html>
