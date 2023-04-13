@@ -9,7 +9,19 @@
 <html>
 <%@include file="../include/header.jsp"%>
 <body>
-<%@include file="../include/navbar.jsp"%>
+ <%@include file="../include/navbar.jsp"%> 
+ <header class="masthead" style="background-image: url('resources/assets/img/home-bg.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Q & A</h1>
+                            <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
 	<div class="container">
 		<div class="photo-gallery container mb-3">
 			<div class="row justify-content-center">
@@ -112,7 +124,7 @@
              imgHTML += ''
                  + "<tr>"
                  + "<td>" + data[i].qno + "</td>"
-                 + "<td><a href=\"select?qno="
+                 + "<td><a href=\"qnas/select?qno="
                  + data[i].qno	+"'\">"	+ data[i].qtitle + "</a></td>"
                  + "<td>" + data[i].qcontent + "</td>"
                  + "<td>" + qDateString + "</td>" // "YYYY-MM-DD" 형식의 날짜 문자열 추가

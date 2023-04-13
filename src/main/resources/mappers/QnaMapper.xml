@@ -11,10 +11,10 @@
 			<trim prefix="OR">
 				<choose>
 					<when test="type == 'T'.toString()">
-						qtitle LIKE concat_ws(#{ keyword }, '%', '%') '%' || #{ keyword } || '%'
+						qtitle LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
 					</when>
 					<when test="type == 'C'.toString()">
-						qcontent LIKE concat_ws(#{ keyword }, '%', '%') '%' || #{ keyword } || '%'
+						qcontent LIKE concat_ws(#{ keyword }, '%', '%')
 					</when>
 				</choose>
 			</trim>
@@ -33,8 +33,8 @@
   	</select>
 	<insert id="insertQna">
 	  <![CDATA[
-		  INSERT INTO qna(qtitle, qcontent, qdate)
-		  VALUES(#{qtitle}, #{qcontent}, now())
+		  INSERT INTO qna(qtitle, qcontent)
+		  VALUES(#{qtitle}, #{qcontent})
 	  	]]>
 	</insert>
 	<select id="qnaList" resultType="com.reserve.seat.qna.QnaDTO" >

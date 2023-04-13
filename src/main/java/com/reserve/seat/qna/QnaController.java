@@ -39,7 +39,7 @@ public class QnaController {
         } else {
         	qnaService.insertQna(qna);
             // 검사에 성공한 경우 처리
-            return "redirect:/qnas/list";
+            return "redirect:/qnas/";
         }
 	}
 	//목록
@@ -79,7 +79,7 @@ public class QnaController {
 	public String updateQna(QnaDTO qna) {
 		
 		qnaService.updateQna(qna);
-		return "redirect:/qnas/list";
+		return "redirect:/qnas";
 	}
 	//삭제
 	@PostMapping("/delete")
@@ -87,7 +87,7 @@ public class QnaController {
 		
 		qnaService.deleteQna(qno);
 		
-		return "redirect:/qnas/list";
+		return "redirect:/qnas";
 	}
 	//상세보기
 	@GetMapping("/select")
