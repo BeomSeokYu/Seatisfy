@@ -23,6 +23,7 @@
 				        <li><a class="dropdown-item" href="#">내 게시글 보기</a></li>
 				        <li><a class="dropdown-item" href="#">내 예약 보기</a></li>
 				        <li><a class="dropdown-item" href="#">로그아웃</a></li>
+				        <li><a class="dropdown-item" href="/user">회원 목록</a></li>
 				    </ul>
 				</li>
             </ul>

@@ -7,16 +7,23 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>	
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>회원 전체 목록</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-
-</head>
+<%@include file="../include/header.jsp" %>
 <body>
+<%@include file="../include/navbar.jsp" %>
+
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('resources/assets/img/home-bg.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>좌석 예약</h1>
+                            <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
 
 	<div class="container">
 		<div class="photo-gallery container mb-3">
@@ -86,9 +93,6 @@
 	</div>
 
 
-
-	
-						
 					
 	<script src="/resources/js/page.js"></script>
 <script>				
@@ -201,6 +205,6 @@
 	}
   
 </script>      
-<script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<%@include file="../include/footer.jsp" %>
 </body>
 </html>
