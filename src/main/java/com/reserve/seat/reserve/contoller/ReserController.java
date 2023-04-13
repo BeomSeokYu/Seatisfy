@@ -39,11 +39,10 @@ public class ReserController {
 	private final UserService userService;
 	
 	@GetMapping
-	public String reserList(Model model, @ModelAttribute Criteria criteria) {
-//		List<PostDTO> list = reserService.getListAll(criteria != null ? criteria : new Criteria());
-//		model.addAttribute("list", list);
-//		int totalCount = reserMapper.totalCount(criteria);
-//		model.addAttribute("pageDTO", new PageDTO(criteria, totalCount));
+	public String reserList(@ModelAttribute Criteria criteria,
+			Model model,
+			Principal principal) {
+		model.addAttribute("username", principal.getName());
 		return "reserve/postList";
 	}
 	
@@ -244,5 +243,10 @@ public class ReserController {
 	@GetMapping("/mypost")
 	public String myPostList() {
 		return "reserve/myPostList";
+	}
+	
+	@GetMapping("/test")
+	public String test() {
+		return "reserve/test";
 	}
 }
