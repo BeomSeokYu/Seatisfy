@@ -75,8 +75,8 @@
 		<div class="postRegister_postContentWrapper__3BXZ6">
 						<h2 class="mb-5">공지 수정</h2>
 				</div>
-<div class="col-lg-3 d-none d-lg-block">
-	<%@ include file="../include/sidebar_support.jsp"%>
+	<div class="col-lg-3 d-none d-lg-block">
+		<%@ include file="../include/sidebar_support.jsp"%>
 			</div>
 			<div class="col-lg-9">
 			<div class="pb-3 mb-5">
@@ -106,7 +106,8 @@
 
 			<div class="row">
 				<div class="col-lg-12 text-end mt-5">
-					<a href="#" class="btn btn-outline-danger btn-sm mx-1">취소</a> 
+					<a href="/notice" class="btn btn-outline-danger btn-sm mx-1">취소</a>
+					<input type="hidden" name="_csrf" value="${_csrf.token}"/> 
 					<input type="submit" value="수정" class="btn btn-outline-warning btn-sm mx-1">
 				</div>
 			</div>
@@ -118,7 +119,7 @@
 		</fieldset>
 		
 	</form>
-	</div>
+</div>
 
 
 
