@@ -100,12 +100,6 @@ public class NoticeController {
 		
 		NoticeDTO noticeNum = noticeService.detailNotice(nno);
 		model.addAttribute("notice", noticeNum);
-		
-		//댓글 조회
-		List<ReplyDTO> replyList = noticeService.AllReplyList(nno); 
-		int cnt = replyList.size();	// 댓글 수
-		model.addAttribute("replyList", replyList);
-		model.addAttribute("cnt", cnt);
 
 		return "notice/noticeDetail";
 	}
@@ -139,30 +133,7 @@ public class NoticeController {
 		
 	}
 	
-	//댓글 등록
-	@PostMapping("/addReply")
-  	@ResponseBody
-  	public void addReply(@RequestParam Map<String, Object> map) {
-  		
-  		noticeService.insertReply(map);
-  	}
 	
-	//댓글 수정
-	@PostMapping("/updateReply")
-	@ResponseBody
-	public void updateReply(@RequestParam Map<String, Object> map) {
-		
-		noticeService.updateReply(map);
-	}
-	
-	
-	//댓글 삭제
-  	@PostMapping("/removeReply")
-  	@ResponseBody
-  	public void removeReply(@RequestParam("rno") int rno) {
-  		
-  		noticeService.deleteReply(rno);
-  	}
 	
 	
 	
