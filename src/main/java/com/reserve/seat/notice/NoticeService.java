@@ -32,4 +32,6 @@ public interface NoticeService {
 	
 	public List<ReplyDTO> AllReplyList(String nno); //전체 댓글 조회
 	
+	public void updateHit(String nno); // 조회수 증가
+	
 }

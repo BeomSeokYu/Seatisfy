@@ -41,11 +41,12 @@
 					<table class="table table-hover shadow bg-body table-rounded">
 						<thead>
 							<tr style="background-color: #999999; color: white;">
-								<th scope="col" class="col-2">번호</th>
+								<th scope="col" class="col-1">번호</th>
 								<th scope="col" class="col-3">제목</th>
 								<th scope="col" class="col-3">작성자</th>
 								<th scope="col" class="col-2">작성일</th>
 								<th scope="col" class="col-2">수정일</th>
+								<th scope="col" class="col-1">조회수</th>
 							</tr>
 						</thead>
 						<tbody id="imgList">
@@ -142,7 +143,8 @@
                   + '<td id=' + i +'>'
 				  + getName(data[i].nwriter, i) + '</td>'
                   + '<td>' + formatRegDate  + "</td>"
-                  +"<td>" + formatModDate + "</td></a></tr>" 
+                  +"<td>" + formatModDate + "</td>"
+                  +"<td>" + data[i].hit + "</td></a></tr>" 
          }
          $('#imgList').html(imgHTML); 
       }	
