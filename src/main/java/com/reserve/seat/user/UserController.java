@@ -41,7 +41,7 @@ public class UserController {
 		if(error != null) {
 			model.addAttribute("error", "아아디 또는 비밀번호가 맞지 않습니다.");
 		}
-		return "login";
+		return "users/login";
 	}
 	
 	// 회원가입 페이지
@@ -205,6 +205,7 @@ public class UserController {
 	@GetMapping("/changepw")
 	public String changePwForm(Principal principal, Model model) {
 	    User user = userService.getUserDetail(principal.getName());
+	    user.setPassword("");
 	    model.addAttribute("user", user);
 		    
 		return "users/pwchange";

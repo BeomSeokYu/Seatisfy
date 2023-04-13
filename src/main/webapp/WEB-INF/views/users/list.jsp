@@ -11,20 +11,6 @@
 <body>
 <%@include file="../include/navbar.jsp" %>
 
-        <!-- Page Header-->
-        <header class="masthead" style="background-image: url('resources/assets/img/home-bg.jpg')">
-            <div class="container position-relative px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="site-heading">
-                            <h1>좌석 예약</h1>
-                            <span class="subheading">A Blog Theme by Start Bootstrap</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
 	<div class="container mt-5">
 	<div class="container">
 		<div class="row justify-content-center">
