@@ -6,10 +6,12 @@
 package com.reserve.seat.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.reserve.seat.Criteria;
+import com.reserve.seat.reply.ReplyDTO;
 import com.reserve.seat.reserve.domain.PostDTO;
 
 
@@ -48,4 +50,16 @@ public interface PostMapper {
 			@Param("typeArr") String[] typeArr,
 			@Param("keyword") String keyword,
 			@Param("pwriter") String pwriter);
+	
+	public void insertReply(Map map);	//댓글 등록
+	
+	public void updateReply(Map map);	//댓글 수정
+	
+	public void deleteReply(int rno); //댓글 삭제
+	
+	public ReplyDTO selectReply(String rno);	//특정 댓글 하나 조회
+	
+	public List<ReplyDTO> AllReplyList(String pno); //전체 댓글 조회
+	
+	
 }

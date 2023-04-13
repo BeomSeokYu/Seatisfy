@@ -5,6 +5,7 @@ package com.reserve.seat.reserve.contoller;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.reserve.seat.Criteria;
 import com.reserve.seat.mapper.SeatMapper;
+import com.reserve.seat.notice.NoticeService;
+import com.reserve.seat.reply.ReplyDTO;
 import com.reserve.seat.reserve.domain.PostDTO;
 import com.reserve.seat.reserve.domain.ReserDTO;
 import com.reserve.seat.reserve.service.ReserService;
@@ -151,7 +154,8 @@ public class ReserController {
 	public String detailView(@ModelAttribute ReserDTO reserDTO, 
 			Model model, 
 			@PathVariable int pno, 
-			Principal principal) {
+			Principal principal
+			) {
 		PostDTO postDTO = reserService.getPost(pno);
 		String name = userService.getUserDetail(postDTO.getPwriter()).getName();
 		if (name != null) {
@@ -162,6 +166,13 @@ public class ReserController {
 		model.addAttribute("seatinfo", reserService.getPost(pno).getSeatinfo());
 		model.addAttribute("myreser", reserService.getReserByIdAndPno(principal.getName(), pno));
 		model.addAttribute("username", principal.getName());
+		
+		//댓글 조회
+		List<ReplyDTO> replyList = reserService.AllReplyList(String.valueOf(pno)); 
+		int cnt = replyList.size();	// 댓글 수
+		model.addAttribute("replyList", replyList);
+		model.addAttribute("cnt", cnt);
+		
 		return "reserve/postDetail";
 	}
 	
@@ -246,4 +257,29 @@ public class ReserController {
 	public String test() {
 		return "reserve/test";
 	}
+	
+	//댓글 등록
+	@PostMapping("/addReply")
+  	@ResponseBody
+  	public void addReply(@RequestParam Map<String, Object> map) {
+  		
+  		reserService.insertReply(map);
+  	}
+	
+	//댓글 수정
+	@PostMapping("/updateReply")
+	@ResponseBody
+	public void updateReply(@RequestParam Map<String, Object> map) {
+		
+		reserService.updateReply(map);
+	}
+	
+	
+	//댓글 삭제
+  	@PostMapping("/removeReply")
+  	@ResponseBody
+  	public void removeReply(@RequestParam("rno") int rno) {
+  		
+  		reserService.deleteReply(rno);
+  	}
 }

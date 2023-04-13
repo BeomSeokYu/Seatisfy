@@ -6,9 +6,13 @@ package com.reserve.seat.notice;
 
 import javax.validation.constraints.NotBlank;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class NoticeDTO {
 	
 	private int nno;			//공지 번호

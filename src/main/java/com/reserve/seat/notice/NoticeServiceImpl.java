@@ -78,8 +78,4 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeMapper.AllReplyList(nno);
 	}
 	
-	//조회 수 증가
-	public void updateView(Map map) {
-		noticeMapper.updateView(map);
-	}
 }

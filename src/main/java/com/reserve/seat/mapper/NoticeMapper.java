@@ -39,7 +39,4 @@ public interface NoticeMapper {
 	
 	public List<ReplyDTO> AllReplyList(String nno); //전체 댓글 조회
 	
-	public void updateView(Map map);
-	
-	
 }
