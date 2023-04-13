@@ -26,7 +26,6 @@
 </style>
 <body>
 
-<%@include file="../include/navbar.jsp"%>
 	 <%-- <form:form modelAttribute="updateNotice"
 		action="./update?nno=${notice.nno}" class="form-horizontal"
 		method="post">
@@ -69,61 +68,108 @@
 		<h1 class="mt-5 mb-5 pt-5 pb-5 text-white"><span class="text-shadow">공지사항 수정</span></h1>
 	</div>
 </header>
-<form action="./update?nno=${notice.nno}" class="form-horizontal" method="post">
-	   <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+
+	<%-- <form action="./update?nno=${notice.nno}" class="form-horizontal"
+		method="post">
+		<input type="hidden" name="_csrf" value="${_csrf.token}" />
 		<fieldset>
-	<div class="container">
-	<div class="container">
-		<div class="row justify-content-center">
-		<div class="postRegister_postContentWrapper__3BXZ6">
-				</div>
-	<div class="col-lg-3 d-none d-lg-block">
-		<%@ include file="../include/sidebar_support.jsp"%>
-			</div>
-			<div class="col-lg-9">
-			<div class="pb-3 mb-5">
-			<div class="form-group">
-				<label for="nwriter">작성자</label>
-				<input name="nwriter" value="${notice.nwriter }"
-					class="form-control" readonly />
+			<div class="container">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="postRegister_postContentWrapper__3BXZ6"></div>
+						<div class="col-lg-3 d-none d-lg-block">
+							<%@ include file="../include/sidebar_support.jsp"%>
+						</div>
+						<div class="col-lg-9">
+							<div class="pb-3 mb-5">
+								<div class="form-group">
+									<label for="nwriter">작성자</label> <input name="nwriter"
+										value="${notice.nwriter }" class="form-control" readonly />
 
-			</div>
-			
-				<div class="mb-3">
-				<label for="ntitle" class="form-label">제목</label>
-				<input name="ntitle" value="${notice.ntitle }"
-					class="form-control rounded" >
+								</div>
 
-			</div>
+								<div class="mb-3">
+									<label for="ntitle" class="form-label">제목</label> <input
+										name="ntitle" value="${notice.ntitle }"
+										class="form-control rounded">
 
-			<div class="mb-3">
-				<label for="ncontent" class="form-label">내용</label>
-				<textarea name="ncontent" id="summernote"
-					class="form-control" rows="10" >
+								</div>
+
+								<div class="mb-3">
+									<label for="ncontent" class="form-label">내용</label>
+									<textarea name="ncontent" id="summernote" class="form-control"
+										rows="10">
 				${notice.ncontent}
 				</textarea>
-			</div>
+								</div>
 
-			
 
-			<div class="row">
-				<div class="col-lg-12 text-end mt-5">
-					<a href="/notice/detail?nno=${notice.nno }" class="btn btn-outline-danger btn-sm mx-1">취소</a>
-					<input type="hidden" name="_csrf" value="${_csrf.token}"/> 
-					<input type="submit" value="수정" class="btn btn-outline-warning btn-sm mx-1">
+
+								<div class="row">
+									<div class="col-lg-12 text-end mt-5">
+										<a href="/notice/detail?nno=${notice.nno }"
+											class="btn btn-outline-danger btn-sm mx-1">취소</a> <input
+											type="hidden" name="_csrf" value="${_csrf.token}" /> <input
+											type="submit" value="수정"
+											class="btn btn-outline-warning btn-sm mx-1">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-</div>
-</div>
-</div>
-</div>
-</div>
 		</fieldset>
-		
-	</form>
+	</form> --%>
+<div class="container mt-5">
+	<div class="container">
+		<div class="row justify-content-center">
+		<div class="col-lg-3 d-none d-lg-block">
+				<%@ include file="../include/sidebar_support.jsp"%>
+			</div>
+<div class="col-lg-8 mx-auto p-4 py-md-5">
+		<form:form modelAttribute="notice" action="./add" method="post">
+			<fieldset>
+			<main>
+				<div class="pb-3 mb-5">
+					<div class="postRegister_postContentWrapper__3BXZ6">
+						<span class="postRegister_sequence__nC1Px">1</span>
+						<h2 class="postRegister_text__17jg3">공지사항 수정</h2>
+					</div>
+					<div>
+
+					<div class="mb-3">
+						<label for="ntitle" class="form-label">제목</label> 
+						<form:input type="text" class="form-control" path="ntitle" />
+							<form:errors path="ntitle" cssStyle="color:red;"/>
+					</div>
+					<div class="mb-3">
+						<label for="ncontent" class="form-label">내용</label>
+						<form:textarea class="form-control" id="summernote" path="ncontent"	rows="5" />
+						<form:errors path="ncontent" cssStyle="color:red;"/>
+					</div>
+					<form:input type="hidden" path="nwriter" value="${user.username}" />
+				</div>
+				<div style="text-align: right;">
+							<!-- 토큰 전송 -->
+							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+					<a href="/notice/detail?nno=${notice.nno }"
+											class="btn btn-outline-danger btn-sm mx-1">취소</a> <input
+											type="hidden" name="_csrf" value="${_csrf.token}" /> <input
+											type="submit" value="수정"
+											class="btn btn-outline-warning btn-sm mx-1">
+					</div>
+				</div>
+			</main>
+			</fieldset>
+		</form:form>
+	</div>
+</div></div></div>
 
 
-<script>
+
+
+	<script>
 	$('#summernote').summernote(
 			{
 				placeholder : '내용을 입력하세요',

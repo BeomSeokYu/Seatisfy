@@ -22,6 +22,13 @@
 		<h1 class="mt-5 mb-5 pt-5 pb-5 text-white"><span class="text-shadow">공지사항 등록</span></h1>
 	</div>
 </header>
+
+<div class="container mt-5">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-3 d-none d-lg-block">
+				<%@ include file="../include/sidebar_support.jsp"%>
+			</div>
 	<div class="col-lg-8 mx-auto p-4 py-md-5">
 		<form:form modelAttribute="notice" action="./add" method="post">
 			<fieldset>
@@ -29,7 +36,7 @@
 				<div class="pb-3 mb-5">
 					<div class="postRegister_postContentWrapper__3BXZ6">
 						<span class="postRegister_sequence__nC1Px">1</span>
-						<h2 class="postRegister_text__17jg3">공지사항</h2>
+						<h2 class="postRegister_text__17jg3">공지사항 등록</h2>
 					</div>
 					<div>
 
@@ -59,6 +66,10 @@
 			</fieldset>
 		</form:form>
 	</div>
+</div></div></div>
+
+
+
 
 	<%@include file="../include/footer.jsp"%>
 <script>

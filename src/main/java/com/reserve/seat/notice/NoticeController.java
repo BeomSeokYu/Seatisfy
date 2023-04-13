@@ -114,7 +114,12 @@ public class NoticeController {
 	
 	//공지 수정
 	@PostMapping("/update")
-	public String updateNotice(@Validated @ModelAttribute("updateNotice") NoticeDTO notice) {
+	public String updateNotice(@Validated @ModelAttribute("updateNotice") NoticeDTO notice,
+			BindingResult br) {
+		
+		if(br.hasErrors()) {
+			return "notice/update?nno=" + notice.getNno();
+		}
 		
 		noticeService.updateNotice(notice);
 		return "redirect:/notice";
