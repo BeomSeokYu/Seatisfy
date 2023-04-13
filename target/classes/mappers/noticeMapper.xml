@@ -120,13 +120,7 @@
     ]]>
   </select>
   
-<update id="updateView" parameterType="HashMap">
-	<![CDATA[
-		UPDATE notice
-		SET nview = nview + 1
-		WHERE nno = #{nno}
-	]]> 
-</update> 
+
   
 
 </mapper>
