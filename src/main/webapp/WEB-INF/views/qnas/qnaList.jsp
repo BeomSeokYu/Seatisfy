@@ -39,17 +39,16 @@
 						<thead>
 							<tr style="background-color: #999999; color: white;">
 								<th scope="col" class="col-2">번호</th>
-								<th scope="col" class="col-4 " >제목</th>
-								<th scope="col" class="col-4">내용</th>
+								<th scope="col" class="col-4 ">제목</th>
 								<th scope="col" class="col-3">작성일</th>
 							</tr>
 						</thead>
 						<tbody id="imgList">
 							<tr>
-							  <th scope="row">1</th>
-							  <td><a href="#">첫 번째 게시물</a></td>
-							  <td>2023-04-13</td>
-							</tr>	
+						  <th scope="row">1</th>
+						  <td><a href="#">첫 번째 게시물</a></td>
+						  <td>2023-04-13</td>
+						</tr>	
 						</tbody>
 					</table>
 
@@ -122,7 +121,7 @@
              imgHTML += ''
                  + "<tr>"
                  + "<td style='line-height: 100px;'>" + data[i].qno + "</td>"
-                 + "<td class='open' style='line-height: 100px;'><a href=\"qnas/select?qno="
+                 + "<td style='line-height: 100px;'><a href=\"qnas/select?qno="
                  + data[i].qno	+"'\">"	+ data[i].qtitle + "</a></td>"
                  + "<td class='qcon' style='display:none'>" + data[i].qcontent + "</td>"
                  + "<td style='line-height: 100px;'>" + qDateString + "</td>" // "YYYY-MM-DD" 형식의 날짜 문자열 추가

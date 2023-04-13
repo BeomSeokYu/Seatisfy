@@ -8,45 +8,70 @@
 <%@taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %> 
 	
 	
-	
+<!DOCTYPE html>	
 <html>
-<head>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<%@include file="../include/header.jsp"%>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-</head>
+<style>
+.text-of {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.text-table th,
+.text-table td{
+	font-size: 90%;
+}
+</style>
 <body>
-<form action="./update?qno=${qna.qno}" class="form-horizontal"
-	  method="post">
+<%@include file="../include/navbar.jsp"%>
+<div class="col-lg-8 mx-auto p-4 py-md-5">
+<form action="./update?qno=${qna.qno}" class="form-horizontal" method="post">
+		
 		<fieldset>
-
-			<div class="form-group">
-				<label for="qtitle">제목</label>
+		<div class="container">
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+				<div class="postRegister_postContentWrapper__3BXZ6">
+						<h2 class="mb-5">Q & A 수정</h2>
+				</div>
+<div class="col-lg-3 d-none d-lg-block">
+	<%@ include file="../include/sidebar_support.jsp"%>
+			</div>
+			<div class="col-lg-9">
+			<div class="pb-3 mb-5">
+				<div class="mb-3">
+						<label for="qtitle" class="form-label">제목</label>
 				<input name="qtitle" value="${qna.qtitle }"
-					class="form-control" >
+					class="form-control rounded" >
 
 			</div>
 
-			<div class="form-group">
-				<label for="qcontent">내용</label>
+			<div class="mb-3">
+						<label for="qcontent" class="form-label">내용</label>
 				<textarea name="qcontent" id="summernote"
 					class="form-control" rows="10" >${qna.qcontent}
 				</textarea>
 			</div>
 
 			<div class="row">
-				<div class="col-12">
-					<a href="/qnas" class="btn btn-secondary">취소</a> 
+				<div class="col-12 text-end mb-2">
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<a href="/qnas" class="btn btn-outline-danger btn-sm mx-1">취소</a> 
 					<input type="hidden" name="_csrf" value="${_csrf.token}"/>
 					<input type="submit"
-						value="수정" class="btn btn-success float-right">
+						value="수정" class="btn btn-outline-warning btn-sm mx-1">
+					</sec:authorize>
 				</div>
 			</div>
-
-
+	</div>
+</div>
 		</fieldset>
 	</form>
-
+</div>
+</div>
+<%@include file="../include/footer.jsp"%>
 	<script>
 		$('#summernote').summernote(
 				{
