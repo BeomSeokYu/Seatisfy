@@ -4,7 +4,6 @@ package com.reserve.seat.reserve.contoller;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.reserve.seat.Criteria;
-import com.reserve.seat.mapper.SeatMapper;
 import com.reserve.seat.reserve.domain.PostDTO;
 import com.reserve.seat.reserve.domain.ReserDTO;
 import com.reserve.seat.reserve.service.ReserService;
@@ -30,7 +28,6 @@ import com.reserve.seat.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequestMapping("/reserve")
 @RequiredArgsConstructor
