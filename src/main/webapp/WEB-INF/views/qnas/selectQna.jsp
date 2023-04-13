@@ -20,9 +20,9 @@
 .text-table td{
 	font-size: 90%;
 }
+<%@include file="../include/navbar.jsp"%>
 </style>
 <body>
-<%@include file="../include/navbar.jsp"%>
 <div class="container">
 	<div class="container mt-5">
 		<div class="row justify-content-center">

@@ -31,10 +31,10 @@
 				<div class="row">
 					<div class="col-12 text-end mb-2">
 						<c:if test="${ notice.nwriter == username }">
-							<a href="/notice/update?nno=${notice.nno}">수정</a>
+							<a class="btn btn-outline-warning btn-sm mx-1" href="/notice/update?nno=${notice.nno}">수정</a>
 							<form method="POST" action="/notice/remove?nno=${notice.nno }">
 								 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<input type="submit" value="삭제" />
+								<button class="btn btn-outline-danger btn-sm mx-1">삭제</button>
 							</form>
 						</c:if>
 					</div>
