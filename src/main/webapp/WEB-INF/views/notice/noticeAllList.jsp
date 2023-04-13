@@ -32,7 +32,7 @@
 						<div class="col-9 text-end">
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 							<button id="regBtn" type="button"
-							class="btn btn-xs pull-right btn-info">등록</button>
+							class="btn btn-sm btn-outline-secondary">공지 등록</button>
 						</sec:authorize>
 						</div>
 					</div>
@@ -42,10 +42,10 @@
 						<thead>
 							<tr style="background-color: #999999; color: white;">
 								<th scope="col" class="col-2">번호</th>
-								<th scope="col" class="col-4">제목[댓글 수]</th>
-								<!-- <th scope="col" class="col-3">작성자</th> -->
-								<th scope="col" class="col-4">작성일</th>
-								<th scope="col" class="col-4">수정일</th>
+								<th scope="col" class="col-3">제목</th>
+								<th scope="col" class="col-3">작성자</th>
+								<th scope="col" class="col-2">작성일</th>
+								<th scope="col" class="col-2">수정일</th>
 							</tr>
 						</thead>
 						<tbody id="imgList">

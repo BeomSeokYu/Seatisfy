@@ -32,12 +32,12 @@
 					<div class="mb-3">
 						<label for="ntitle" class="form-label">제목</label> 
 						<form:input type="text" class="form-control" path="ntitle" />
-							<form:errors path="ntitle"/>
+							<form:errors path="ntitle" cssStyle="color:red;"/>
 					</div>
 					<div class="mb-3">
 						<label for="ncontent" class="form-label">내용</label>
 						<form:textarea class="form-control" id="summernote" path="ncontent"	rows="5" />
-						<form:errors path="ncontent"/>
+						<form:errors path="ncontent" cssStyle="color:red;"/>
 					</div>
 					<form:input type="hidden" path="nwriter" value="${user.username}" />
 				</div>

@@ -122,20 +122,20 @@ public class NoticeController {
 	
 	//공지 수정
 	@PostMapping("/update")
-	public String updateNotice(NoticeDTO notice) {
+	public String updateNotice(@ModelAttribute("updateNotice") NoticeDTO notice) {
 		
 		noticeService.updateNotice(notice);
-		return "redirect:/notice/list";
+		return "redirect:/notice";
 	}
 	
 	
 	//공지 삭제
 	@PostMapping("/remove")
-	public String removeNotice(@RequestParam("nno") String nno) {
+	@ResponseBody
+	public void removeNotice(@RequestParam("nno") String nno) {
 		
 		noticeService.deleteNotice(nno);
 		
-		return "redirect:/notice/list";
 	}
 	
 	//댓글 등록
