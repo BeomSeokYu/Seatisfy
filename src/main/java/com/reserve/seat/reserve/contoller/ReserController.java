@@ -39,10 +39,7 @@ public class ReserController {
 	private final UserService userService;
 	
 	@GetMapping
-	public String reserList(@ModelAttribute Criteria criteria,
-			Model model,
-			Principal principal) {
-		model.addAttribute("username", principal.getName());
+	public String reserList(@ModelAttribute Criteria criteria, Model model) {
 		return "reserve/postList";
 	}
 	

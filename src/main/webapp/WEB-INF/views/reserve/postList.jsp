@@ -28,9 +28,7 @@
 						</select> <span class="d-inline">개씩 보기</span>
 					</div>
 					<div class="col-9 text-end">
-					<c:if test="${ username != null }">
 						<a href="/reserve/add" class="btn btn-sm btn-outline-secondary">예약 등록 </a>
-					</c:if>
 					</div>
 				</div>
 				<hr class="my-4">
