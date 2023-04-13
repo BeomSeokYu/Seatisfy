@@ -2,26 +2,26 @@
     pageEncoding="UTF-8"%>
 <div id="sideNav" class="d-flex flex-column sidebar flex-shrink-0 p-3">
   <hr>
-  <span class="fs-4">회원</span>
+  <span class="fs-4 text-center">회원</span>
   <hr>
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark" aria-current="page">
+      <a href="/user/detail" class="nav-link link-dark" aria-current="page">
                  마이페이지
       </a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark" aria-current="page">
+      <a href="/user/changepw" class="nav-link link-dark" aria-current="page">
                  비밀번호 변경
       </a>
     </li>
     <li>
-      <a href="#" class="nav-link link-dark">
+      <a href="/reserve/mypost" class="nav-link link-dark">
                  내 예약 게시글 보기
       </a>
     </li>
     <li>
-      <a href="#" class="nav-link link-dark">
+      <a href="/reserve/myreser" class="nav-link link-dark">
                   내 좌석 보기
       </a>
     </li>

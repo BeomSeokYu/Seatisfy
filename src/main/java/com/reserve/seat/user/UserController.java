@@ -127,7 +127,7 @@ public class UserController {
 	}
 	
 	// 전체 회원 목록
-	@GetMapping
+	@GetMapping("/list")
 	public String listPage(Model model) {
 		return "users/list";
 	}

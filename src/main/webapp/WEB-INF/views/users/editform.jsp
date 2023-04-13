@@ -4,34 +4,71 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>회원 정보 수정</title>
-</head>
+<%@include file="../include/header.jsp" %>
 <body>
+<%@include file="../include/navbar.jsp" %>
+<div class="container mt-5">
+	<div class="container">
+		<div class="row justify-content-center">
+			<h2 class="mb-5">마이페이지</h2>
+			<div class="col-lg-3 d-none d-lg-block">
+				<%@ include file="../include/sidebar_user.jsp"%>
+			</div>
+			<div class="col-lg-9">
+				<hr class="my-4">
+				<form:form modelAttribute="user" 
+				   action="/user/edit"
+		           class="form-horizontal"
+		           method="post">
+		        <fieldset>
+					<table class="table text-nowrap text-table table-rounded shadow-sm">
+							<tr class="row">
+								<th class="col-sm-3 text-center table-primary text-of">이메일</th>
+								<td class="col-sm-9 text-of table-light">${user.username}</td>
+							</tr>
+							<tr class="row">
+								<th class="col-sm-3 text-center table-primary text-of">이름</th>
+								<td class="col-sm-9 text-of table-light">
+									<form:input path="name" value="${user.name }" class="form-control"/>
+									<form:errors path="name"/>
+								</td>
+							</tr>
+							<tr class="row">
+								<th class="col-sm-3 text-center table-primary text-of">전화번호</th>
+								<td class="col-sm-9 text-of table-light">
+									<form:input path="phone" value="${user.phone}" class="form-control" />
+									<form:errors path="phone"/>
+								</td>
+							</tr>
+							<tr class="row">
+								<th class="col-sm-3 text-center table-primary text-of">가입일</th>
+								<td class="col-sm-9 text-of table-light">${user.udate}</td>
+							</tr>
+						
+					</table>
+					<hr class="my-4">
+					
+					<div class="col-lg-12 text-end mt-5">
+						<input type="hidden" name="username" value="${user.username}">
+						<input type="hidden" name="udate" value="${user.udate}">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+						<button type="submit" class="btn btn-outline-primary btn-sm">수정</button> 
+						<a onclick="javascript:history.back()"
+							class="btn btn-outline-secondary btn-sm">취소</a>
+					</div>
+				</fieldset>
+				</form:form>
+			</div>
+				
+				
+				
+				
+		</div>
+	</div>
+</div>
 
 	
-	<form:form modelAttribute="user" 
-			   action="./edit?${_csrf.parameterName}=${_csrf.token}"
-	           class="form-horizontal"
-	           method="post">
-	<fieldset>
-		아이디 : <form:input path="username" value="${user.username }" class="form-control" readonly="${true }"/>
-		<br>
-		이름 : <form:input path="name" value="${user.name }" class="form-control"/>
-		<form:errors path="name"/>
-		<br>
-		휴대폰 : <form:input path="phone" value="${user.phone}" class="form-control" />
-		<form:errors path="phone"/>
-		<br>
-		가입일: <form:input path="udate" value="${user.udate }" class="form-control" readonly="${true}"/>
-		<br>
-		<input type="submit" class="btn btn-primary" value="수정" />
-	</fieldset>
-	</form:form>
 
-
-
-
+<%@include file="../include/footer.jsp" %>
 </body>
 </html>
