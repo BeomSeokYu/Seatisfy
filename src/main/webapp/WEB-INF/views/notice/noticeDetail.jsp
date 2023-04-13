@@ -25,6 +25,7 @@
 	</form>
 	<a href="/notice/update?nno=${notice.nno}">수정</a>
 	<form method="POST" action="/notice/remove?nno=${notice.nno }">
+		 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 		<input type="submit" value="삭제" />
 	</form>
 
@@ -50,7 +51,7 @@
    <c:forEach items="${replyList}" var="reply">
    
     <div class="card">
-      <div class="card-header">작성자 : <b>${reply.rwriter}</b></div>
+      <div class="card-header">작성자 : <b>${user.name}</b></div>
       <div class="card-body">
         <blockquote class="blockquote mb-0">
           <p id="${reply.rno}">${reply.rcontent}</p>
@@ -107,13 +108,8 @@ function replyNewFunction() {
 		data:{
 			nno : nno,
 			csrfName: csrfToken,
-			/* rwriter :rwriter, */
 			rcontent : rcontent
 		},
-		/* beforeSend : function(xhr)
-	          {   데이터를 전송하기 전에 헤더에 csrf값을 설정한다 */
-	        /*     xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-	         }, */
 		success:function(result) {
 			window.location.reload();
 		},
