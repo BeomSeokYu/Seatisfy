@@ -110,82 +110,91 @@
 }
 .text-table th,
 .text-table td{
-	font-size: 80%;
+	font-size: 90%;
 }
 </style>
 <body>
 <%@include file="../include/navbar.jsp"%>
 <div class="container">
-	<div class="container mb-3">
+	<div class="container mt-5">
 		<div class="row justify-content-center">
-			<h2>예약</h2>
-			<%-- <div class="col-lg-3 d-none d-lg-block">
-				<%@ include file="/include/sidebar4.jsp"%>
-			</div> --%>
-			<div>
+			<h2 class="mb-5">예약글</h2>
+			<div class="col-lg-3 d-none d-lg-block">
+				<%@ include file="../include/sidebar_reser.jsp"%>
+			</div>
+			<div class="col-lg-9">
+				<div class="row">
+					<div class="col-12 text-end mb-2">
+						<c:choose>
+							<c:when test="${ post.pwriter == username }">
+								<button class="btn btn-outline-warning btn-sm mx-1" type="button" id="editBtn">수정</button>
+								<button class="btn btn-outline-danger btn-sm mx-1" type="button" id="removeBtn">삭제</button>
+							</c:when>
+						</c:choose>
+					</div>
+				</div>
 				<form:form action="/reserve/detail/${ post.pno }" method="post" modelAttribute="reserDTO" id="reserFrm">
 					<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }"/>
 					<form:errors path="seatnum"/>
 		   			<form:hidden path="seatnum" id="seatnum"/>
 					<form:hidden path="pno" value="${ post.pno }"/>
 		   		</form:form>
-				<table class="table text-nowrap table-bordered text-table">
+				<table class="table text-nowrap text-table table-rounded shadow-sm">
 					<tr class="row">
-						<th class="col-sm-1 text-center table-light text-of">제목</th>
-						<td class="col-sm-4 text-of">${ post.ptitle }</td>
-						<th class="col-sm-1 text-center table-light text-of">작성자</th>
-						<td class="col-sm-2 text-of">${ name }</td>
-						<th class="col-sm-1 text-center table-light text-of">등록일</th>
-						<td class="col-sm-3 text-of">${ post.regdate }</td>
+						<th class="col-sm-1 text-center table-primary text-of">제목</th>
+						<td class="col-sm-4 text-of table-light">${ post.ptitle }</td>
+						<th class="col-sm-1 text-center table-primary text-of">작성자</th>
+						<td class="col-sm-2 text-of table-light">${ name }</td>
+						<th class="col-sm-1 text-center table-primary text-of">등록일</th>
+						<td class="col-sm-3 text-of table-light">${ post.regdate }</td>
 					</tr>
 					<tr class="row">
-						<th class="col-sm-1 text-center table-light text-of">장소</th>
-						<td class="col-sm-4 text-of">${ post.place }</td>
-						<th class="col-sm-1 text-center table-light text-of">주소</th>
-						<td class="col-sm-6 text-of" colspan="3">${ post.address }</td>
+						<th class="col-sm-1 text-center table-primary text-of">장소</th>
+						<td class="col-sm-4 text-of table-light">${ post.place }</td>
+						<th class="col-sm-1 text-center table-primary text-of">주소</th>
+						<td class="col-sm-6 text-of table-light" colspan="3">${ post.address }</td>
 					</tr>
 					<tr class="row">
-						<th class="col-sm-2 text-center table-light text-of">예약 가능 시간</th>
-						<td class="col-sm-6 text-of" colspan="3">${fn:replace(post.startdate, 'T', ' ')} ~ ${fn:replace(post.enddate, 'T', ' ')}</td>
-						<th class="col-sm-2 text-center table-light text-of" colspan="1">진행 상태</th>
-						<td class="col-sm-2 text-of" colspan="1" id="status"></td>
+						<th class="col-sm-2 text-center table-primary text-of">예약 가능 시간</th>
+						<td class="col-sm-6 text-of table-light" colspan="3">${fn:replace(post.startdate, 'T', ' ')} ~ ${fn:replace(post.enddate, 'T', ' ')}</td>
+						<th class="col-sm-2 text-center table-primary text-of" colspan="1">진행 상태</th>
+						<td class="col-sm-2 text-of table-light" colspan="1" id="status"></td>
 					</tr>
 				</table>
 
 				<div class="py-3 px-5">
-					<div class="text-lg">
-						<p class="text-lg" style="width: 100%">${ post.pcontent }</p>
+					<div class="text-lg" style="min-height: 300px;">
+						<p class="text-lg" style="width: 100%;">${ post.pcontent }</p>
 						<!-- <p id="ncontent"></p> -->
 					</div>
 				</div>
 				<!-- 이미지 지도를 표시할 div 입니다 -->
 				<div class="row">
-					<div class="col-sm-6" id="map" style="width:50%;height:350px;"></div>
-					<div class="col-sm-6 table-responsive">
-						<table class="table" id="seatMiniTable" style="width:100%;height:100%;">
+					<div class="col-sm-8 card">
+					  <div class="card-body">
+					    <h5 class="card-title">위치 정보</h5>
+					    <div class="rounded shadow card-text" id="map" style="width:100%;height:300px;"></div>
+					  </div>
+					</div>
+					<div class="col-sm-4 card">
+					  <div class="card-body table-responsive">
+					    <h5 class="card-title">예약 상태</h5>
+					    <table class="table card-text" id="seatMiniTable" style="width:100%;height:300px;">
 			      		</table>
-		      		</div>
+					  </div>
+					</div>
 	      		</div>
-			</div>
-			<!-- <div class="col-lg-9"> -->
-			<div class="col-lg-12 text-center mt-5">
-			<c:choose>
-				<c:when test="${ myreser != null }">
-					<button class="btn btn-info btn-lg" type="button" id="showReserveBtn">예약확인</button>
-				</c:when>
-				<c:otherwise>
-					<button class="btn btn-danger btn-lg" type="button" id="showReserveBtn">예약하기</button>
-				</c:otherwise>
-			</c:choose>
-				<a class="btn btn-secondary btn-lg" href="/reserve">목록보기</a>
-			</div>
-			<div class="col-lg-12 text-center mt-5">
-			<c:choose>
-				<c:when test="${ post.pwriter == username }">
-					<button class="btn btn-info btn-lg" type="button" id="editBtn">수정하기</button>
-					<button class="btn btn-danger btn-lg" type="button" id="removeBtn">삭제하기</button>
-				</c:when>
-			</c:choose>
+				<div class="col-lg-12 text-center mt-5">
+				<c:choose>
+					<c:when test="${ myreser != null }">
+						<button class="btn btn-info btn-lg mx-3" type="button" id="showReserveBtn">예약확인</button>
+					</c:when>
+					<c:otherwise>
+						<button class="btn btn-danger btn-lg mx-3" type="button" id="showReserveBtn">예약하기</button>
+					</c:otherwise>
+				</c:choose>
+					<a class="btn btn-secondary btn-lg mx-3" href="/reserve">목록보기</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -317,7 +326,7 @@ $("#removeBtn").on("click", function() {
 });
 
 </script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=앱키&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8b383d5cd72a2f6c17df1bc2be653f54&libraries=services"></script>
 <script>   
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {

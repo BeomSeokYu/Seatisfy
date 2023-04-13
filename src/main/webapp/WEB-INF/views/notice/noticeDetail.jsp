@@ -7,28 +7,62 @@
 <!DOCTYPE html>
 <html>
 <%@include file="../include/header.jsp"%>
-<title>공지사항 상세보기</title>
-
+<style>
+.text-of {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.text-table th,
+.text-table td{
+	font-size: 90%;
+}
+</style>
 <body>
 <%@include file="../include/navbar.jsp"%>
-	 <div class="card">
-		<h5 class="card-header">제목 : ${notice.ntitle}</h5>
-		<div class="card-body">
-			<h5 class="card-title">내용 : ${notice.ncontent}</h5>
- 
-			<div class="d-flex justify-content-end badge bg-light text-dark">작성일자 : ${notice.regDate}</div>
+<div class="container">
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<h2 class="mb-5">공지사항 보기</h2>
+			<div class="col-lg-3 d-none d-lg-block">
+				<%@ include file="../include/sidebar_support.jsp"%>
+			</div>
+			<div class="col-lg-9">
+				<div class="row">
+					<div class="col-12 text-end mb-2">
+						<c:if test="${ notice.nwriter == username }">
+							<a href="/notice/update?nno=${notice.nno}">수정</a>
+							<form method="POST" action="/notice/remove?nno=${notice.nno }">
+								 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<input type="submit" value="삭제" />
+							</form>
+						</c:if>
+					</div>
+				</div>
+				<table class="table text-nowrap text-table table-rounded shadow-sm">
+					<tr class="row">
+						<th class="col-sm-1 text-center table-primary text-of">제목</th>
+						<td class="col-sm-4 text-of table-light">${notice.ntitle}</td>
+						<th class="col-sm-1 text-center table-primary text-of">작성자</th>
+						<td class="col-sm-2 text-of table-light">${notice.nwriter}</td>
+						<th class="col-sm-1 text-center table-primary text-of">등록일</th>
+						<td class="col-sm-3 text-of table-light">${notice.rdate}</td>
+					</tr>
+				</table>
+
+				<div class="py-3 px-5">
+					<div class="text-lg" style="min-height: 300px;">
+						<p class="text-lg" style="width: 100%;">${notice.ncontent}</p>
+						<!-- <p id="ncontent"></p> -->
+					</div>
+				</div>
+				<div class="col-lg-12 text-end mt-5">
+					<a class="btn btn-outline-secondary btn-sm mx-3" href="/notice">목록</a>
+				</div>
+			</div>
 		</div>
 	</div>
-	
-	<form action="/notice/list">
-		<input type="submit" value="목록으로" />
-	</form>
-	<a href="/notice/update?nno=${notice.nno}">수정</a>
-	<form method="POST" action="/notice/remove?nno=${notice.nno }">
-		 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-		<input type="submit" value="삭제" />
-	</form>
-
+</div>
  <!-- 댓글 시작 -->
  <hr>
  <div>

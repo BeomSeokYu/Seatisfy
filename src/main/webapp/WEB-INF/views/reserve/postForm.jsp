@@ -124,7 +124,7 @@
 					        <span id="centerAddr"></span>
 					    </div>
 					</div>
-					자리 배치 정보 (수정이 불가하니 신중하게 해라) : <input id="seatX" type="number" min="1" max="20" value="10"/>
+					자리 배치 정보 (등록 후 수정 불가) : <input id="seatX" type="number" min="1" max="20" value="10"/>
 					X <input id="seatY" type="number" min="1" max="20" value="10"/>
 					<button id="seatTableBtn" type="button">만들기</button><br>
 					<form:hidden path="seatinfo"/><br>
@@ -147,7 +147,7 @@
 	</div>
 </div>
 <%@include file="../include/footer.jsp"%>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=앱키&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8b383d5cd72a2f6c17df1bc2be653f54&libraries=services"></script>
 <script>
 // 마커를 담을 배열입니다
 var markers = [];
