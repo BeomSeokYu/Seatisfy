@@ -86,7 +86,6 @@ public class NoticeController {
 		
 		return totalcount;
 	}
-
 	
 	//공지 상세 보기
 	@GetMapping("/detail")
@@ -115,12 +114,11 @@ public class NoticeController {
 	
 	//공지 수정
 	@PostMapping("/update")
-	public String updateNotice(@ModelAttribute("updateNotice") NoticeDTO notice) {
+	public String updateNotice(@Validated @ModelAttribute("updateNotice") NoticeDTO notice) {
 		
 		noticeService.updateNotice(notice);
 		return "redirect:/notice";
 	}
-	
 	
 	//공지 삭제
 	@PostMapping("/remove")

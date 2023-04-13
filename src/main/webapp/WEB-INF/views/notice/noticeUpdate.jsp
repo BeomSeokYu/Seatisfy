@@ -26,6 +26,7 @@
 </style>
 <body>
 
+<%@include file="../include/navbar.jsp"%>
 	 <%-- <form:form modelAttribute="updateNotice"
 		action="./update?nno=${notice.nno}" class="form-horizontal"
 		method="post">
@@ -120,7 +121,6 @@
 		</fieldset>
 		
 	</form>
-
 
 
 <script>
