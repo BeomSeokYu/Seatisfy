@@ -34,7 +34,7 @@
 						<thead>
 							<tr style="background-color: #999999; color: white;">
 								<th scope="col" class="col-2">번호</th>
-								<th scope="col" class="col-4">제목[댓글 수]</th>
+								<th scope="col" class="col-4">제목</th>
 								<!-- <th scope="col" class="col-3">작성자</th> -->
 								<th scope="col" class="col-4">작성일</th>
 								<th scope="col" class="col-4">수정일</th>
@@ -133,9 +133,7 @@
                   + "<tr>"
             	  +"<td>" + data[i].nno + "</td>"
                   + "<td><a href=\"detail?nno="
-                  + data[i].nno	+"'\">"	+ data[i].ntitle +  "</a>"
-                  + "<span class=\"replyCnt\">(" + data[i].replyCnt + ")</span>"
-                  + "</td>" 
+                  + data[i].nno	+"'\">"	+ data[i].ntitle +  "</a></td>"
                   + '<td>' + formatRegDate  + "</td>"
                   +"<td>" + formatModDate + "</td></tr>" 
          }

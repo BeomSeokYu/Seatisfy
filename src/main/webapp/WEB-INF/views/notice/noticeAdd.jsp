@@ -59,10 +59,11 @@
   <label for="ncontent" class="form-label">내용</label>
   <textarea class="form-control" id="summernote" name="ncontent" rows="5"></textarea>
 </div>
-<div class="mb-3">
+<!-- <div class="mb-3">
   <label for="nwriter" class="form-label">작성자</label>
   <input type="text" class="form-control" id="nwriter" name="nwriter" value="admin">
-</div>
+</div> -->
+<input type="hidden" name="nwriter" value="${user.name}">
 <button type="button" class="btn btn-warning " onclick="history.back()">뒤로가기</button>
 <button type="submit" class="btn btn-info ">등록</button>
 </form>

@@ -3,6 +3,7 @@
 package com.reserve.seat.notice;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,10 @@ public class NoticeController {
 
 	//공지 등록 조회 폼
 	@GetMapping("/add")
-	public String requestAddNoticeForm() {
+	public String requestAddNoticeForm(Principal principal, Model model) {
+		
+		User user = userService.getUserDetail(principal.getName());
+		model.addAttribute("user", user);
 		
 		return "notice/noticeAdd";
 	}
@@ -61,15 +65,6 @@ public class NoticeController {
 	public String NoticeList(Model model, Criteria cri) {
 		
 //		model.addAttribute("list", noticeService.selectAllNotice(cri));
-		
-		List<NoticeDTO> list = noticeService.selectAllNotice(cri);
-	    for (NoticeDTO noticeDTO : list) {
-	        String nno = String.valueOf(noticeDTO.getNno());
-	        List<ReplyDTO> replyList = noticeService.AllReplyList(nno);
-	        int cnt = replyList.size(); // 댓글 수
-	        noticeDTO.setReplyCnt(cnt);
-	    }
-	    model.addAttribute("list", list);
 		
 		return "notice/noticeAllList";
 	}
@@ -97,6 +92,8 @@ public class NoticeController {
 	//공지 상세 보기
 	@GetMapping("/detail")
 	public String requestNoticeByNum(@RequestParam("nno") String nno, Model model, Principal principal) {
+		
+		//폼을 띄우기 전에 조회수 하나 증가
 		
 		User user = userService.getUserDetail(principal.getName());
 		model.addAttribute("user", user);
