@@ -31,4 +31,6 @@ public interface NoticeService {
 	public ReplyDTO selectReply(String rno);	//특정 댓글 하나 조회
 	
 	public List<ReplyDTO> AllReplyList(String nno); //전체 댓글 조회
+	
+	public void updateView(Map map);
 }

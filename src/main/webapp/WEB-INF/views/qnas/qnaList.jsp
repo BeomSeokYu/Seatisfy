@@ -39,13 +39,17 @@
 						<thead>
 							<tr style="background-color: #999999; color: white;">
 								<th scope="col" class="col-2">번호</th>
-								<th scope="col" class="col-5">제목</th>
-								<th scope="col" class="col-5">내용</th>
+								<th scope="col" class="col-4 " >제목</th>
+								<th scope="col" class="col-4">내용</th>
 								<th scope="col" class="col-3">작성일</th>
 							</tr>
 						</thead>
 						<tbody id="imgList">
-								
+							<tr>
+							  <th scope="row">1</th>
+							  <td><a href="#">첫 번째 게시물</a></td>
+							  <td>2023-04-13</td>
+							</tr>	
 						</tbody>
 					</table>
 
@@ -117,14 +121,19 @@
 
              imgHTML += ''
                  + "<tr>"
-                 + "<td>" + data[i].qno + "</td>"
-                 + "<td><a href=\"qnas/select?qno="
+                 + "<td style='line-height: 100px;'>" + data[i].qno + "</td>"
+                 + "<td style='line-height: 100px;'><a href=\"qnas/select?qno="
                  + data[i].qno	+"'\">"	+ data[i].qtitle + "</a></td>"
-                 + "<td>" + data[i].qcontent + "</td>"
-                 + "<td>" + qDateString + "</td>" // "YYYY-MM-DD" 형식의 날짜 문자열 추가
+                 + "<td class='qcon' style='display:none'>" + data[i].qcontent + "</td>"
+                 + "<td style='line-height: 100px;'>" + qDateString + "</td>" // "YYYY-MM-DD" 형식의 날짜 문자열 추가
                  + "</tr>";
+                 
          }
-         $('#imgList').html(imgHTML); 
+         $('#imgList').html(imgHTML);
+         $(document).on('click', '#imgList tr', function() {
+/*         	    var index = $(this).index(); // 클릭한 행의 인덱스 찾기*/   
+      	    $(this).find('td.qcon').toggle(); // 다음 형제 요소(td) 보이거나 숨기기
+        	  });
       }	
 </script>
 </body>

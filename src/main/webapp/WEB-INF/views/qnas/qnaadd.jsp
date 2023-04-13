@@ -16,34 +16,44 @@
 <body>
 <%@include file="../include/navbar.jsp"%>
 
- <form:form modelAttribute="eee" 
-			   action="./add?${_csrf.parameterName}=${_csrf.token}"
-	           class="form-horizontal"
-	           method = "post"
-	           onsubmit="return checkForm();">
-	<fieldset>
-              <div class="form-group">
-                <label for="qtitle">제목</label>
-                <form:textarea path="qtitle" name="qtitle" id="qtitle" class="form-control" />
-                <form:errors path="qtitle"/>
-              </div>
-              
-              <div class="form-group">
-                <label for="qcontent">내용</label>
-                <form:textarea path="qcontent" name="qcontent" id="summernote" class="form-control" rows="10"/>
-              	<form:errors path="qcontent"/>
-              </div>
-        
- 		<div class="row">
-        <div class="col-12">
-          <a href="/qnas" class="btn btn-secondary">취소</a>
-          <input type="submit" value="등록" class="btn btn-success float-right">
-        </div>
-      </div>
-	</fieldset>
-	</form:form> 
+<div class="col-lg-8 mx-auto p-4 py-md-5">
+		<form:form modelAttribute="eee" action="./add" method="post">
+			<fieldset>
+			<main>
+				<div class="pb-3 mb-5">
+					<div class="postRegister_postContentWrapper__3BXZ6">
+						<span class="postRegister_sequence__nC1Px">1</span>
+						<h2 class="postRegister_text__17jg3">Q & A</h2>
+					</div>
+					<div>
+
+					<div class="mb-3">
+						<label for="ntitle" class="form-label">제목</label> 
+						<form:input type="text" class="form-control" path="qtitle" />
+							<form:errors path="qtitle"/>
+					</div>
+					<div class="mb-3">
+						<label for="ncontent" class="form-label">내용</label>
+						<form:textarea class="form-control" id="summernote" path="qcontent"	rows="5" />
+						<form:errors path="qcontent"/>
+					</div>
+				</div>
+				<div style="text-align: right;">
+							<!-- 토큰 전송 -->
+							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+						<button type="button"
+							class="btn btn-warning btn-lg px-4 text text-white"
+							onclick="history.back()">뒤로가기</button>
+						<button class="btn btn-primary btn-lg px-4 text text-white addBtn"
+							type="submit">글 등록</button>
+					</div>
+				</div>
+			</main>
+			</fieldset>
+		</form:form>
+	</div>
 	
-<%-- <%@include file="../include/footer.jsp"%> --%>
+<%@include file="../include/footer.jsp"%>
 <script>
 function checkForm() {
 	  // 폼 유효성 검사를 수행
@@ -58,7 +68,6 @@ function checkForm() {
 </script>
  <script>
       $('#summernote').summernote({
-        placeholder: 'Hello stand alone ui',
         tabsize: 2,
         height: 400,
         toolbar: [

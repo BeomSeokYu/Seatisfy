@@ -11,7 +11,7 @@
 
 	
 	<form:form modelAttribute="user" 
-			   action="./join?${_csrf.parameterName}=${_csrf.token}"
+			   action="./join"
 	           class="form-horizontal"
 	           method="post">
 	<fieldset>
@@ -30,6 +30,7 @@
 		휴대폰 : <form:input path="phone" class="form-control"/>
 		<form:errors path="phone"/>
 		<br>
+		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 		<input type="submit" class="btn btn-primary" value="등록" />
 	
 	</fieldset>

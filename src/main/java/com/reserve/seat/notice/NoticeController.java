@@ -3,6 +3,7 @@
 package com.reserve.seat.notice;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,39 +38,31 @@ public class NoticeController {
 
 	//공지 등록 조회 폼
 	@GetMapping("/add")
-	public String requestAddNoticeForm() {
+	public String requestAddNoticeForm(@ModelAttribute("notice") NoticeDTO notice, Principal principal, Model model) {
+		
+		User user = userService.getUserDetail(principal.getName());
+		model.addAttribute("user", user);
 		
 		return "notice/noticeAdd";
 	}
 
 	//공지 등록
 	@PostMapping("/add")
-	public String submitAddNoticeForm(@Validated NoticeDTO notice, BindingResult br) {
+	public String submitAddNoticeForm(@Validated @ModelAttribute("notice") NoticeDTO notice, BindingResult br) {
 		
 		if(br.hasErrors()) {
 			return "notice/noticeAdd";
 		}
 		
 		//공지를 notice 테이블에 등록하고
-				noticeService.insertNotice(notice);
+		noticeService.insertNotice(notice);
 		
-		return "redirect:/notice/list";	 //공지 전체 목록으로 response.sendRedirect()처리
+		return "redirect:/notice";	 //공지 전체 목록으로 response.sendRedirect()처리
 	}
 
 	//공지 전체 목록
 	@GetMapping
 	public String NoticeList(Model model, Criteria cri) {
-		
-//		model.addAttribute("list", noticeService.selectAllNotice(cri));
-		
-//		List<NoticeDTO> list = noticeService.selectAllNotice(cri);
-//	    for (NoticeDTO noticeDTO : list) {
-//	        String nno = String.valueOf(noticeDTO.getNno());
-//	        List<ReplyDTO> replyList = noticeService.AllReplyList(nno);
-//	        int cnt = replyList.size(); // 댓글 수
-//	        noticeDTO.setReplyCnt(cnt);
-//	    }
-//	    model.addAttribute("list", list);
 		
 		return "notice/noticeAllList";
 	}
@@ -97,6 +90,8 @@ public class NoticeController {
 	//공지 상세 보기
 	@GetMapping("/detail")
 	public String requestNoticeByNum(@RequestParam("nno") String nno, Model model, Principal principal) {
+		
+		//폼을 띄우기 전에 조회수 하나 증가
 		
 		User user = userService.getUserDetail(principal.getName());
 		model.addAttribute("user", user);
