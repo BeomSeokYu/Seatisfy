@@ -45,7 +45,7 @@
 						<label for="qtitle" class="form-label">제목</label>
 				<input name="qtitle" value="${qna.qtitle }"
 					class="form-control rounded" >
-
+			
 			</div>
 
 			<div class="mb-3">
