@@ -12,8 +12,25 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto py-4 py-lg-0">
+            	<li class="nav-item dropdown">
+				    <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				        소개
+				    </a>
+				    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+				        <li><a class="dropdown-item" href="#">서비스 소개</a></li>
+				        <li><a class="dropdown-item" href="#">이용 방법</a></li>
+				    </ul>
+				</li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/reserve">예약</a></li>
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/notice">공지사항</a></li>
+                <li class="nav-item dropdown">
+				    <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="/notice" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				        지원
+				    </a>
+				    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+				        <li><a class="dropdown-item" href="/notice">공지사항</a></li>
+				        <li><a class="dropdown-item" href="/qnas">자주 묻는 질문(QnA)</a></li>
+				    </ul>
+				</li>
                 <sec:authorize access="isAnonymous()">
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">로그인</a></li>
 				</sec:authorize>
@@ -28,7 +45,7 @@
 				        <li><a class="dropdown-item" href="/reserve/myreser">내 좌석 보기</a></li>
 				        <li><a class="dropdown-item" href="#" onClick="javascript:logoutPost()">로그아웃</a></li>
 				        <sec:authorize access="hasRole('ROLE_ADMIN')">
-					        <li><a class="dropdown-item" href="/user">회원 목록</a></li>
+					        <li><a class="dropdown-item" href="/user/list">회원 목록</a></li>
 						</sec:authorize>
 				    </ul>
 				</li>

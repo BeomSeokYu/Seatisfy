@@ -40,8 +40,8 @@
 						class="btn btn-outline-primary btn-sm">내정보수정</a>
 					<a href="<c:url value="/user/changepw"/>"
 						class="btn btn-outline-success btn-sm">비밀번호 변경</a>
-					<a href="javascript:removeUser('${user.uno}')"
-						class="btn btn-outline-danger btn-sm">회원탈퇴</a> 
+					<button onclick="javascript:removeConfirm('${user.uno}')"
+						class="btn btn-outline-danger btn-sm" id="signoutBtn">회원탈퇴</button> 
 				</div>
 			</div>
 				
@@ -55,6 +55,12 @@
 
 
 <script>
+	function removeConfirm(uno) {
+	    if (confirm("정말로 회원탈퇴하시겠습니까?")) {
+	        removeUser(uno);
+	    }
+	}
+
 	function removeUser(uno) {
 		$.ajax({
 			type : "POST",

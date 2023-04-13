@@ -1,7 +1,6 @@
 package com.reserve.seat.user;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -17,13 +16,14 @@ public class User {
 	
 	private int uno;
 
-	@Email(message = "이메일 형식이 아닙니다.")
 	@NotEmpty(message = "아이디는 필수 입력값입니다.")
+	@Email(message = "이메일 형식이 아닙니다.")
+	@Pattern(regexp = "^[^@]{4,}@[^@]+\\\\.[^@]+$", message = "@앞은 최소 4글자여야 합니다.")
 	@UniqueUsername
 	private String username;
 	
 	@NotEmpty(message = "비밀번호는 필수 입력값입니다.")
-//	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "비밀번호는 8자 이상이어야 하며, 영문자와 숫자를 모두 포함해야 합니다.")
+	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "비밀번호는 8자 이상이어야 하며, 영문자와 숫자를 모두 포함해야 합니다.")
 	private String password;
 	
 	private String passwordConfirm;

@@ -82,43 +82,10 @@
   	<![CDATA[ nno > 0 ]]>
   </select>
   
-  <!-- 댓글 등록  -->
-  <insert id="insertReply" parameterType="hashMap">
-	INSERT 
-	INTO 
-	reply(nno, rcontent, rwriter)
-	VALUES
-	(#{nno}, #{rcontent}, #{rwriter})
-  </insert>
-  
-  <!-- 댓글 수정  -->
-	<update id="updateReply" parameterType="hashMap">
-		UPDATE reply
-		SET rcontent = #{rcontent}, modDate = now()
-		WHERE rno = #{rno}
-	</update>
-	
-	<!-- 댓글 삭제  -->
-	<delete id="deleteReply" parameterType="int">
-		DELETE FROM reply
-		WHERE rno = #{rno}
-	</delete>
-  
-  <!-- 댓글 조회 -->
-  <select id="selectReply" parameterType="String" resultType="com.reserve.seat.reply.ReplyDTO">
-    SELECT * 
-    FROM reply 
-    WHERE rno = #{rno}
-  </select> 
-
-<!--댓글 리스트  -->
-<select id="AllReplyList" parameterType="String" resultType="com.reserve.seat.reply.ReplyDTO">
-    <![CDATA[
-    SELECT *
-	FROM reply
-	WHERE nno = #{nno}
-    ]]>
-</select>
-  
+ <update id="updateHit" parameterType="String">
+ 	UPDATE notice
+ 	SET hit = hit + 1
+ 	WHERE nno = #{nno}
+ </update> 
 
 </mapper>

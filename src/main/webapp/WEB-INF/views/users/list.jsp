@@ -135,7 +135,7 @@
                   +		"<option value='ROLE_ADMIN'>ROLE_ADMIN</option>"
                   +		"</select></td>"
                   +"<td>" + data[i].udate + "</td>" 
-                  +"<td><a href=\"javascript:removeUser("+ data[i].uno+")\"	class=\"btn btn-danger btn-sm\">삭제</a></td>"
+                  +"<td><button onclick=\"javascript:removeConfirm("+ data[i].uno+")\"	class=\"btn btn-danger btn-sm\">삭제</button></td>"
                   +"</tr>"
          }
          $('#imgList').html(imgHTML); 
@@ -147,6 +147,12 @@
   		self.location = "/join";
   	});
     
+    // 회원 삭제 confirm
+	function removeConfirm(uno) {
+	    if (confirm("이 회원을 정말로 삭제하시겠습니까?")) {
+	        removeUser(uno);
+	    }
+	}
     // 회원 삭제 버튼
   	function removeUser(uno) {
 		$.ajax({

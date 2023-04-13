@@ -30,17 +30,10 @@
 			<div class="col-lg-9">
 				<div class="row">
 					<div class="col-12 text-end mb-2">
-						<c:if test="${ notice.nwriter == username }">
-						<div style="display: inline-block;">
-							<a class="btn btn-outline-warning btn-sm mx-1" href="/notice/update?nno=${notice.nno}">수정</a>
-							</div>
-							<div style="display: inline-block;">
-							<form method="POST" action="/notice/remove?nno=${notice.nno }">
-								 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<button class="btn btn-outline-danger btn-sm mx-1">삭제</button>
-							</form>
-							</div>
-						</c:if>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<button class="btn btn-outline-warning btn-sm mx-1" type="button" id="editBtn">수정</button>
+								<button class="btn btn-outline-danger btn-sm mx-1" type="button" id="removeBtn">삭제</button>
+						</sec:authorize>
 					</div>
 								
 								
@@ -86,6 +79,7 @@ $("#editBtn").on("click", function() {
 	});
 	
 $("#removeBtn").on("click", function() {
+	if(confirm('정말로 삭제하시겠습니까?')) {
     // 해당 게시물의 nno
     var nno = '${notice.nno}';
     // POST 요청
@@ -108,6 +102,7 @@ $("#removeBtn").on("click", function() {
         console.log(xhr.responseText);
       }
     });
+	}
   });
 
 </script>

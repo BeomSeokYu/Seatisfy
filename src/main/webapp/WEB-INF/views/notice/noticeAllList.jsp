@@ -41,11 +41,12 @@
 					<table class="table table-hover shadow bg-body table-rounded">
 						<thead>
 							<tr style="background-color: #999999; color: white;">
-								<th scope="col" class="col-2">번호</th>
+								<th scope="col" class="col-1">번호</th>
 								<th scope="col" class="col-3">제목</th>
 								<th scope="col" class="col-3">작성자</th>
 								<th scope="col" class="col-2">작성일</th>
 								<th scope="col" class="col-2">수정일</th>
+								<th scope="col" class="col-1">조회수</th>
 							</tr>
 						</thead>
 						<tbody id="imgList">
@@ -72,7 +73,7 @@
 									<option value="TCW">제목/내용/작성자</option>
 								</select> <input class="form-control form-control-sm" type="search"
 									placeholder="검색어" id="keyword">
-								<button class="btn btn-sm btn-outline-secondary" type="button"
+								<button class="btn btn-sm btn-outline-success" type="button"
 									id="searchBtn">
 									<i class="bi bi-search"></i>
 								</button>
@@ -88,10 +89,21 @@
 
 	
 						
-<%@include file="../include/footer.jsp"%>					
+<%@include file="../include/footer.jsp"%>	
+<%@ include file="../include/scriptUtil.jsp"%>					
 	<script src="/resources/js/page.js"></script>
 <script>		
-
+onload = function() {
+	switch ('${param.result}') {
+	  case 'rmsuccess':
+	  	popModal('삭제 성공', '게시물이 삭제되었습니다');
+	    break;
+	  case 'rmfail':
+	  	popModal('삭제 실패', '삭제에 실패하였습니다');
+	    break;
+	}
+	pageObj.pageCal(cri);
+}
 
 
 /*
@@ -142,7 +154,8 @@
                   + '<td id=' + i +'>'
 				  + getName(data[i].nwriter, i) + '</td>'
                   + '<td>' + formatRegDate  + "</td>"
-                  +"<td>" + formatModDate + "</td></a></tr>" 
+                  +"<td>" + formatModDate + "</td>"
+                  +"<td>" + data[i].hit + "</td></a></tr>" 
          }
          $('#imgList').html(imgHTML); 
       }	
