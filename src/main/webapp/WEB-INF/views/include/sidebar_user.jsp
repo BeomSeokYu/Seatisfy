@@ -15,16 +15,6 @@
                  비밀번호 변경
       </a>
     </li>
-    <li>
-      <a href="/reserve/mypost" class="nav-link link-dark">
-                 내 예약 게시글 보기
-      </a>
-    </li>
-    <li>
-      <a href="/reserve/myreser" class="nav-link link-dark">
-                  내 좌석 보기
-      </a>
-    </li>
   </ul>
   <hr>
   <!-- <div class="dropdown">

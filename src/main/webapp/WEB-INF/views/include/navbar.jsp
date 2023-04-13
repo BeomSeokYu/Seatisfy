@@ -45,7 +45,7 @@
 				        <li><a class="dropdown-item" href="/reserve/myreser">내 좌석 보기</a></li>
 				        <li><a class="dropdown-item" href="#" onClick="javascript:logoutPost()">로그아웃</a></li>
 				        <sec:authorize access="hasRole('ROLE_ADMIN')">
-					        <li><a class="dropdown-item" href="/user">회원 목록</a></li>
+					        <li><a class="dropdown-item" href="/user/list">회원 목록</a></li>
 						</sec:authorize>
 				    </ul>
 				</li>
