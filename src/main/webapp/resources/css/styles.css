@@ -10617,16 +10617,16 @@ blockquote {
     background: transparent;
   }
   #mainNav .navbar-brand {
-    color: #fff;
+    color: rgb(0, 0, 0);
   }
   #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgb(0, 0, 0);
   }
   #mainNav .navbar-nav > li.nav-item > a.nav-link {
-    color: #fff;
+    color: rgb(0, 0, 0);
   }
   #mainNav .navbar-nav > li.nav-item > a.nav-link:focus, #mainNav .navbar-nav > li.nav-item > a.nav-link:hover {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgb(0, 0, 0);
   }
 }
 @media (min-width: 992px) {
@@ -10644,6 +10644,7 @@ blockquote {
     transition: transform 0.2s;
     border-bottom: 1px solid white;
     background-color: rgba(255, 255, 255, 0.9);
+    transform: translate3d(0, 100%, 0);
   }
   #mainNav.is-fixed .navbar-brand {
     color: #212529;

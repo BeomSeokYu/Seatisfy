@@ -36,7 +36,7 @@
 
 
 <!-- common css -->
-<!-- <link href="/resources/css/common.css" rel="stylesheet"> -->
+<link href="/resources/css/common.css" rel="stylesheet">
  
  
 </head>

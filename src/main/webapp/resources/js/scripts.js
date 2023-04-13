@@ -16,6 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
             } else {
                 console.log(123);
                 mainNav.classList.remove('is-visible', 'is-fixed');
+                mainNav.classList.remove('is-fixed');
             }
         } else {
             // Scrolling Down
