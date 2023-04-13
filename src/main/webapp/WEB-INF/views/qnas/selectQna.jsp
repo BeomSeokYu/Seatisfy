@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-        </header>
+</header>
 	<h3 class="com_title2">상세보기</h3>
 	<div class="card">
 		<h5 class="card-header">제목 : ${qna.qtitle}</h5>
