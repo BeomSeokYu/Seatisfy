@@ -25,12 +25,15 @@
             </div>
         </header>
 
+	<div class="container mt-5">
 	<div class="container">
-		<div class="photo-gallery container mb-3">
-			<div class="row justify-content-center">
-				<h2>회원</h2>
-
-				<div class="col-lg-12">
+		<div class="row justify-content-center">
+			<h2 class="mb-5">회원 목록</h2>
+			<div class="col-lg-3 d-none d-lg-block">
+				<%@ include file="../include/sidebar_user.jsp"%>
+			</div>
+			
+			<div class="col-lg-9">
 					<div class="row">
 						<div class="col-3 text-muted">
 							<select class="form-select form-select-sm w-50 d-inline"
@@ -40,11 +43,14 @@
 								<option value="40">40</option>
 							</select> <span class="d-inline">개씩 보기</span>
 						</div>
-						<div class="col-9 text-end"></div>
+						<div class="col-9 text-end">
+							<button id="regBtn" type="button"
+						class="btn btn-xs pull-right btn-outline-secondary btn-sm">등록</button>
+						</div>
 					</div>
 					<hr class="my-4">
 
-					<table class="table table-hover shadow bg-body rounded">
+					<table class="table table-hover shadow bg-body table-rounded">
 						<thead>
 							<tr style="background-color: #999999; color: white;">
 								<th scope="col" class="col-2">번호</th>
@@ -61,8 +67,6 @@
 								
 						</tbody>
 					</table>
-					<button id="regBtn" type="button"
-						class="btn btn-xs pull-right btn-info">등록</button>
 					<div class="row text-center" id="none"></div>
 
 					<hr class="my-4">
@@ -80,7 +84,7 @@
 									<option value="EN">이메일/이름</option>
 								</select> <input class="form-control form-control-sm" type="search"
 									placeholder="검색어" id="keyword">
-								<button class="btn btn-sm btn-outline-success" type="button"
+								<button class="btn btn-sm btn-outline-secondary" type="button"
 									id="searchBtn">
 									<i class="bi bi-search"></i>
 								</button>

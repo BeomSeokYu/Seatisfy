@@ -6,12 +6,12 @@
   <hr>
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
-      <a href="/reserve" class="nav-link link-dark" aria-current="page">
+      <a href="/notice" class="nav-link link-dark" aria-current="page">
                  공지사항
       </a>
     </li>
     <li>
-      <a href="/reserve/myreser" class="nav-link link-dark">
+      <a href="/qnas" class="nav-link link-dark">
                  자주 묻는 질문(QnA)
       </a>
     </li>

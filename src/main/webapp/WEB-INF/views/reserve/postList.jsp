@@ -3,6 +3,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>  
 
 <!DOCTYPE html>
 <html>
@@ -28,7 +29,9 @@
 						</select> <span class="d-inline">개씩 보기</span>
 					</div>
 					<div class="col-9 text-end">
+					<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
 						<a href="/reserve/add" class="btn btn-sm btn-outline-secondary">예약 등록 </a>
+					</sec:authorize>
 					</div>
 				</div>
 				<hr class="my-4">
