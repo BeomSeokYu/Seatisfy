@@ -56,6 +56,7 @@
 
 <form action="./update?nno=${notice.nno}" class="form-horizontal"
 	  method="post">
+	   <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 		<fieldset>
 
 			<div class="form-group">

@@ -5,19 +5,12 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>  
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>	
-<!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>회원 전체 목록</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<%@include file="../include/header.jsp"%>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-
-</head>
 <body>
-
+<%@include file="../include/navbar.jsp"%>
 	<div class="container">
 		<div class="photo-gallery container mb-3">
 			<div class="row justify-content-center">
@@ -41,18 +34,20 @@
 						<thead>
 							<tr style="background-color: #999999; color: white;">
 								<th scope="col" class="col-2">번호</th>
-								<th scope="col" class="col-6">제목[댓글 수]</th>
-								<th scope="col" class="col-6">작성자</th>
-								<th scope="col" class="col-2">작성일</th>
-								<th scope="col" class="col-2">수정일</th>
+								<th scope="col" class="col-4">제목[댓글 수]</th>
+								<!-- <th scope="col" class="col-3">작성자</th> -->
+								<th scope="col" class="col-4">작성일</th>
+								<th scope="col" class="col-4">수정일</th>
 							</tr>
 						</thead>
 						<tbody id="imgList">
 								
 						</tbody>
 					</table>
-					<button id="regBtn" type="button"
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<button id="regBtn" type="button"
 						class="btn btn-xs pull-right btn-info">등록</button>
+					</sec:authorize>
 					<div class="row text-center" id="none"></div>
 
 					<hr class="my-4">
@@ -88,7 +83,7 @@
 
 	
 						
-					
+<%@include file="../include/footer.jsp"%>					
 	<script src="/resources/js/page.js"></script>
 <script>		
 
@@ -105,9 +100,7 @@
 
       /* 전체 게시물 수 가져오기 위해 처리한 jsp URL 입력해주세요 */
       
-      function getCsrfToken(){
-         return '${_csrf.token}';
-      } 
+      
       
       function getTotalCountUrl() {
          return '/notice/total'
@@ -117,6 +110,10 @@
          return '/notice/list'
       }
 
+      function getCsrfToken(){
+          return '${_csrf.token}';
+       } 
+      
       function printList(data) {
          //TODO: 리스트 출력 처리 하세요
          if (data.length < 1) {
@@ -130,14 +127,15 @@
              var formatRegDate = regDate.getFullYear() + '-' + ('0' + (regDate.getMonth() + 1)).slice(-2) + '-' + ('0' + regDate.getDate()).slice(-2); // yyyy-MM-dd 형식으로 변환
             
              var modDate = new Date(data[i].modDate); // Date 객체 생성
-             var formatModDate = regDate.getFullYear() + '-' + ('0' + (modDate.getMonth() + 1)).slice(-2) + '-' + ('0' + modDate.getDate()).slice(-2); // yyyy-MM-dd 형식으로 변환
+             var formatModDate = regDate.getFullYear() + '-' + ('0' + (modDate.getMonth() + 1)).slice(-2) + '-' + ('0' + modDate.getDate()).slice(-2); // yyyy-MM-dd 형식으로 변환 
              
               imgHTML += ''
                   + "<tr>"
             	  +"<td>" + data[i].nno + "</td>"
                   + "<td><a href=\"detail?nno="
-                  + data[i].nno	+"'\">"	+ data[i].ntitle + "</a></td>" 
-                  +'<td>' + data[i].nwriter+ "</td>"
+                  + data[i].nno	+"'\">"	+ data[i].ntitle +  "</a>"
+                  + "<span class=\"replyCnt\">(" + data[i].replyCnt + ")</span>"
+                  + "</td>" 
                   + '<td>' + formatRegDate  + "</td>"
                   +"<td>" + formatModDate + "</td></tr>" 
          }
