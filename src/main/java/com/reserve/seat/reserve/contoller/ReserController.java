@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mysql.cj.log.Log;
 import com.reserve.seat.Criteria;
 import com.reserve.seat.reply.ReplyDTO;
 import com.reserve.seat.reserve.domain.PostDTO;
@@ -32,7 +31,6 @@ import com.reserve.seat.user.User;
 import com.reserve.seat.user.UserService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/reserve")
