@@ -36,10 +36,10 @@
 								</div>
 								
 								<div class="d-flex align-items-center">
-									<a href="/user/findid" class="float-end">아이디 찾기</a>
+									<a href="/findid" class="float-end">아이디 찾기</a>
 								</div>
 								<div class="d-flex align-items-center">
-									<a href="/user/findpw" class="float-end">비밀번호 찾기</a>
+									<a href="/findpw" class="float-end">비밀번호 찾기</a>
 								</div>
 											
                                  <!-- 토큰 전송 -->
@@ -49,7 +49,7 @@
 						</div>
 						<div class="card-footer py-3 border-0">
 							<div class="text-center">
-								<a href="/user/join" class="text-dark">회원 가입</a>
+								<a href="/join" class="text-dark">회원 가입</a>
 							</div>
 						</div>
 					</div>

@@ -69,7 +69,7 @@
 						</div>
 						<div class="card-footer py-3 border-0">
 							<div class="text-center">
-								<a href="/user/login" class="text-dark">로그인</a>
+								<a href="/login" class="text-dark">로그인</a>
 							</div>
 						</div>
 					</div>
