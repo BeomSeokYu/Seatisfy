@@ -16,7 +16,7 @@
 							<h1 class="fs-4 card-title fw-bold mb-4">아이디 찾기</h1>
 							
 							<form:form modelAttribute="user" 
-									   action="/user/findid"
+									   action="/findid"
 							           class="form-horizontal"
 							           method="post">
 							<fieldset>
@@ -49,7 +49,7 @@
 						</div>
 						<div class="card-footer py-3 border-0">
 							<div class="text-center">
-								<a href="/user/login" class="text-dark">로그인</a>
+								<a href="/login" class="text-dark">로그인</a>
 							</div>
 						</div>
 					</div>

@@ -144,7 +144,7 @@
       
     //등록 버튼 클릭 이벤트 처리
   	$('#regBtn').on('click', function(){
-  		self.location = "/user/join";
+  		self.location = "/join";
   	});
     
     // 회원 삭제 버튼

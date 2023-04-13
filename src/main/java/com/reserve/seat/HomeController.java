@@ -14,7 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -96,7 +95,7 @@ public class HomeController {
 		userService.signup(user);
 //		userService.changeTmpPw(user);	//임시 비밀번호로 DB데이터 변경, 메일 전송
 		
-		return "redirect:/user/login";
+		return "redirect:/login";
 	}
 	
 	
@@ -137,7 +136,7 @@ public class HomeController {
 		//성공 로직
 		redirectAttributes.addFlashAttribute("idFound", maskedId);
 		
-		return "redirect:/user/findid";
+		return "redirect:/findid";
 	}
 	
 	

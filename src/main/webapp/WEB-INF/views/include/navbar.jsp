@@ -15,7 +15,7 @@
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/reserve">예약</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/notice">공지사항</a></li>
                 <sec:authorize access="isAnonymous()">
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/user/login">로그인</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">로그인</a></li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
                 <li class="nav-item dropdown">

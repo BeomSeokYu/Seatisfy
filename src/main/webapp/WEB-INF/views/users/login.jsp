@@ -15,7 +15,7 @@
 							<h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
 							
 							<h4 style="color :red">${error }</h4>
-							<form role="form" action="/user/login" method="post" accept-charset="UTF-8">
+							<form role="form" action="/login" method="post" accept-charset="UTF-8">
 							<fieldset>
 								<div class="mb-3">
 									<label class="mb-2 text-muted" for="email">E-Mail Address</label>

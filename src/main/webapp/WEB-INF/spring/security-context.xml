@@ -24,10 +24,10 @@
 		
 
 		<!-- 로그인 페이지 지정 / 로그인 성공 핸들러 지정 -->
-		<security:form-login login-page="/user/login" 
+		<security:form-login login-page="/login" 
 			password-parameter="password" 
 			username-parameter="username" 
-			login-processing-url="/user/login"
+			login-processing-url="/login"
 		 />
 		
 		<!-- csrf 사용 설정 -->

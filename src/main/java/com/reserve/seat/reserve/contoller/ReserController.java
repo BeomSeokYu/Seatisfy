@@ -67,7 +67,7 @@ public class ReserController {
 		
 		User user = userService.getUserDetail(principal.getName());
 		if (user == null) {
-			return "redirect:/user/login";
+			return "redirect:/login";
 		}
 		postDTO.setPwriter(principal.getName());
 		reserService.addPost(postDTO);
@@ -101,7 +101,7 @@ public class ReserController {
 		}
 		User user = userService.getUserDetail(principal.getName());
 		if (user == null) {
-			return "redirect: /user/login";
+			return "redirect: /login";
 		}
 		
 		if (bindingResult.hasErrors()) {
@@ -136,7 +136,7 @@ public class ReserController {
 		}
 		User user = userService.getUserDetail(principal.getName());
 		if (user == null) {
-			return "/user/login";
+			return "/login";
 		}
 		
 		if (reserService.removePost(pno) == 1) {
@@ -194,7 +194,7 @@ public class ReserController {
 			ReserDTO rdto = reserService.getReserByIdAndPno(principal.getName(), pno);
 			User user = userService.getUserDetail(principal.getName());
 			if (user == null) {
-				return "redirect:/user/login";
+				return "redirect:/login";
 			}
 			if (rdto != null) {
 				redirectAttributes.addAttribute("result", "dupli");

@@ -16,7 +16,7 @@
 							<h1 class="fs-4 card-title fw-bold mb-4">회원가입</h1>
 							
 							<form:form modelAttribute="user" 
-									   action="/user/join"
+									   action="/join"
 							           class="form-horizontal"
 							           method="post">
 							<fieldset>
