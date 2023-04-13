@@ -13,5 +13,9 @@ body {
 
 /* footer 상단 마진 */
 footer {
-  margin-top: 300px;
+  margin-top: 200px;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }

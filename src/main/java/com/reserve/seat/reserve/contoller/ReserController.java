@@ -259,20 +259,30 @@ public class ReserController {
 	
 	//댓글 등록
 	@PostMapping("/addReply")
-  	@ResponseStatus(code = HttpStatus.OK)
-  	public void addReply(@ModelAttribute ReplyDTO replyDTO) {
+	@ResponseBody
+  	public String addReply(@Validated @ModelAttribute ReplyDTO replyDTO, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+	        return "fail";
+	    }
+		
 		System.out.println(replyDTO.getPno());
 		System.out.println(replyDTO.getRcontent());
 		System.out.println(replyDTO.getRwriter());
   		reserService.insertReply(replyDTO);
+  		
+  		return "ok";
   	}
 	
 	//댓글 수정
 	@PostMapping("/updateReply")
-	@ResponseStatus(code = HttpStatus.OK)
-	public void updateReply(@ModelAttribute ReplyDTO replyDTO) {
-		
+	@ResponseBody
+	public String updateReply(@ModelAttribute ReplyDTO replyDTO) {
+		String content = replyDTO.getRcontent();
+		if (content == null || content == "") {
+	        return "fail";
+	    }
 		reserService.updateReply(replyDTO);
+		return "ok";
 	}
 	
 	

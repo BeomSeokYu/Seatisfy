@@ -86,10 +86,14 @@
 </style>
 <body>
 <%@include file="../include/navbar.jsp"%>
+<header class="mt-5 mb-5 pt-5 pb-5" style="background-image: url('/resources/assets/img/portfolio/fullsize/1.jpg'); background-size: cover;">
+	<div class="container">
+		<h1 class="mt-5 mb-5 pt-5 pb-5 text-white"><span class="text-shadow">예약 게시글 수정</span></h1>
+	</div>
+</header>
 <div class="container">
 	<div class="container mb-3">
 		<div class="row justify-content-center">
-			<h2>예약</h2>
 			<div class="col-lg-3 d-none d-lg-block">
 				<%@ include file="../include/sidebar_reser.jsp"%>
 			</div>

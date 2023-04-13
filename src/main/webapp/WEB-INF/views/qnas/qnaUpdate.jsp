@@ -26,20 +26,21 @@
 </style>
 <body>
 <%@include file="../include/navbar.jsp"%>
+<header class="mt-5 mb-5 pt-5 pb-5" style="background-image: url('/resources/assets/img/portfolio/fullsize/5.jpg'); background-size: cover;">
+	<div class="container">
+		<h1 class="mt-5 mb-5 pt-5 pb-5 text-white"><span class="text-shadow">Q & A 수정</span></h1>
+	</div>
+</header>
 <div class="col-lg-8 mx-auto p-4 py-md-5">
 <form action="./update?qno=${qna.qno}" class="form-horizontal" method="post">
 		
 		<fieldset>
 		<div class="container">
-	<div class="container mt-5">
+		<div class="container mt-5">
 		<div class="row justify-content-center">
 				<div class="postRegister_postContentWrapper__3BXZ6">
 						<h2 class="mb-5">Q & A 수정</h2>
 				</div>
-<div class="col-lg-3 d-none d-lg-block">
-	<%@ include file="../include/sidebar_support.jsp"%>
-			</div>
-			<div class="col-lg-9">
 			<div class="pb-3 mb-5">
 				<div class="mb-3">
 						<label for="qtitle" class="form-label">제목</label>
@@ -65,11 +66,12 @@
 					</sec:authorize>
 				</div>
 			</div>
+			</div>
+			</div>
 	</div>
 </div>
 		</fieldset>
 	</form>
-</div>
 </div>
 <%@include file="../include/footer.jsp"%>
 	<script>

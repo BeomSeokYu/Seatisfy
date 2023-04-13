@@ -9,7 +9,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>공지사항 수정</title>
 <%@include file="../include/header.jsp"%>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
@@ -64,16 +63,18 @@
 		</fieldset>
 	</form:form>  --%>
 <%@include file="../include/navbar.jsp"%>
-
- <div class="col-lg-8 mx-auto p-4 py-md-5">
+<header class="mt-5 mb-5 pt-5 pb-5" style="background-image: url('/resources/assets/img/portfolio/fullsize/5.jpg'); background-size: cover;">
+	<div class="container">
+		<h1 class="mt-5 mb-5 pt-5 pb-5 text-white"><span class="text-shadow">공지사항 수정</span></h1>
+	</div>
+</header>
 <form action="./update?nno=${notice.nno}" class="form-horizontal" method="post">
 	   <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 		<fieldset>
 	<div class="container">
-	<div class="container mt-5">
+	<div class="container">
 		<div class="row justify-content-center">
 		<div class="postRegister_postContentWrapper__3BXZ6">
-						<h2 class="mb-5">공지 수정</h2>
 				</div>
 	<div class="col-lg-3 d-none d-lg-block">
 		<%@ include file="../include/sidebar_support.jsp"%>
@@ -119,7 +120,6 @@
 		</fieldset>
 		
 	</form>
-</div>
 
 
 

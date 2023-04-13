@@ -10,10 +10,14 @@
 <%@include file="../include/header.jsp"%>
 <body>
  <%@include file="../include/navbar.jsp"%> 
+ <header class="mt-5 mb-5 pt-5 pb-5" style="background-image: url('/resources/assets/img/portfolio/fullsize/6.jpg'); background-size: cover;">
+	<div class="container">
+		<h1 class="mt-5 mb-5 pt-5 pb-5 text-white"><span class="text-shadow">자주 묻는 질문 (QnA)</span></h1>
+	</div>
+</header>
 	<div class="container mt-5">
 	<div class="container">
 		<div class="row justify-content-center">
-			<h2 class="mb-5">Q n A</h2>
 			<div class="col-lg-3 d-none d-lg-block">
 				<%@ include file="../include/sidebar_support.jsp"%>
 			</div>

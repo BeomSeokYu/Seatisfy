@@ -114,10 +114,14 @@
 </style>
 <body>
 <%@include file="../include/navbar.jsp"%>
+<header class="mt-5 mb-5 pt-5 pb-5" style="background-image: url('/resources/assets/img/portfolio/fullsize/3.jpg'); background-size: cover;">
+	<div class="container">
+		<h1 class="mt-5 mb-5 pt-5 pb-5 text-white"><span class="text-shadow">예약 게시글 보기</span></h1>
+	</div>
+</header>
 <div class="container">
 	<div class="container mt-5">
 		<div class="row justify-content-center">
-			<h2 class="mb-5">예약글</h2>
 			<div class="col-lg-3 d-none d-lg-block">
 				<%@ include file="../include/sidebar_reser.jsp"%>
 			</div>
@@ -202,20 +206,21 @@
 <div class="container mt-5">
 <!-- 댓글 시작 -->
  <hr>
- <div>
+<div>
+	<h4 class="px-5 mt-5 mb-3">댓글</h4>
+	<div class="post_reply row px-5">
+		<textarea class="col-sm-10 rounded" rows="2" id="rcontent" name="rcontent"></textarea>
+		<button class="btn btn-primary col-sm-2" onclick="replyNewFunction()">답변등록</button>
+	</div>
 
-		<div class="post_reply row p-5">
-			<textarea class="col-sm-10 rounded" rows="2" id="rcontent" name="rcontent"></textarea>
-			<button class="btn btn-primary col-sm-2" onclick="replyNewFunction()">답변등록</button>
-		</div>
-
-	</div>   
+</div>   
+<div class="px-5" id="replyErr" style="color:red;"></div>
  
  
 <hr>
-<div id="cnt" class="px-1 py-3"></div>
+<div id="cnt" class="px-4 my-4"></div>
 <div class="card">
-  <div id="imgList">
+  <div class="" id="imgList">
   </div>
   <ul class="pagination justify-content-center" id="pagination">
 
@@ -302,10 +307,10 @@ function printList(data) {
       			+ '</span>'
       			+ '<span class="col-4 text-end">';
       			if ('${username}' == data[i].rwriter) {
-      				imgHTML += '<button type="button" class="btn btn-sm btn-primary" style="display:none" id="replyUpdateBtn'+data[i].rno +'" onclick="updateReply(\''+data[i].rno+'\')">완료</button>'
-		            + '<button type="button" class="btn btn-sm btn-secondary" style="display:none" id="cancelBtn'+data[i].rno +'" onclick="cancel(\''+data[i].rno+'\')">취소</button>'
-		            + '<button type="button" class="btn btn-sm btn-warning" id="modifyReplyBtn'+data[i].rno+'"  onclick="modifyReply(\''+data[i].rno+'\')">수정</button>'
-		            + '<button type="button" class="btn btn-sm btn-danger" id="deleteReplyBtn'+data[i].rno+'" onclick="deleteReply(\''+data[i].rno+'\')">삭제</button>';
+      				imgHTML += '<button type="button" class="btn btn-sm btn-outline-primary" style="display:none" id="replyUpdateBtn'+data[i].rno +'" onclick="updateReply(\''+data[i].rno+'\')">완료</button>'
+		            + '<button type="button" class="btn btn-sm btn-outline-secondary" style="display:none" id="cancelBtn'+data[i].rno +'" onclick="cancel(\''+data[i].rno+'\')">취소</button>'
+		            + '<button type="button" class="btn btn-sm btn-outline-warning" id="modifyReplyBtn'+data[i].rno+'"  onclick="modifyReply(\''+data[i].rno+'\')">수정</button>'
+		            + '<button type="button" class="btn btn-sm btn-outline-danger" id="deleteReplyBtn'+data[i].rno+'" onclick="deleteReply(\''+data[i].rno+'\')">삭제</button>';
       			}
       			imgHTML += '</span>'
       			+ '</div>'
@@ -344,8 +349,9 @@ function replyNewFunction() {
 		.then(data => {
 			data.trim()
 			console.log(data);
-			$('#rcontent').val('')
 			pageObj.pageCal(cri);
+			$('#rcontent').val('')
+    		pageObj.pageCal(cri);
 		})
 }
 
@@ -364,7 +370,9 @@ function deleteReply(rno) {
 	    },
 	    success: function (result) {
 	      // 삭제가 성공하면 댓글 목록을 갱신한다.
-	    	pageObj.pageCal(cri);
+	      	console.log(result)
+    		pageObj.pageCal(cri);
+
 	    },
 	    error: function (request, status, error) {
 	      alert(request.status + " " + request.responseText);
@@ -420,28 +428,32 @@ function updateReply(rno) {
       rcontent: modifiedContent
     },
     success: function(result) {
-      // 댓글 수정 성공 시, 수정한 내용을 화면에 업데이트
-      var replyContent = document.getElementById(rno);
-      replyContent.innerText = modifiedContent;
-
-	  const replyElement = document.getElementById(rno); // 해당 댓글의 p 요소
-	  const p = document.createElement('p'); // 새로운 textarea 요소 생성
-	  p.id = rno; // textarea 요소의 id를 댓글의 id와 동일하게 설정
-	  p.value = replyContent; // textarea 요소 내용을 해당 댓글 내용으로 설정
-	  replyElement.replaceWith(p); // 해당 댓글의 p 요소를 textarea 요소로 교체 
-      
-      // 수정 완료 후, 수정, 삭제 버튼을 보이게 함
-      var modifyReplyBtn = document.getElementById("modifyReplyBtn" + rno);
-      var deleteReplyBtn = document.getElementById("deleteReplyBtn" + rno);
-      var replyUpdateBtn = document.getElementById("replyUpdateBtn" + rno);
-      var cancelBtn = document.getElementById("cancelBtn" + rno);
-      
-      modifyReplyBtn.style.display = "inline";
-      deleteReplyBtn.style.display = "inline";
-      replyUpdateBtn.style.display = "none";
-      cancelBtn.style.display = "none";
-      
-      pageObj.pageCal(cri);
+    	console.log(result)
+    	if(result.trim() == 'ok') {
+	      // 댓글 수정 성공 시, 수정한 내용을 화면에 업데이트
+	      var replyContent = document.getElementById(rno);
+	      replyContent.innerText = modifiedContent;
+	
+		  const replyElement = document.getElementById(rno); // 해당 댓글의 p 요소
+		  const p = document.createElement('p'); // 새로운 textarea 요소 생성
+		  p.id = rno; // textarea 요소의 id를 댓글의 id와 동일하게 설정
+		  p.value = replyContent; // textarea 요소 내용을 해당 댓글 내용으로 설정
+		  replyElement.replaceWith(p); // 해당 댓글의 p 요소를 textarea 요소로 교체 
+	      
+	      // 수정 완료 후, 수정, 삭제 버튼을 보이게 함
+	      var modifyReplyBtn = document.getElementById("modifyReplyBtn" + rno);
+	      var deleteReplyBtn = document.getElementById("deleteReplyBtn" + rno);
+	      var replyUpdateBtn = document.getElementById("replyUpdateBtn" + rno);
+	      var cancelBtn = document.getElementById("cancelBtn" + rno);
+	      
+	      modifyReplyBtn.style.display = "inline";
+	      deleteReplyBtn.style.display = "inline";
+	      replyUpdateBtn.style.display = "none";
+	      cancelBtn.style.display = "none";
+	      
+	      pageObj.pageCal(cri);
+	      $('#replyErr').html("")
+    	}
     },
     error: function(xhr, status, error) {
       // 에러 처리 로직
@@ -467,7 +479,7 @@ function cancel(rno){
 	  deleteReplyBtn.style.display = "inline";
 	  replyUpdateBtn.style.display = "none";
 	  cancelBtn.style.display = "none";
-	  location.reload();
+	  pageObj.pageCal(cri);
 }
 
 onload = function() {

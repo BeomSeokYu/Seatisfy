@@ -17,7 +17,11 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <body>
 <%@include file="../include/navbar.jsp"%>
-
+<header class="mt-5 mb-5 pt-5 pb-5" style="background-image: url('/resources/assets/img/portfolio/fullsize/2.jpg'); background-size: cover;">
+	<div class="container">
+		<h1 class="mt-5 mb-5 pt-5 pb-5 text-white"><span class="text-shadow">공지사항 등록</span></h1>
+	</div>
+</header>
 	<div class="col-lg-8 mx-auto p-4 py-md-5">
 		<form:form modelAttribute="notice" action="./add" method="post">
 			<fieldset>
@@ -45,9 +49,9 @@
 							<!-- 토큰 전송 -->
 							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 						<button type="button"
-							class="btn btn-warning btn-lg px-4 text text-white"
+							class="btn btn-warning btn-sm px-4 text text-white"
 							onclick="history.back()">뒤로가기</button>
-						<button class="btn btn-primary btn-lg px-4 text text-white addBtn"
+						<button class="btn btn-primary btn-sm px-4 text text-white addBtn"
 							type="submit">글 등록</button>
 					</div>
 				</div>
