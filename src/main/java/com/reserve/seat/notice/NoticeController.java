@@ -2,6 +2,7 @@
 // 작성일시 : 2023. 4. 5. 10:37
 package com.reserve.seat.notice;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.reserve.seat.Criteria;
 import com.reserve.seat.mapper.NoticeMapper;
 import com.reserve.seat.reply.ReplyDTO;
+import com.reserve.seat.user.User;
+import com.reserve.seat.user.UserService;
 
 @Controller
 @RequestMapping("/notice")
@@ -28,6 +31,9 @@ public class NoticeController {
 
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private UserService userService;
 
 	//공지 등록 조회 폼
 	@GetMapping("/add")
@@ -54,13 +60,17 @@ public class NoticeController {
 	@GetMapping
 	public String NoticeList(Model model, Criteria cri) {
 		
-		model.addAttribute("list", noticeService.selectAllNotice(cri));
+//		model.addAttribute("list", noticeService.selectAllNotice(cri));
 		
-//		int totalCount = noticeService.totalCount(cri);
+		List<NoticeDTO> list = noticeService.selectAllNotice(cri);
+	    for (NoticeDTO noticeDTO : list) {
+	        String nno = String.valueOf(noticeDTO.getNno());
+	        List<ReplyDTO> replyList = noticeService.AllReplyList(nno);
+	        int cnt = replyList.size(); // 댓글 수
+	        noticeDTO.setReplyCnt(cnt);
+	    }
+	    model.addAttribute("list", list);
 		
-//		List<NoticeDTO> noticeList = noticeService.AllNoticeList();
-//		model.addAttribute("noticeList", noticeList);
-
 		return "notice/noticeAllList";
 	}
 	
@@ -70,6 +80,7 @@ public class NoticeController {
 	public List<NoticeDTO> NoticeListCount(Criteria cri) {
 
 		return noticeService.selectAllNotice(cri);
+		
 	}
 	
 	//페이지 수
@@ -85,7 +96,10 @@ public class NoticeController {
 	
 	//공지 상세 보기
 	@GetMapping("/detail")
-	public String requestNoticeByNum(@RequestParam("nno") String nno, Model model) {
+	public String requestNoticeByNum(@RequestParam("nno") String nno, Model model, Principal principal) {
+		
+		User user = userService.getUserDetail(principal.getName());
+		model.addAttribute("user", user);
 		
 		NoticeDTO noticeNum = noticeService.detailNotice(nno);
 		model.addAttribute("notice", noticeNum);
