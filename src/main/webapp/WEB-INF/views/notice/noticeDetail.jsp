@@ -15,7 +15,6 @@
 		<h5 class="card-header">제목 : ${notice.ntitle}</h5>
 		<div class="card-body">
 			<h5 class="card-title">내용 : ${notice.ncontent}</h5>
-			
  
 			<div class="d-flex justify-content-end badge bg-light text-dark">작성일자 : ${notice.regDate}</div>
 		</div>
@@ -26,6 +25,7 @@
 	</form>
 	<a href="/notice/update?nno=${notice.nno}">수정</a>
 	<form method="POST" action="/notice/remove?nno=${notice.nno }">
+		 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 		<input type="submit" value="삭제" />
 	</form>
 
@@ -51,13 +51,14 @@
    <c:forEach items="${replyList}" var="reply">
    
     <div class="card">
-      <div class="card-header">작성자 : <b>${reply.rwriter}</b></div>
+      <div class="card-header">작성자 : <b>${user.name}</b></div>
       <div class="card-body">
         <blockquote class="blockquote mb-0">
           <p id="${reply.rno}">${reply.rcontent}</p>
           <div class="d-flex justify-content-end">
-            <footer class="blockquote-footer">${reply.regDate}</footer>
-            <%-- <input type="hidden" name="rno" id="rno" value="${reply.rno }"> --%>
+          
+            <footer class="blockquote-footer" id="regDate${reply.rno }">${reply.regDate}</footer>
+            
             <button type="button" class='btn btn-primary' style='display:none' id="replyUpdateBtn${reply.rno }" onclick="updateReply(${reply.rno})">완료</button>
             <button type="button" class='btn btn-secondary' style='display:none' id="cancelBtn${reply.rno }" onclick="cancel(${reply.rno})">취소</button>
             <button type="button" class="btn btn-warning" id="modifyReplyBtn${reply.rno }"  onclick="modifyReply(${reply.rno})">수정</button>
@@ -85,6 +86,13 @@
 <%@include file="../include/footer.jsp"%>
 
 <script>
+
+var csrfToken = getCsrfToken();
+
+function getCsrfToken(){
+    return '${_csrf.token}';
+}
+
 function replyNewFunction() {
 	var nno = document.getElementById('nno').value;
 	/* var rwriter = document.getElementById('rwriter').value; */
@@ -92,16 +100,16 @@ function replyNewFunction() {
 	
 	$.ajax({
 		type:"POST",
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'X-CSRF-TOKEN': csrfToken
+		},
 		url:"/notice/addReply",
 		data:{
 			nno : nno,
-			/* rwriter :rwriter, */
+			csrfName: csrfToken,
 			rcontent : rcontent
 		},
-		/* beforeSend : function(xhr)
-	          {   데이터를 전송하기 전에 헤더에 csrf값을 설정한다 */
-	        /*     xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-	         }, */
 		success:function(result) {
 			window.location.reload();
 		},
@@ -113,10 +121,17 @@ function replyNewFunction() {
 }
 
 function deleteReply(rno) {
+	
   $.ajax({
     type: "POST",
+    headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		'X-CSRF-TOKEN': csrfToken
+	},
     url: "/notice/removeReply",
-    data: { rno: rno },
+    data: { rno: rno, 
+    	csrfName: csrfToken
+    },
     success: function (result) {
       // 삭제가 성공하면 댓글 목록을 갱신한다.
       location.reload();
@@ -129,7 +144,7 @@ function deleteReply(rno) {
 
 //수정 버튼을 누르면
 function modifyReply(rno){
-		 console.log(rno);
+	
 		  const replyContent = document.getElementById(rno).innerText; // 해당 댓글의 내용을 가져옴
 		  const replyElement = document.getElementById(rno); // 해당 댓글의 p 요소
 		  const textarea = document.createElement('textarea'); // 새로운 textarea 요소 생성
@@ -143,12 +158,15 @@ function modifyReply(rno){
 		  var deleteReplyBtn = document.getElementById("deleteReplyBtn" + rno);
 		  var replyUpdateBtn = document.getElementById("replyUpdateBtn" + rno);
 		  var cancelBtn = document.getElementById("cancelBtn" + rno);
+		  var regDate = document.getElementById("regDate" + rno);
+		  
 		  
 		  // 수정, 삭제 버튼을 감추고 완료 버튼을 보이게 함
 		  modifyReplyBtn.style.display = "none";
 		  deleteReplyBtn.style.display = "none";
 		  replyUpdateBtn.style.display = "inline";
 		  cancelBtn.style.display = "inline";
+		  regDate.style.display = "none";
 		    
 	}
 
@@ -160,9 +178,14 @@ function updateReply(rno) {
   // AJAX 요청 보내기
   $.ajax({
     type: "POST",
+    headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		'X-CSRF-TOKEN': csrfToken
+	},
     url: "/notice/updateReply",
     data: {
       rno : rno,
+      csrfName: csrfToken,
       rcontent: modifiedContent
     },
     success: function(result) {
@@ -225,6 +248,8 @@ function cancel(rno){
 	  cancelBtn.style.display = "none";
 	  location.reload();
 }
+
+
 
 </script>
 

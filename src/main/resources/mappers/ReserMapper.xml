@@ -4,27 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.reserve.seat.mapper.ReserMapper">
-  <!-- 쿼리 보관 -->
-  <sql id="criteria">
-  	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
-		<foreach collection="typeArr" item="type">
-			<trim prefix="OR">
-				<choose>
-					<when test="type == 'T'.toString()">
-						rno LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
-					</when>
-					<when test="type == 'W'.toString()">
-						sno LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
-					</when>
-					<when test="type == 'C'.toString()">
-						pno LIKE concat_ws(#{ keyword }, '%', '%') <!-- '%' || #{ keyword } || '%' -->
-					</when>
-				</choose>
-			</trim>
-		</foreach>
-	</trim>
-  </sql>
-  
+
   <select id="selectAllReserById" resultType="com.reserve.seat.reserve.domain.ReserDTO">
   	<![CDATA[
 	  	SELECT *
@@ -69,14 +49,6 @@
   </insert>
   
   <delete id="deleteReser">
-  	DELETE FROM reservation WHERE rno = #{rno}
+  	DELETE FROM reservation WHERE email = #{username} AND pno = #{pno}
   </delete>
-  
-  <update id="updateReser">
-  	UPDATE reservation
-  	SET pno=#{pno}, 
-  		seatnum=#{seatnum}, 
-  		email=#{email} 
-	WHERE rno = #{rno}
-  </update>
 </mapper>

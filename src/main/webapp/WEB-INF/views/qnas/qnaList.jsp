@@ -3,30 +3,21 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-		
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html>
 <%@include file="../include/header.jsp"%>
 <body>
  <%@include file="../include/navbar.jsp"%> 
- <header class="masthead" style="background-image: url('resources/assets/img/home-bg.jpg')">
-            <div class="container position-relative px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="site-heading">
-                            <h1>Q & A</h1>
-                            <span class="subheading">A Blog Theme by Start Bootstrap</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+	<div class="container mt-5">
 	<div class="container">
-		<div class="photo-gallery container mb-3">
-			<div class="row justify-content-center">
-				<h2>Q & A</h2>
-				<div class="col-lg-12">
+		<div class="row justify-content-center">
+			<h2 class="mb-5">Q n A</h2>
+			<div class="col-lg-3 d-none d-lg-block">
+				<%@ include file="../include/sidebar_support.jsp"%>
+			</div>
+			<div class="col-lg-9">
 					<div class="row">
 						<div class="col-3 text-muted">
 							<select class="form-select form-select-sm w-50 d-inline"
@@ -36,11 +27,15 @@
 								<option value="40">40</option>
 							</select> <span class="d-inline">개씩 보기</span>
 						</div>
-						<div class="col-10 text-end"></div>
+						<div class="col-9 text-end">
+						<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
+							<a href="/qnas/add" class="btn btn-sm btn-outline-success"> 등록 </a>
+						</sec:authorize>
+						</div>
 					</div>
 					<hr class="my-4">
 
-					<table class="table table-hover shadow bg-body rounded">
+					<table class="table table-hover shadow bg-body table-rounded">
 						<thead>
 							<tr style="background-color: #999999; color: white;">
 								<th scope="col" class="col-2">번호</th>
@@ -53,7 +48,6 @@
 								
 						</tbody>
 					</table>
-					<a href="/qnas/add" class="btn btn-sm btn-outline-success"> 등록 </a>
 
 					<hr class="my-4">
 					<div class="row">

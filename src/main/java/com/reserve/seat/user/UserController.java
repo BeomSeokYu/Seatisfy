@@ -127,13 +127,13 @@ public class UserController {
 	}
 	
 	// 전체 회원 목록
-	@GetMapping("/list")
+	@GetMapping
 	public String listPage(Model model) {
 		return "users/list";
 	}
 	
 	// 회원 권한 변경
-	@PostMapping("/list")
+	@PostMapping
 	public String changeAuth(@ModelAttribute("user") User user) {
 		userService.changeAutority(user);
 		return "redirect:/user/list";

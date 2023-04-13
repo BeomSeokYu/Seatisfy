@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-light is-visible is-fixed" id="mainNav">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="/">Home</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,6 +23,7 @@
 				        <li><a class="dropdown-item" href="#">내 게시글 보기</a></li>
 				        <li><a class="dropdown-item" href="#">내 예약 보기</a></li>
 				        <li><a class="dropdown-item" href="#">로그아웃</a></li>
+				        <li><a class="dropdown-item" href="/user">회원 목록</a></li>
 				    </ul>
 				</li>
             </ul>

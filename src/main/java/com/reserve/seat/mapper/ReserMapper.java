@@ -25,19 +25,20 @@ public interface ReserMapper {
 	public ReserDTO selectReser(int rno);
 
 	// 하나 가져오기
-	public ReserDTO selectReserById(String username);
+	public List<ReserDTO> selectReserById(@Param("username") String username);
 	
 	// 하나 가져오기
-	public ReserDTO selectReserByIdAndPno(String username, int pno);
+	public ReserDTO selectReserByIdAndPno(
+			@Param("username") String username, 
+			@Param("pno")int pno);
 	
 	// 삽입
-	public void insertReser(ReserDTO rdto);
-	
-	// 수정
-	public boolean updateReser(ReserDTO rdto);
+	public int insertReser(ReserDTO rdto);
 	
 	// 삭제
-	public int deleteReser(int rno);
+	public int deleteReser(
+			@Param("username") String username, 
+			@Param("pno")int pno);
 	
 	// 예약 수 가져오기
 	public int totalCount();

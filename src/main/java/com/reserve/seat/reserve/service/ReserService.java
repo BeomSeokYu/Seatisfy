@@ -21,15 +21,13 @@ public interface ReserService {
 
 	public ReserDTO getReser(int rno);
 	
-	public ReserDTO getReserById(String username);
+	public List<ReserDTO> getReserById(String username);
 	
-	public ReserDTO getReserByIdAndPno(String username, int pno);
+	public ReserDTO getReserByIdAndPno(
+			@Param("username") String username, 
+			@Param("pno")int pno);
 
 	public void addReser(ReserDTO rdto);
-
-	public boolean editReser(ReserDTO rdto);
-
-	public int removeReser(int rno);
 
 	public int getReserTotalCount();
 	
@@ -76,9 +74,21 @@ public interface ReserService {
 
 	public void addSeat(String seatinfo, int pno);
 
-	public boolean reserveSeat(ReserDTO rdto, String email);
-
-	public int removeSeat(int sno);
+	public int deleteSeatByPost(
+			@Param("seatnum") int seatnum, 
+			@Param("pno")int pno);
 
 	public int getSeatTotalCount(Criteria criteria);
+	
+	/**
+	 * CombinationService -------------------------------------
+	 */
+	
+	public boolean reserveSeat(ReserDTO rdto);
+	
+	public boolean cancelReser(
+			@Param("seatnum") int seatnum, 
+			@Param("username") String username, 
+			@Param("pno")int pno);
+
 }

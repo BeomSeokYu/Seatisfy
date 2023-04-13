@@ -2,12 +2,6 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
- <!-- 
-작성자 : 유범석 
-작성일 : 03-04-05
--->
-
 
 <mapper namespace="com.reserve.seat.mapper.SeatMapper">
   <!-- 쿼리 보관 -->
@@ -79,17 +73,15 @@
   		#{isreserved} )
   </insert>
   
-  <delete id="deleteSeat">
-  	DELETE FROM seat WHERE sno = #{sno}
+  <delete id="deleteSeatByPost">
+  	DELETE FROM seat WHERE pno = #{pno} 
   </delete>
   
   <update id="updateSeat">
   	UPDATE seat
   	SET 
-  		seatnum=#{seatnum},
-  		pno=#{pno}, 
   		isreserved=#{isreserved} 
-	WHERE sno = #{sno}
+	WHERE seatnum = #{seatnum} AND pno = #{pno} 
   </update>
 
 </mapper>
