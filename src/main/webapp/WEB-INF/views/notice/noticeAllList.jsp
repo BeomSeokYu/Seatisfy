@@ -135,12 +135,12 @@
              var formatModDate = regDate.getFullYear() + '-' + ('0' + (modDate.getMonth() + 1)).slice(-2) + '-' + ('0' + modDate.getDate()).slice(-2); // yyyy-MM-dd 형식으로 변환 
              
               imgHTML += ''
-                  + "<tr>"
+                  + '<tr onclick="location.href=\'/notice/detail?nno=>'
+                  + data[i].nno + "'\">"		  
             	  +"<td>" + data[i].nno + "</td>"
-                  + "<td><a href=\"notice/detail?nno="
-                  + data[i].nno	+"'\">"	+ data[i].ntitle +  "</a></td>"
+                  + "<td>" + data[i].ntitle + "</td>"
                   + '<td>' + formatRegDate  + "</td>"
-                  +"<td>" + formatModDate + "</td></tr>" 
+                  +"<td>" + formatModDate + "</td></a></tr>" 
          }
          $('#imgList').html(imgHTML); 
       }	
