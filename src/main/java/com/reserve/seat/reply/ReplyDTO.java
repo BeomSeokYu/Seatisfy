@@ -12,7 +12,7 @@ import lombok.Setter;
 public class ReplyDTO {
 
 	private int rno;			//댓글번호
-	private int nno;
+	private int nno;			//공지 번호
 	private int pno;			//예약 번호
 	private String rwriter;		//작성자
 	private String rcontent;	//댓글 내용

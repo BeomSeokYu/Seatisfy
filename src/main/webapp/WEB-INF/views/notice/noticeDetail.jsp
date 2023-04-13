@@ -46,7 +46,7 @@
 						<th class="col-sm-1 text-center table-primary text-of">작성자</th>
 						<td class="col-sm-2 text-of table-light">${notice.nwriter}</td>
 						<th class="col-sm-1 text-center table-primary text-of">등록일</th>
-						<td class="col-sm-3 text-of table-light">${notice.rdate}</td>
+						<td class="col-sm-3 text-of table-light">${notice.regDate}</td>
 					</tr>
 				</table>
 
