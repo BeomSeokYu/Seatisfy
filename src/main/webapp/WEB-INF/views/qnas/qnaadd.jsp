@@ -16,6 +16,7 @@
 <body>
 <%@include file="../include/navbar.jsp"%>
 
+<div class="col-lg-8 mx-auto p-4 py-md-5">
  <form:form modelAttribute="eee" 
 			   action="./add?${_csrf.parameterName}=${_csrf.token}"
 	           class="form-horizontal"
@@ -42,8 +43,9 @@
       </div>
 	</fieldset>
 	</form:form> 
+	</div>
 	
-<%-- <%@include file="../include/footer.jsp"%> --%>
+<%@include file="../include/footer.jsp"%>
 <script>
 function checkForm() {
 	  // 폼 유효성 검사를 수행

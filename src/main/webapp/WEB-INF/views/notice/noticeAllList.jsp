@@ -137,7 +137,7 @@
               imgHTML += ''
                   + "<tr>"
             	  +"<td>" + data[i].nno + "</td>"
-                  + "<td><a href=\"detail?nno="
+                  + "<td><a href=\"notice/detail?nno="
                   + data[i].nno	+"'\">"	+ data[i].ntitle +  "</a></td>"
                   + '<td>' + formatRegDate  + "</td>"
                   +"<td>" + formatModDate + "</td></tr>" 

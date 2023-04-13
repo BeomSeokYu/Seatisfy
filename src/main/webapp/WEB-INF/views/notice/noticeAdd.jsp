@@ -17,64 +17,48 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <body>
 <%@include file="../include/navbar.jsp"%>
-<%-- <form:form modelAttribute="notice" 
-			   action="./add?${_csrf.parameterName}=${_csrf.token}"
-	           class="form-horizontal"
-	           method = "post">
-	<fieldset>
 
-              <div class="form-group">
-                <label for="ntitle">제목</label>
-                <form:input path="ntitle" name="ntitle" class="form-control"/>
-                <form:errors path="ntitle"/>
-              </div>
-              
-              <div class="form-group">
-                <label for="ncontent">내용</label>
-                <form:textarea path="ncontent" name="ncontent" id="summernote" class="form-control" rows="10"/>
-              </div>
-              
-              <div class="form-group">
-                <label for="nwriter">작성자</label>
-                <form:input path="nwriter" name="nwriter" value="admin" class="form-control"/>
-                
-              </div>
-                
- 		<div class="row">
-        <div class="col-12">
-          <button type="button" class="btn btn-warning" onclick="history.back()">뒤로가기</button>
-          <input type="submit" value="등록" class="btn btn-success float-right">
-        </div>
-      </div>
+	<div class="col-lg-8 mx-auto p-4 py-md-5">
+		<form:form modelAttribute="notice" action="./add" method="post">
+			<fieldset>
+			<main>
+				<div class="pb-3 mb-5">
+					<div class="postRegister_postContentWrapper__3BXZ6">
+						<span class="postRegister_sequence__nC1Px">1</span>
+						<h2 class="postRegister_text__17jg3">공지사항</h2>
+					</div>
+					<div>
 
+					<div class="mb-3">
+						<label for="ntitle" class="form-label">제목</label> 
+						<form:input type="text" class="form-control" path="ntitle" />
+							<form:errors path="ntitle"/>
+					</div>
+					<div class="mb-3">
+						<label for="ncontent" class="form-label">내용</label>
+						<form:textarea class="form-control" id="summernote" path="ncontent"	rows="5" />
+						<form:errors path="ncontent"/>
+					</div>
+					<form:input type="hidden" path="nwriter" value="${user.name}" />
+				</div>
+				<div style="text-align: right;">
+							<!-- 토큰 전송 -->
+							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+						<button type="button"
+							class="btn btn-warning btn-lg px-4 text text-white"
+							onclick="history.back()">뒤로가기</button>
+						<button class="btn btn-primary btn-lg px-4 text text-white addBtn"
+							type="submit">글 등록</button>
+					</div>
+				</div>
+			</main>
+			</fieldset>
+		</form:form>
+	</div>
 
-	</fieldset>
-	</form:form> --%>
-<form action="./add?${_csrf.parameterName}=${_csrf.token}" method="post" role="form">
-<div class="mb-3">
-  <label for="ntitle" class="form-label">제목</label>
-  <input type="text" class="form-control" id="ntitle" name="ntitle">
-</div>
-<div class="mb-3">
-  <label for="ncontent" class="form-label">내용</label>
-  <textarea class="form-control" id="summernote" name="ncontent" rows="5"></textarea>
-</div>
-<!-- <div class="mb-3">
-  <label for="nwriter" class="form-label">작성자</label>
-  <input type="text" class="form-control" id="nwriter" name="nwriter" value="admin">
-</div> -->
-<input type="hidden" name="nwriter" value="${user.name}">
-<button type="button" class="btn btn-warning " onclick="history.back()">뒤로가기</button>
-<button type="submit" class="btn btn-info ">등록</button>
-</form>
-
-
-
-
-<%@include file="../include/footer.jsp"%>
+	<%@include file="../include/footer.jsp"%>
 <script>
       $('#summernote').summernote({
-        placeholder: 'Hello stand alone ui',
         tabsize: 2,
         height: 400,
         toolbar: [

@@ -10793,6 +10793,37 @@ header.masthead .post-heading .meta a {
 .post-preview > .post-meta > a {
   text-decoration: none;
 }
+
+.postRegister_sequence__nC1Px {
+    margin-right: 8px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: #007bff;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19px;
+    color: #fff;
+    }
+
+.postRegister_text__17jg3 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 40px;
+    letter-spacing: -.05em;
+    margin: 0;
+}
+
+.postRegister_postContentWrapper__3BXZ6 {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    margin-bottom: 36px;
+    border-bottom: 3px solid #f2f2f2;
+}
 @media (min-width: 992px) {
   .post-preview > a > .post-title {
     font-size: 2.25rem;
