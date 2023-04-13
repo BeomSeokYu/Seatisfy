@@ -1,81 +1,42 @@
-<%-- 
-
-작성자 : 유범석
-작성일 : 2023.02.16
-버전 정보 : V1.0
-
- --%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>행전우리교회</title>
-<style>
-html,
-body {
-  height: 100%;
-}
+<%@include file="../include/header.jsp" %>
+<body class="text-center">
+<%@include file="../include/navbar.jsp" %>
 
-body {
-  align-items: center;
-  padding-bottom: 40px;
-}
-
-.form-signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
-}
-
-.form-signin .checkbox {
-  font-weight: 400;
-}
-
-.form-signin .form-floating:focus-within {
-  z-index: 2;
-}
-
-.form-signin input[data-type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.form-signin input[data-type="name"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-@media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
-  }
-}
-</style>
-</head>
-<body>
-<div class="container">
-	<div class="form-signin text-center">
-	  <form action="/user/pwedit.jsp" method="post" id="findFrm">
-	    <h1 class="h3 py-5 fw-normal">회원 이메일 확인</h1>
-	    <div class="form-floating">
-	      <input type="email" class="form-control" id="email" name="email" placeholder="이메일" data-type="email">
-	      <label for="floatingInput">이메일</label>
-	    </div>
-	  	<input type="hidden" id="check" name="check" value="">
-	  	<hr class="my-4">
-        <button class="w-100 btn btn-secondary btn-md" id="appSendBtn" type="button">임시비밀번호 발급받기</button>
-	  </form>
-	</div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-
+<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-sm-center h-100">
+				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+					<div class="card shadow-lg">
+						<div class="card-body p-5">
+							<h1 class="fs-4 card-title fw-bold mb-4">비밀번호 찾기</h1>
+							
+							<h4 style="color :red">${error }</h4>
+							<form action="/user/pwedit.jsp" method="post" id="findFrm">
+								<div class="mb-3">
+									<label class="mb-2 text-muted" for="email">회원 이메일 확인</label>
+									<input type="email" id="email" class="form-control" name="username" placeholder="Email" autofocus>
+									
+								</div>
+								<div class="mb-3">
+									<button type="submit" class="btn btn-primary ms-auto" id="appSendBtn" type="button">
+										임시비밀번호 발급받기
+									</button>
+								</div>
+							  	<input type="hidden" id="check" name="check" value="">
+							  	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"> 
+								
+							  </form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+    
 <script>
 $('#appSendBtn').on('click', function(){
 	email = $('#email').val()
@@ -110,5 +71,6 @@ $('#appSendBtn').on('click', function(){
 });
 
 </script>
+<%@include file="../include/footer.jsp" %>
 </body>
 </html>
