@@ -51,7 +51,7 @@
 						</tr>	
 						</tbody>
 					</table>
-
+					<div class="row text-center" id="none"></div>
 					<hr class="my-4">
 					<div class="row">
 						<div class="col-8">
