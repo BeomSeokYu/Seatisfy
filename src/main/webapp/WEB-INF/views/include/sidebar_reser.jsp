@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <div id="sideNav" class="d-flex flex-column sidebar flex-shrink-0 p-3">
   <hr>
-  <span class="fs-4">예약</span>
+  <span class="fs-4 text-center">예약</span>
   <hr>
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">

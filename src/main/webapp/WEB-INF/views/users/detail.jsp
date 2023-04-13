@@ -3,64 +3,55 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 <%@include file="../include/header.jsp" %>
-<body class="text-center">
+<body>
 <%@include file="../include/navbar.jsp" %>
 
-<body>
-
-<section class="h-100">
-		<div class="container h-100">
-			<div class="row justify-content-sm-center h-100">
-				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
-					<div class="card shadow-lg">
-						<div class="card-body p-5">
-							<h1 class="fs-4 card-title fw-bold mb-4">내 정보 보기</h1>
-							
-								<div class="mb-3">
-									<div class="mb-2 w-100">
-										<label class="mb-2 text-muted" for="email">이메일</label>
-									</div>
-									<input name="username" class="form-control" value="${user.username }" readonly/>
-								</div>
-	
-								<div class="mb-3">
-									<div class="mb-2 w-100">
-										<label class="text-muted" for="name">이름</label>
-									</div>
-									<input name="name" class="form-control" placeholder="Name" value="${user.name }" readonly/>
-								</div>
-								<div class="mb-3">
-									<div class="mb-2 w-100">
-										<label class="mb-2 text-muted" for="phone">전화번호</label>
-									</div>
-									<input name="phone" class="form-control" placeholder="Phone" value="${user.phone }" readonly/>
-								</div>
-								<div class="mb-3">
-									<div class="mb-2 w-100">
-										<label class="mb-2 text-muted" for="udate">가입일</label>
-									</div>
-									<input name="udate" class="form-control" placeholder="Phone" value="${user.udate }" readonly/>
-								</div>
-
-								<div class="mb-3">
-									<a href="javascript:removeUser('${user.uno}')"
-										class="btn btn-danger btn-sm">회원탈퇴</a> 
-									<a href="<c:url value="/user/edit"/>"
-										class="btn btn-success btn-sm">내정보수정</a>
-									<a href="<c:url value="/user/changepw"/>"
-										class="btn btn-success btn-sm">비밀번호 변경</a>
-								</div>
-								
-						</div>
-						<div class="card-footer py-3 border-0">
-							<div class="text-center">
-							</div>
-						</div>
-					</div>
+<div class="container mt-5">
+	<div class="container">
+		<div class="row justify-content-center">
+			<h2 class="mb-5">마이페이지</h2>
+			<div class="col-lg-3 d-none d-lg-block">
+				<%@ include file="../include/sidebar_user.jsp"%>
+			</div>
+			<div class="col-lg-9">
+				<hr class="my-4">
+				<table class="table text-nowrap text-table table-rounded shadow-sm">
+					<tr class="row">
+						<th class="col-sm-3 text-center table-primary text-of">이메일</th>
+						<td class="col-sm-9 text-of table-light">${user.username}</td>
+					</tr>
+					<tr class="row">
+						<th class="col-sm-3 text-center table-primary text-of">이름</th>
+						<td class="col-sm-9 text-of table-light">${user.name}</td>
+					</tr>
+					<tr class="row">
+						<th class="col-sm-3 text-center table-primary text-of">전화번호</th>
+						<td class="col-sm-9 text-of table-light">${user.phone}</td>
+					</tr>
+					<tr class="row">
+						<th class="col-sm-3 text-center table-primary text-of">가입일</th>
+						<td class="col-sm-9 text-of table-light">${user.udate}</td>
+					</tr>
+				</table>
+				<hr class="my-4">
+				
+				<div class="col-lg-12 text-end mt-5">
+					<a href="<c:url value="/user/edit"/>"
+						class="btn btn-outline-primary btn-sm">내정보수정</a>
+					<a href="<c:url value="/user/changepw"/>"
+						class="btn btn-outline-success btn-sm">비밀번호 변경</a>
+					<a href="javascript:removeUser('${user.uno}')"
+						class="btn btn-outline-danger btn-sm">회원탈퇴</a> 
 				</div>
 			</div>
+				
+				
+				
+				
 		</div>
-	</section>
+	</div>
+</div>
+
 
 
 <script>

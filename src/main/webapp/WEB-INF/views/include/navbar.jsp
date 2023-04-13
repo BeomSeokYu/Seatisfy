@@ -19,7 +19,7 @@
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
                 <li class="nav-item dropdown">
-				    <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				    <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="/user/detail" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 				        회원 아이디
 				    </a>
 				    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
