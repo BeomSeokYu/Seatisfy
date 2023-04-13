@@ -25,6 +25,7 @@ public class NoticeDTO {
 	private String nwriter;		//작성자
 	private String regDate;		//공지 등록일
 	private String modDate;		//공지 수정일
+	private int hit;
 	
 	
 }

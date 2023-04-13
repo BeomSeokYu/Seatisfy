@@ -78,4 +78,10 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeMapper.AllReplyList(nno);
 	}
 	
+	//댓글 증가
+	public void updateHit(String nno) {
+		noticeMapper.updateHit(nno);
+	}
+	
+	
 }

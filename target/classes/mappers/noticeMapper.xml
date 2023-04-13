@@ -120,5 +120,10 @@
     ]]>
 </select>
   
+ <update id="updateHit" parameterType="String">
+ 	UPDATE notice
+ 	SET hit = hit + 1
+ 	WHERE nno = #{nno}
+ </update> 
 
 </mapper>
