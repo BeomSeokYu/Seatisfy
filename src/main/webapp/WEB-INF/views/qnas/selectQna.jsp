@@ -40,7 +40,7 @@
 	<input type="hidden" name="_csrf" value="${_csrf.token}"/>
 		<input type="submit" value="삭제"/>
 	</form>
-	<a href="/qnas/">이전</a>
+	<a href="/qnas">이전</a>
 	</div>
 </body>
 					
