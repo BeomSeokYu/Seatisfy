@@ -65,7 +65,6 @@ public class NoticeController {
 	public String NoticeList(Model model, Criteria cri) {
 		
 		
-		
 		return "notice/noticeAllList";
 	}
 	
@@ -91,12 +90,11 @@ public class NoticeController {
 	
 	//공지 상세 보기
 	@GetMapping("/detail")
-	public String requestNoticeByNum(@RequestParam("nno") String nno, Model model, Principal principal) {
+	public String requestNoticeByNum(@RequestParam("nno") String nno, Model model) {
 		
 		//폼을 띄우기 전에 조회수 하나 증가
 		noticeService.updateHit(nno);
 		
-		model.addAttribute("username", principal.getName());
 		
 		NoticeDTO noticeNum = noticeService.detailNotice(nno);
 		model.addAttribute("notice", noticeNum);

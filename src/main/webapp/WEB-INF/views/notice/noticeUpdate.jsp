@@ -106,7 +106,7 @@
 
 			<div class="row">
 				<div class="col-lg-12 text-end mt-5">
-					<a href="/notice" class="btn btn-outline-danger btn-sm mx-1">취소</a>
+					<a href="/notice/detail?nno=${notice.nno }" class="btn btn-outline-danger btn-sm mx-1">취소</a>
 					<input type="hidden" name="_csrf" value="${_csrf.token}"/> 
 					<input type="submit" value="수정" class="btn btn-outline-warning btn-sm mx-1">
 				</div>

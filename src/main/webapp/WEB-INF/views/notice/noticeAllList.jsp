@@ -89,10 +89,21 @@
 
 	
 						
-<%@include file="../include/footer.jsp"%>					
+<%@include file="../include/footer.jsp"%>	
+<%@ include file="../include/scriptUtil.jsp"%>					
 	<script src="/resources/js/page.js"></script>
 <script>		
-
+onload = function() {
+	switch ('${param.result}') {
+	  case 'rmsuccess':
+	  	popModal('삭제 성공', '게시물이 삭제되었습니다');
+	    break;
+	  case 'rmfail':
+	  	popModal('삭제 실패', '삭제에 실패하였습니다');
+	    break;
+	}
+	pageObj.pageCal(cri);
+}
 
 
 /*
