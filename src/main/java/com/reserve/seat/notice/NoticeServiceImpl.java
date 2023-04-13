@@ -78,5 +78,4 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeMapper.AllReplyList(nno);
 	}
 	
-	
 }

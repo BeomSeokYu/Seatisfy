@@ -2,6 +2,7 @@ package com.reserve.seat.reserve.service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.javassist.compiler.ast.NewExpr;
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.reserve.seat.Criteria;
+import com.reserve.seat.mapper.NoticeMapper;
 import com.reserve.seat.mapper.PostMapper;
 import com.reserve.seat.mapper.ReserMapper;
 import com.reserve.seat.mapper.SeatMapper;
+import com.reserve.seat.reply.ReplyDTO;
 import com.reserve.seat.reserve.domain.PostDTO;
 import com.reserve.seat.reserve.domain.ReserDTO;
 import com.reserve.seat.reserve.domain.SeatDTO;
@@ -177,4 +180,30 @@ public class ReserServiceImpl implements ReserService {
 		}
 		return false;
 	}
+	
+		//댓글 등록
+		public void insertReply(Map map) {
+			postMapper.insertReply(map);
+		}
+		
+		//댓글 수정
+		public void updateReply(Map map) {
+			postMapper.updateReply(map);
+		}
+		
+		//댓글 삭제
+		public void deleteReply(int rno) {
+			postMapper.deleteReply(rno);;
+		}
+
+		//특정 댓글 하나 조회
+		public ReplyDTO selectReply(String rno) {
+			return postMapper.selectReply(rno);
+		}
+		
+		//전체 댓글 조회
+		public List<ReplyDTO> AllReplyList(String pno){
+			return postMapper.AllReplyList(pno);
+		}
+	
 }

@@ -118,9 +118,7 @@
 	FROM reply
 	WHERE nno = #{nno}
     ]]>
-  </select>
-  
-
+</select>
   
 
 </mapper>

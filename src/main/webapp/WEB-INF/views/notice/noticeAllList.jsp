@@ -135,7 +135,7 @@
              var formatModDate = regDate.getFullYear() + '-' + ('0' + (modDate.getMonth() + 1)).slice(-2) + '-' + ('0' + modDate.getDate()).slice(-2); // yyyy-MM-dd 형식으로 변환 
              
               imgHTML += ''
-            	  + '<tr onclick="location.href=\'/notice/detail?nno=>'
+                  + '<tr onclick="location.href=\'/notice/detail?nno='
                   + data[i].nno + "'\">"		  
             	  +"<td>" + data[i].nno + "</td>"
                   + "<td>" + data[i].ntitle + "</td>"
