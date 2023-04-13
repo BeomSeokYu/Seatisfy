@@ -61,10 +61,19 @@ public class NoticeController {
 	}
 
 	//공지 전체 목록
-	@GetMapping("/list")
+	@GetMapping
 	public String NoticeList(Model model, Criteria cri) {
 		
 //		model.addAttribute("list", noticeService.selectAllNotice(cri));
+		
+//		List<NoticeDTO> list = noticeService.selectAllNotice(cri);
+//	    for (NoticeDTO noticeDTO : list) {
+//	        String nno = String.valueOf(noticeDTO.getNno());
+//	        List<ReplyDTO> replyList = noticeService.AllReplyList(nno);
+//	        int cnt = replyList.size(); // 댓글 수
+//	        noticeDTO.setReplyCnt(cnt);
+//	    }
+//	    model.addAttribute("list", list);
 		
 		return "notice/noticeAllList";
 	}

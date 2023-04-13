@@ -39,11 +39,12 @@ public class ReserAPIController {
 		LocalDateTime endDate = LocalDateTime.parse(post.getEnddate());
 		if (!nowTime.isAfter(startDate)) {
 			return false;
-		} else if (!nowTime.isBefore(endDate)){
-			return false;
-		} else {
-			return true;				
 		}
+		if (!nowTime.isBefore(endDate)){
+			return false;
+		}
+		
+		return true;				
 	}
 	
 	@PostMapping("/post")
@@ -58,16 +59,12 @@ public class ReserAPIController {
 	
 	@PostMapping("/mypost")
 	public List<PostDTO> myPostListAPI(@ModelAttribute Criteria criteria, Principal principal) {
-		User user = userService.getUserDetail(principal.getName());
-		if (user == null) {
-			return null;
-		}
 		return reserService.getPostListById(
 				criteria.getAmount(),
 				criteria.getOffset(),
 				criteria.getTypeArr(),
 				criteria.getKeyword(),
-				user.getName());
+				principal.getName());
 	}
 	
 	@PostMapping("/mypost/total")

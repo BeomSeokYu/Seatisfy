@@ -3,6 +3,7 @@ package com.reserve.seat.reserve.service;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.javassist.compiler.ast.NewExpr;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,7 @@ public class ReserServiceImpl implements ReserService {
 	}
 
 	@Override
-	public ReserDTO getReserById(String username) {
+	public List<ReserDTO> getReserById(String username) {
 		return reserMapper.selectReserById(username);
 	}
 	
@@ -53,16 +54,6 @@ public class ReserServiceImpl implements ReserService {
 	@Override
 	public void addReser(ReserDTO rdto) {
 		reserMapper.insertReser(rdto);
-	}
-
-	@Override
-	public boolean editReser(ReserDTO rdto) {
-		return reserMapper.updateReser(rdto);
-	}
-
-	@Override
-	public int removeReser(int rno) {
-		return reserMapper.deleteReser(rno);
 	}
 
 	@Override
@@ -148,28 +139,42 @@ public class ReserServiceImpl implements ReserService {
 		
 	}
 	
-	@Transactional
 	@Override
-	public boolean reserveSeat(ReserDTO rdto, String email) {
-		SeatDTO updateSeatDTO = seatMapper.selectSeatLock(
-				new SeatDTO(null, rdto.getSeatnum(), rdto.getPno(), null));
-		if (!updateSeatDTO.getIsreserved()) {
-			reserMapper.insertReser(rdto);
-			updateSeatDTO.setIsreserved(true);
-			return seatMapper.updateSeat(updateSeatDTO);			
-		} else {
-			seatMapper.updateSeat(updateSeatDTO);
-			return false;
-		}
-	}
-
-	@Override
-	public int removeSeat(int sno) {
-		return seatMapper.deleteSeat(sno);
+	public int deleteSeatByPost(int seatnum, int pno) {
+		return seatMapper.deleteSeatByPost(seatnum, pno);
 	}
 
 	@Override
 	public int getSeatTotalCount(Criteria criteria) {
 		return seatMapper.totalCount(criteria);
+	}
+	
+	
+	/**
+	 * CombinationService -------------------------------------
+	 */
+	@Transactional
+	@Override
+	public boolean reserveSeat(ReserDTO rdto) {
+		SeatDTO updateSeatDTO = seatMapper.selectSeatLock(
+				new SeatDTO(null, rdto.getSeatnum(), rdto.getPno(), null));
+		if (!updateSeatDTO.getIsreserved()) {
+			if (reserMapper.insertReser(rdto) == 1) {
+				return seatMapper.updateSeat(rdto.getSeatnum(), rdto.getPno(), true) == 1 ? true : false;			
+			}
+		} else {
+			return seatMapper.updateSeat(rdto.getSeatnum(), rdto.getPno(), false) == 1 ? true : false;
+		}
+		return false;
+	}
+	
+	@Transactional
+	@Override
+	public boolean cancelReser(int seatnum, String username, int pno) {
+		seatMapper.selectSeatLock(new SeatDTO(null, seatnum, pno, null));
+		if (reserMapper.deleteReser(username, pno) == 1) {
+			return seatMapper.updateSeat(seatnum, pno, false) == 1 ? true : false;			
+		}
+		return false;
 	}
 }

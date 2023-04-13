@@ -124,7 +124,7 @@
 					        <span id="centerAddr"></span>
 					    </div>
 					</div>
-					자리 배치 정보 : <input id="seatX" type="number" min="1" max="20" value="10"/>
+					자리 배치 정보 (수정이 불가하니 신중하게 해라) : <input id="seatX" type="number" min="1" max="20" value="10"/>
 					X <input id="seatY" type="number" min="1" max="20" value="10"/>
 					<button id="seatTableBtn" type="button">만들기</button><br>
 					<form:hidden path="seatinfo"/><br>
@@ -496,7 +496,7 @@ function addSeatInfoForm(x, y) {
 
 function errorsSeatTable() {
 	console.log('validation');
-	var seatinfo = $("#seatinfo").val();
+	var seatinfo = '['+$("#seatinfo").val()+']';
 	var seatNum = 1;
 	
 	var y = seatinfo.split(" ").length;
@@ -606,7 +606,10 @@ function checkMinMaxRange(TagNameById) {
 }
 
 $("#submitBtn").on('click', function() {
-	$("#seatinfo").val(seatInfoformData);
+	if (seatInfoformData != '') {
+		$("#seatinfo").val(seatInfoformData);
+		console.log($("#seatinfo").val());
+	}
 	$("#postFrm").submit();
 });
 

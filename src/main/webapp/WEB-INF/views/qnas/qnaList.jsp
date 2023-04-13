@@ -3,18 +3,21 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-		
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html>
 <%@include file="../include/header.jsp"%>
 <body>
-<%@include file="../include/navbar.jsp"%>
+ <%@include file="../include/navbar.jsp"%> 
+	<div class="container mt-5">
 	<div class="container">
-		<div class="photo-gallery container mb-3">
-			<div class="row justify-content-center">
-				<h2>Q & A</h2>
-				<div class="col-lg-12">
+		<div class="row justify-content-center">
+			<h2 class="mb-5">Q n A</h2>
+			<div class="col-lg-3 d-none d-lg-block">
+				<%@ include file="../include/sidebar_support.jsp"%>
+			</div>
+			<div class="col-lg-9">
 					<div class="row">
 						<div class="col-3 text-muted">
 							<select class="form-select form-select-sm w-50 d-inline"
@@ -24,11 +27,15 @@
 								<option value="40">40</option>
 							</select> <span class="d-inline">개씩 보기</span>
 						</div>
-						<div class="col-10 text-end"></div>
+						<div class="col-9 text-end">
+						<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
+							<a href="/qnas/add" class="btn btn-sm btn-outline-success"> 등록 </a>
+						</sec:authorize>
+						</div>
 					</div>
 					<hr class="my-4">
 
-					<table class="table table-hover shadow bg-body rounded">
+					<table class="table table-hover shadow bg-body table-rounded">
 						<thead>
 							<tr style="background-color: #999999; color: white;">
 								<th scope="col" class="col-2">번호</th>
@@ -41,7 +48,6 @@
 								
 						</tbody>
 					</table>
-					<a href="/qnas/add" class="btn btn-sm btn-outline-success"> 등록 </a>
 
 					<hr class="my-4">
 					<div class="row">
@@ -112,7 +118,7 @@
              imgHTML += ''
                  + "<tr>"
                  + "<td>" + data[i].qno + "</td>"
-                 + "<td><a href=\"select?qno="
+                 + "<td><a href=\"qnas/select?qno="
                  + data[i].qno	+"'\">"	+ data[i].qtitle + "</a></td>"
                  + "<td>" + data[i].qcontent + "</td>"
                  + "<td>" + qDateString + "</td>" // "YYYY-MM-DD" 형식의 날짜 문자열 추가
