@@ -87,8 +87,8 @@ public class ReserAPIController {
 	}
 	
 	@PostMapping("/myreser/total")
-	public int myReserListtotalCountAPI() {
-		return reserService.getReserTotalCount();
+	public int myReserListtotalCountAPI(Principal principal) {
+		return reserService.getReserTotalCount(principal.getName());
 	}
 	
 	@PostMapping("/reply")

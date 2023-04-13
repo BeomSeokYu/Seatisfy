@@ -62,8 +62,8 @@ public class ReserServiceImpl implements ReserService {
 	}
 
 	@Override
-	public int getReserTotalCount() {
-		return reserMapper.totalCount();
+	public int getReserTotalCount(String username) {
+		return reserMapper.totalCount(username);
 	}
 	
 	

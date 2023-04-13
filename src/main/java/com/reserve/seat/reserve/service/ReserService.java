@@ -31,7 +31,7 @@ public interface ReserService {
 
 	public void addReser(ReserDTO rdto);
 
-	public int getReserTotalCount();
+	public int getReserTotalCount(String username);
 	
 	
 	/**
