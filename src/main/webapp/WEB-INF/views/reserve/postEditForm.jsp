@@ -90,64 +90,89 @@
 	<div class="container mb-3">
 		<div class="row justify-content-center">
 			<h2>예약</h2>
-			<%-- <div class="col-lg-3 d-none d-lg-block">
-				<%@ include file="/include/sidebar4.jsp"%>
-			</div> --%>
+			<div class="col-lg-3 d-none d-lg-block">
+				<%@ include file="../include/sidebar_reser.jsp"%>
+			</div>
 
 			<!-- <div class="col-lg-9"> -->
-			<div class="col-lg-12">
+			<div class="col-lg-9">
 				<form:form action="/reserve/edit/${ post.pno }" method="post" modelAttribute="postDTO" id="postFrm">
 					<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }"/>
-					제목 : <form:input path="ptitle" value="${ post.ptitle }" /><br>
-					<form:errors path="ptitle"/><br>
-					장소 : <form:input path="place" id="place" value="${ post.place }" /><br>
-					<form:errors path="place"/><br>
-					주소 : <form:input path="address" id="address" value="${ post.address }" /><br>
-					<form:errors path="address" /><br>
-					<div class="map_wrap">
-					    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-					
-					    <div id="menu_wrap" class="bg_white">
-					        <div class="option">
-					            <div>
-					     	 장소 검색 : 
-					                <input type="text" id="keyword" size="15">
-					                <button type="button" onclick="searchPlaces()">검색</button><br>
-					            </div>
-					        </div>
-					        <hr>
-					        <ul id="placesList"></ul>
-					        <div id="pagination"></div>
-					    </div>
-					    <div class="hAddr">
-					        <span class="title">지도중심기준 행정동 주소정보</span>
-					        <span id="centerAddr"></span>
-					    </div>
+					<fieldset class="border p-2 rounded mb-5">
+	    				<legend>장소 정보</legend>
+						<div class="map_wrap mt-3">
+						    <div class="rounded" id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+						
+						    <div id="menu_wrap" class="bg_white">
+						        <div class="option">
+						            <div>
+						     	 장소 검색 : 
+						                <input class="rounded" type="text" id="keyword" size="15">
+						                <button type="button" onclick="searchPlaces()">검색</button><br>
+						            </div>
+						        </div>
+						        <hr>
+						        <ul id="placesList"></ul>
+						        <div id="pagination"></div>
+						    </div>
+						    <div class="hAddr">
+						        <span class="title">지도중심기준 행정동 주소정보</span>
+						        <span id="centerAddr"></span>
+						    </div>
+						</div>
+						<label for="place" class="form-label">장소</label>
+						<form:input path="place" id="place" class="form-control rounded" value="${ post.place }"/>
+						<div><form:errors path="place" cssStyle="color:red;"/></div>
+						
+						<label for="address" class="form-label">주소</label>
+						<form:input path="address" id="address" class="form-control rounded" value="${ post.address }"/>
+						<div><form:errors path="address" cssStyle="color:red;"/></div>
+					</fieldset>
+					<fieldset class="border p-2 rounded mb-5">
+	    				<legend>예약 정보</legend>
+	    				<div><div class="badge bg-danger">(등록 후 수정 불가)</div></div>
+						<label for="seatX" class="form-label mt-3">자리 배치 정보</label>
+						<div class="mb-3">
+							<input id="seatX" type="hidden" />
+							<input id="seatY" type="hidden" />
+						</div>
+						<form:hidden path="seatinfo"/>
+						<div class="table-responsive">
+							<table class="table table-fixed table-responsive" id="seatTable">
+							</table>
+						</div>
+						<div><form:errors path="seatinfo" cssStyle="color:red;"/></div>
+						<label for="sdate" class="form-label mt-3">시작일</label>
+						<form:input id="sdate" path="startdate" type="datetime-local" class="form-control rounded" value="${ post.startdate }"/>
+						<div><form:errors path="startdate" cssStyle="color:red;"/></div>
+						
+						<label for="edate" class="form-label mt-3">종료일</label>
+						<form:input id="edate" path="enddate" type="datetime-local" class="form-control rounded" value="${ post.enddate }"/>
+						<div><form:errors path="enddate" cssStyle="color:red;"/></div>
+					</fieldset>
+					<fieldset class="border p-2 rounded mb-5">
+	    				<legend>게시글 작성</legend>
+						<label for="ptitle" class="form-label">제목</label>
+						<form:input path="ptitle" id="ptitle" class="form-control rounded" value="${ post.ptitle }"/>
+						<div><form:errors path="ptitle" cssStyle="color:red;"/></div>
+						
+						<label for="summernote" class="form-label">내용</label>
+						<form:textarea path="pcontent" id="summernote"/><br>
+						<div><form:errors path="pcontent" cssStyle="color:red;"/><br></div>
+						<form:hidden path="pwriter" value="작성자"/>
+					</fieldset>
+					<div class="row">
+						<div class="col-12 text-end">
+							<button class="btn btn-sm btn-outline-success" type="button" id="submitBtn">전송</button>
+						</div>
 					</div>
-					<input id="seatX" type="hidden" />
-					<input id="seatY" type="hidden" />
-					자리 배치 정보 (수정 불가)
-					<form:hidden path="seatinfo" value="${ post.seatinfo }"/><br>
-					<div class="table-responsive">
-						<table class="table table-fixed table-responsive" id="seatTable">
-						</table>
-					</div>
-					<form:errors path="seatinfo"/><br>
-					시작일 : <form:input id="sdate" path="startdate" type="datetime-local" value="${ post.startdate }" /><br>
-					<form:errors path="startdate"/><br>
-					종료일 : <form:input id="edate" path="enddate" type="datetime-local" value="${ post.enddate }" /><br>
-					<form:errors path="enddate"/><br>
-					내용 : <form:textarea path="pcontent" id="summernote"/><br>
-					<form:errors path="pcontent"/><br>
-					<form:hidden path="pwriter" value="작성자"/>
-					<button type="button" id="submitBtn">전송</button>
 				</form:form>
 			</div>
 		</div>
 	</div>
 </div>
 <%@include file="../include/footer.jsp"%>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=앱키&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8b383d5cd72a2f6c17df1bc2be653f54&libraries=services"></script>
 <script>
 // 마커를 담을 배열입니다
 var markers = [];
