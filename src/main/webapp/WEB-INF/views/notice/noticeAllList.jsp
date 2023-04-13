@@ -32,7 +32,7 @@
 						<div class="col-9 text-end">
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 							<button id="regBtn" type="button"
-							class="btn btn-xs pull-right btn-info">등록</button>
+							class="btn btn-sm btn-outline-success">등록</button>
 						</sec:authorize>
 						</div>
 					</div>
