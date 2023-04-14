@@ -5,7 +5,10 @@
 <body>
 <%@include file="../include/navbar.jsp"%>
 <h1>
-	HOW
+	이용방법
+	화면상에서 좌석 배치도에서 빈 좌석 및 사용시간을 확인할 수 있다. 
+	운영 시 주의사항
+	시스템 제한사항
 </h1>
 
 <%@include file="../include/footer.jsp"%>

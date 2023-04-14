@@ -41,7 +41,7 @@
 
 					<table class="table table-hover shadow bg-body table-rounded">
 						<thead>
-							<tr style="background-color: #999999; color: white;">
+							<tr class="bg-primary" style="color: white;">
 								<th scope="col" class="col-2">번호</th>
 								<th scope="col" class="col-4 ">제목</th>
 								<th scope="col" class="col-3">작성일</th>
@@ -116,11 +116,16 @@
          }
          var imgHTML = '';
          for (var i = 0; i < data.length; i++) {
-             var regDate = new Date(data[i].regDate); // Date 객체 생성
-             var qDate = new Date(data[i].qdate);
-             
-             // "YYYY-MM-DD" 형식의 날짜 문자열 생성
-             var qDateString = qDate.getFullYear() + "-" + (qDate.getMonth() + 1).toString().padStart(2, '0') + "-" + qDate.getDate().toString().padStart(2, '0');
+        		var regDate = new Date(data[i].qdate); // Date 객체 생성
+        	    var formatRegDate = '';
+        	    var now = new Date(); // 오늘 날짜를 가져옵니다.
+        	    if (regDate.getFullYear() == now.getFullYear() && regDate.getMonth() == now.getMonth() && regDate.getDate() == now.getDate()) {
+        	      // 오늘 날짜와 같은 경우, 시간을 출력합니다.
+        	      formatRegDate = ('0' + regDate.getHours()).slice(-2) + ':' + ('0' + regDate.getMinutes()).slice(-2) + ':' + ('0' + regDate.getSeconds()).slice(-2);
+        	    } else {
+        	      // 다른 날짜의 경우, 년-월-일 형식으로 출력합니다.
+        	      formatRegDate = regDate.getFullYear() + '-' + ('0' + (regDate.getMonth() + 1)).slice(-2) + '-' + ('0' + regDate.getDate()).slice(-2);
+        	    }
 
              imgHTML += ''
                  + "<tr>"
@@ -128,7 +133,7 @@
                  + "<td style='line-height: 100px;'><a href=\"qnas/select?qno="
                  + data[i].qno	+"'\">"	+ data[i].qtitle + "</a></td>"
                  + "<td class='qcon' style='display:none'>" + data[i].qcontent + "</td>"
-                 + "<td style='line-height: 100px;'>" + qDateString + "</td>" // "YYYY-MM-DD" 형식의 날짜 문자열 추가
+                 + "<td style='line-height: 100px;'>" + formatRegDate + "</td>" // "YYYY-MM-DD" 형식의 날짜 문자열 추가
                  + "</tr>";
                  
          }
