@@ -42,7 +42,7 @@
 
 				<table class="table table-hover table-rounded shadow-sm bg-body rounded">
 					<thead>
-						<tr style="background-color: #888888; color: white;">
+						<tr class="bg-primary" style="color: white;">
 							<th scope="col" class="col-1">no</th>
 							<th scope="col" class="col-4">제목</th>
 							<th scope="col" class="col-1">작성자</th>

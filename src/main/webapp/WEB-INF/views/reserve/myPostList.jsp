@@ -38,7 +38,7 @@
 
 				<table class="table table-hover shadow bg-body table-rounded">
 					<thead>
-						<tr style="background-color: #999999; color: white;">
+						<tr class="bg-primary" style="color: white;">
 							<th scope="col" class="col-2">no</th>
 							<th scope="col" class="col-6">제목</th>
 							<th scope="col" class="col-2">작성자</th>

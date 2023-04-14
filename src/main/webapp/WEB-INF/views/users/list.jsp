@@ -41,7 +41,7 @@
 
 					<table class="table table-hover shadow bg-body table-rounded">
 						<thead>
-							<tr style="background-color: #999999; color: white;">
+							<tr class="bg-primary" style="color: white;">
 								<th scope="col" class="col-2">번호</th>
 								<th scope="col" class="col-2">이메일</th>
 								<th scope="col" class="col-2">이름</th>

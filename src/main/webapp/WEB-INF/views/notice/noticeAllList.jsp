@@ -44,7 +44,7 @@
 
 					<table class="table table-hover shadow bg-body table-rounded">
 						<thead>
-							<tr style="background-color: #999999; color: white;">
+							<tr class="bg-primary" style="color: white;">
 								<th scope="col" class="col-1">번호</th>
 								<th scope="col" class="col-3">제목</th>
 								<th scope="col" class="col-3">작성자</th>
