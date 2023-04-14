@@ -102,11 +102,6 @@
   text-overflow: ellipsis;
    
 }
-.text-of {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 .text-table th,
 .text-table td{
 	font-size: 90%;

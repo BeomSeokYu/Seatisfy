@@ -65,6 +65,22 @@
 						</c:forEach> --%>
 					</tbody>
 				</table>
+				<div class="card-columns row" id="imgList">
+			        <div class="card col-4 m-4" >
+			        	<div  class="card-header"><strong>제목</strong></div>
+			        	<div class="row mx-3">
+			        	<div class="col-6">진행중</div>
+			        	<div class="col-6 text-end"><i class="bi bi-alarm"></i></div>
+			        	</div>
+			        	<a href="#">
+			            <div  class="card-body">
+			                <div class="card-text my-2">시작일 : 1234-12-12 12:12</div>
+			                <div class="card-text my-2">시작일 : 1234-12-12 12:12</div>
+			                <div class="card-text comment my-2 text-end">작성</div>
+		            	</div>
+			            </a>
+			        </div>
+			     </div>
 				<div class="row text-center" id="none"></div>
 				
 				<hr class="my-4">
