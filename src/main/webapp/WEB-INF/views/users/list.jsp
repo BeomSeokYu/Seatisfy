@@ -15,7 +15,7 @@
 		<h1 class="mt-5 mb-5 pt-5 pb-5 text-white"><span class="text-shadow">회원 목록</span></h1>
 	</div>
 </header>
-	<div class="container mt-5">
+	<div class="container mt-5">	
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-lg-3 d-none d-lg-block">
@@ -141,8 +141,9 @@
                   + data[i].uno	+"'\">"	+ data[i].username + "</a></td>" 
                   +'<td>' + data[i].name+ "</td>"
                   + '<td>' + data[i].phone  + "</td>"
-                  +	"<td><select onchange=\"javascript:updateAuth(" + data[i].uno, this.value + ")"
-                  +	"class='form-select form-select-sm	 aria-label='.form-select-sm example'>"
+                  +	"<td><select onchange=\"javascript:updateAuth(\'" + data[i].username +"\' ,'"+ i + "')"
+                  + "\" id='" + i + "'"
+                  +	" class='form-select form-select-sm '	 aria-label=\'.form-select-sm example'>"
                   +		"<option selected>" +data[i].authority + "</option>"
                   +		"<option disabled>---------</option>"
                   +		"<option value='ROLE_USER'>ROLE_USER</option>"
@@ -188,30 +189,25 @@
 
 		window.location.reload();
 	}
-
+    
     //권한 변경 
 	function updateAuth(username, e) {
+		var auth = $('#'+e).val();
 		$.ajax({
 			type : "POST",
 			url : "/user/list",
 			data : {
 				username : username,
-				authority : e.value
+				authority : auth
 			},
 			beforeSend : function(xhr) { /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
 				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 			},
 			success : function(result) {
-				alert("권한 정보 변경이 완료되었습니다.")
-				window.location.assign('/user/list');
-			},
-			error : function(request, status, error) {
-				alert(request.status + " " + request.responseText);
+				pageObj.pageCal(cri);
 			}
 		})
 
-		/* window.location.reload(); */
-		window.location.assign('/user/list');
 	}
   
 </script>      

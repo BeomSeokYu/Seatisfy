@@ -60,9 +60,9 @@ public class UserController {
 	
 	// 회원 권한 변경
 	@PostMapping("/list")
-	public String changeAuth(@ModelAttribute("user") User user) {
+	@ResponseStatus(code = HttpStatus.OK)
+	public void changeAuth(@ModelAttribute("user") User user) {
 		userService.changeAutority(user);
-		return "redirect:/user/list";
 	}
 	
 	//페이지 수
