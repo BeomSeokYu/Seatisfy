@@ -21,6 +21,7 @@
 			<div class="col-lg-3 d-none d-lg-block">
 				<%@ include file="../include/sidebar_support.jsp"%>
 			</div>
+			
 			<div class="col-lg-9">
 					<div class="row">
 						<div class="col-3 text-muted">
@@ -38,7 +39,6 @@
 						</div>
 					</div>
 					<hr class="my-4">
-
 					<table class="table table-hover shadow bg-body table-rounded">
 						<thead>
 							<tr class="bg-primary" style="color: white;">
@@ -48,11 +48,7 @@
 							</tr>
 						</thead>
 						<tbody id="imgList">
-							<tr>
-						  <th scope="row">1</th>
-						  <td><a href="#">첫 번째 게시물</a></td>
-						  <td>2023-04-13</td>
-						</tr>	
+							
 						</tbody>
 					</table>
 					<div class="row text-center" id="none"></div>
@@ -127,21 +123,15 @@
         	      formatRegDate = regDate.getFullYear() + '-' + ('0' + (regDate.getMonth() + 1)).slice(-2) + '-' + ('0' + regDate.getDate()).slice(-2);
         	    }
 
-             imgHTML += ''
-                 + "<tr>"
-                 + "<td style='line-height: 100px;'>" + data[i].qno + "</td>"
-                 + "<td style='line-height: 100px;'><a href=\"qnas/select?qno="
-                 + data[i].qno	+"'\">"	+ data[i].qtitle + "</a></td>"
-                 + "<td class='qcon' style='display:none'>" + data[i].qcontent + "</td>"
-                 + "<td style='line-height: 100px;'>" + formatRegDate + "</td>" // "YYYY-MM-DD" 형식의 날짜 문자열 추가
-                 + "</tr>";
-                 
+        	    imgHTML += ''
+        	    	+ '<tr onclick="location.href=\'/qnas/select?qno='
+          	        + data[i].qno + "'\">"
+          	        + "<td>" + data[i].qno + "</td>"
+         	        + "<td>" + data[i].qtitle + "</td>"
+        	        + "<td>" + formatRegDate + "</td></tr>"
          }
          $('#imgList').html(imgHTML);
-         $(document).on('click', '#imgList tr', function() {
-/*         	    var index = $(this).index(); // 클릭한 행의 인덱스 찾기*/   
-      	    $(this).find('td.qcon').toggle(); // 다음 형제 요소(td) 보이거나 숨기기
-        	  });
+        
       }	
 </script>
 </body>
