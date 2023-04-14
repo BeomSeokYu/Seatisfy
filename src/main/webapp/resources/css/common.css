@@ -36,3 +36,9 @@ span[id$=".errors"], .error-msg{
 	border-left: 1px solid #ddd;
 	height: 100%;
 }
+
+.text-of {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
