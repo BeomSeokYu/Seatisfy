@@ -6,12 +6,12 @@
   <hr>
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark" aria-current="page">
+      <a href="/intro" class="nav-link link-dark" aria-current="page">
                  서비스 소개
       </a>
     </li>
     <li>
-      <a href="#" class="nav-link link-dark">
+      <a href="/how" class="nav-link link-dark">
                  이용 안내
       </a>
     </li>
