@@ -137,8 +137,7 @@
               imgHTML += ''
                   + "<tr>"
             	  +"<td>" + data[i].uno + "</td>"
-                  + "<td><a href=\"detail?uno="
-                  + data[i].uno	+"'\">"	+ data[i].username + "</a></td>" 
+                  + "<td>" + data[i].username + "</td>" 
                   +'<td>' + data[i].name+ "</td>"
                   + '<td>' + data[i].phone  + "</td>"
                   +	"<td><select onchange=\"javascript:updateAuth(\'" + data[i].username +"\' ,'"+ i + "')"
