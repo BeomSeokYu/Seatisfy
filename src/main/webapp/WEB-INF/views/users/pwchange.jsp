@@ -41,7 +41,6 @@
 							</td>
 						</tr>
 					</table>
-					
 					<hr class="my-4">
 					<div class="col-lg-12 text-end mt-5">
 						<input type="submit" class="btn btn-primary btn-sm" value="비밀번호 변경 " />

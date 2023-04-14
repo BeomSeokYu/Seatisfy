@@ -138,9 +138,10 @@ public class UserController {
 	}
 	// 비밀번호 변경
 	@PostMapping("/changepw")
-	public String changePw(@ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String changePw(@ModelAttribute("user") User user, Principal principal,
+			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
-		if (!user.getPassword().matches("^(?=.*[A-Za-z])(?=.*\\\\d)[A-Za-z\\\\d!@#$%^&*()_+]{8,}$")) {
+		if (!user.getPassword().matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d!@#$%^&*()_+]{8,}$")) {
 			bindingResult.rejectValue("password", "incorrectPw", "비밀번호는 8자 이상, 영문자와 숫자를 포함해야 합니다.");
 		}
 		if (!user.getPassword().equals(user.getPasswordConfirm())) {
@@ -156,6 +157,7 @@ public class UserController {
 		String encodedPassword = bcryptPasswordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 		
+		user.setUsername(principal.getName());
 		//성공 로직
 		userService.changePw(user);
 		redirectAttributes.addAttribute("pwChanged", "비밀번호가 변경되었습니다.");

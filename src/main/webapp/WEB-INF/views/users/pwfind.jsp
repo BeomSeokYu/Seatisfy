@@ -45,7 +45,7 @@ $('#appSendBtn').on('click', function(){
 	} else {
 		if (confirm("해당 이메일로 임시비밀번호를 발급하시겠습니까?")){
 		
-		fetch('/pwfind', {
+		fetch('/findpw', {
 			headers: {
 		    '${_csrf.headerName}': '${_csrf.token}' // CSRF 토큰 값
 			},

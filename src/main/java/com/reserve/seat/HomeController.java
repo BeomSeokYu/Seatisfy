@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.reserve.seat.HomeController;
@@ -127,10 +129,16 @@ public class HomeController {
 	}
 	
 	
-	// 임시 비밀번호 발급
+	// 비밀번호 찾기 폼
 	@GetMapping("/findpw")
 	public String findPw(Model model) {
 		return "users/pwfind";
+	}
+	// 임시 비밀번호 발급
+	@PostMapping("/findpw")
+	@ResponseStatus(code = HttpStatus.OK)
+	public void changeAuth(@ModelAttribute("user") User user) {
+		userService.changeTmpPw(user);
 	}
 	
 	// 아이디 찾기 폼
