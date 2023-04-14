@@ -97,7 +97,7 @@
                     <div class="post-preview">
                         <a href="/reserve">
                             <h2 class="post-title text-primary text-end">어떤 배치든지 가능</h2>
-                            <h3 class="post-subtitle text-end">자리 배치가 규칙적이지 않아고 괜찮아요</h3>
+                            <h3 class="post-subtitle text-end">자리 배치가 규칙적이지 않아도 괜찮아요</h3>
                         </a>
                         <p class="post-meta text-end">
                             자리 배치를 직접 등록할 수 있어요
