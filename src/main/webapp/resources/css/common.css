@@ -19,3 +19,20 @@ footer {
 .text-shadow {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
+/* 에러 메세지 */
+span[id$=".errors"], .error-msg{
+	font-size: small;
+    font-weight: bold;
+    color: red;
+} 
+
+.table-rounded {
+    border-radius: 10px;
+    overflow: hidden;
+}
+.sidebar {
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	height: 100%;
+}

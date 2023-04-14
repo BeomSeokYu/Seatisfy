@@ -25,7 +25,7 @@
 										<label class="mb-2 text-muted" for="email">아이디</label>
 									</div>
 									<form:input path="username" class="form-control" placeholder="Email" autofocus = "${true }"/>
-									<form:errors path="username"/>
+									<form:errors path="username" />
 								</div>
 	
 								<div class="mb-3">
@@ -39,7 +39,7 @@
 									<div class="mb-2 w-100">
 										<label class="text-muted" for="passwordConfirm">비밀번호 확인</label>
 									</div>
-									<form:input path="passwordConfirm" type="password" class="form-control"/>
+									<form:input path="passwordConfirm" type="password" class="form-control" placeholder="Password Confirm"/>
 									<form:errors path="passwordConfirm" cssClass="error" />
 								</div>
 								<div class="mb-3">
@@ -59,7 +59,7 @@
 
 
 								<div class="mb-3">
-									<button type="submit" class="btn btn-primary ms-auto">등록</button>
+									<button type="submit" class="btn btn-primary ms-auto">회원가입</button>
 								</div>
 								
                                  <!-- 토큰 전송 -->
@@ -68,9 +68,7 @@
 							</form:form>
 						</div>
 						<div class="card-footer py-3 border-0">
-							<div class="text-center">
-								<a href="/login" class="text-dark">로그인</a>
-							</div>
+							<a href="/login" class="text-dark text-center"><div>로그인</div></a>
 						</div>
 					</div>
 				</div>

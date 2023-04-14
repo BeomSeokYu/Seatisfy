@@ -155,6 +155,7 @@ public class UserController {
 		
 		//성공 로직
 		userService.changePw(user);
+		redirectAttributes.addAttribute("pwChanged", "비밀번호가 변경되었습니다.");
 		
 		return "redirect:/user/detail";
 	}

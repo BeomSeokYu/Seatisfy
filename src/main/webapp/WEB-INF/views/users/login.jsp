@@ -12,33 +12,30 @@
 				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
 					<div class="card shadow-lg">
 						<div class="card-body p-5">
-							<h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
+							<h1 class="fs-4 card-title fw-bold mb-4">로그인</h1>
 							
-							<h4 style="color :red">${error }</h4>
+							<p class="error-msg">${error }</p>
 							<form role="form" action="/login" method="post" accept-charset="UTF-8">
 							<fieldset>
 								<div class="mb-3">
-									<label class="mb-2 text-muted" for="email">E-Mail Address</label>
+									<label class="text-muted" for="email">이메일</label>
 									<input type="email" class="form-control" name="username" placeholder="Email" autofocus>
 								</div>
 	
 								<div class="mb-3">
-									<div class="mb-2 w-100">
-										<label class="text-muted" for="password">Password</label>
-									</div>
+									<label class="text-muted" for="password">비밀번호</label>
 									<input type="password" class="form-control" name="password" placeholder="Password" >
 								</div>
 
 								<div class="mb-3">
-									<button type="submit" class="btn btn-primary ms-auto">
-										Login
+									<button type="submit" class="btn btn-primary">
+										로그인
 									</button>
 								</div>
 								
-								<div class="d-flex align-items-center">
-									<a href="/findid" class="float-end">아이디 찾기</a>
-								</div>
-								<div class="d-flex align-items-center">
+								<div class="mb-3">
+									<a href="/findid" class="float-end ">아이디 찾기</a>
+									<br>
 									<a href="/findpw" class="float-end">비밀번호 찾기</a>
 								</div>
 											
@@ -48,9 +45,7 @@
 							</form>
 						</div>
 						<div class="card-footer py-3 border-0">
-							<div class="text-center">
-								<a href="/join" class="text-dark">회원 가입</a>
-							</div>
+							<a href="/join" class="text-dark text-center"><div>회원 가입</div></a>
 						</div>
 					</div>
 				</div>

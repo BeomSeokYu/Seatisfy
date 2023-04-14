@@ -21,27 +21,33 @@
 			<div class="col-lg-9">
 				<hr class="my-4">
 				<form:form modelAttribute="user" 
-						   action="user/changepw"
+						   action="/user/changepw"
 				           class="form-horizontal"
 				           method="post">
 				<fieldset>
-					아이디 : <form:input path="username" value="${user.username }" class="form-control" readonly="${true }"/>
-					<br>
-					이름 : <form:input path="name" value="${user.name }" class="form-control" readonly="${true }" />
-					<form:errors path="name"/>
-					<br>
-					휴대폰 : <form:input path="phone" value="${user.phone}" class="form-control" readonly="${true }" />
-					<form:errors path="phone"/>
-					<br>
-					새 비밀번호 : <form:input path="password" type="password" class="form-control"/>
-					<form:errors path="password" />
-					<br>
-					비밀번호 확인 : <form:input path="passwordConfirm" type="password" class="form-control"/>
-					<form:errors path="passwordConfirm" cssClass="error" />
-					<br>
-					<input type="submit" class="btn btn-primary btn-sm" value="비밀번호 변경 " />
-					<a onclick="javascript:history.back()"
+					<table class="table text-nowrap text-table table-rounded shadow-sm">
+						<tr class="row">
+							<th class="col-sm-3 text-center table-primary text-of">새 비밀번호</th>
+							<td class="col-sm-9 text-of table-light">
+								<form:input path="password" type="password" class="form-control"/>
+								<form:errors path="password" />
+							</td>
+						</tr>
+						<tr class="row">
+							<th class="col-sm-3 text-center table-primary text-of">비밀번호 확인</th>
+							<td class="col-sm-9 text-of table-light">
+								<form:input path="passwordConfirm" type="password" class="form-control"/>
+								<form:errors path="passwordConfirm" cssClass="error" />
+							</td>
+						</tr>
+					</table>
+					
+					<hr class="my-4">
+					<div class="col-lg-12 text-end mt-5">
+						<input type="submit" class="btn btn-primary btn-sm" value="비밀번호 변경 " />
+						<a onclick="javascript:history.back()"
 							class="btn btn-outline-secondary btn-sm">취소</a>
+					</div>
 	
 				</fieldset>
 				</form:form>
@@ -49,6 +55,7 @@
 		</div>
 	</div>
 </div>
+
 <%@ include file="../include/footer.jsp"%>	
 
 </body>

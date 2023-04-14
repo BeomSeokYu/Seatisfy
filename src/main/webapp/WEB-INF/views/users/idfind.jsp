@@ -21,6 +21,10 @@
 							           method="post">
 							<fieldset>
 								<div class="mb-3">
+									<form:errors path="*" cssClass=""/>
+									<h4 style="color:blue;">${idFound }</h4>
+								</div>
+								<div class="mb-3">
 									<div class="mb-2 w-100">
 										<label class="text-muted" for="name">이름</label>
 									</div>
@@ -37,9 +41,6 @@
 								<div class="mb-3">
 									<button type="submit" class="btn btn-primary" >아이디 찾기</button>
 								</div>
-								
-								<form:errors path="*" cssClass=""/>
-								<h4>${idFound }</h4>
 								
 								
                                  <!-- 토큰 전송 -->

@@ -58,6 +58,12 @@
 
 
 <script>
+	var msg = '${param.pwChanged}';
+	if(msg) {
+		console.log(msg);
+		alert(msg);
+	}
+	
 	function removeConfirm(uno) {
 	    if (confirm("정말로 회원탈퇴하시겠습니까?")) {
 	        removeUser(uno);

@@ -14,7 +14,7 @@
 						<div class="card-body p-5">
 							<h1 class="fs-4 card-title fw-bold mb-4">비밀번호 찾기</h1>
 							
-							<h4 style="color :red">${error }</h4>
+							<p class="error-msg">${error }</p>
 							<form action="/user/pwedit.jsp" method="post" id="findFrm">
 								<div class="mb-3">
 									<label class="mb-2 text-muted" for="email">회원 이메일 확인</label>
