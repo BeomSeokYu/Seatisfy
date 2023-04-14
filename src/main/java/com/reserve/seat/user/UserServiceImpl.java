@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService{
       
 		boolean result = (userMapper.updatePassword(user) != 0) ? true : false;
 		if (result) {
-			mailService.sendMailForPw(user.getUsername(), tempPw);
+			mailService.sendMail(user.getUsername(), "[Seatisfy] 임시 비밀번호입니다.", "임시 비밀번호는 [ " + tempPw + " ] 입니다.");
 		}
 		return result;
 	}
