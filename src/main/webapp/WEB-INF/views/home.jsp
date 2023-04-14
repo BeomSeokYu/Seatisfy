@@ -83,53 +83,36 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="post.html">
-                            <h2 class="post-title">Man must explore, and this is exploration at its greatest</h2>
-                            <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
+                        <a href="/reserve">
+                            <h2 class="post-title text-primary">어느 곳이든지 가능</h2>
+                            <h3 class="post-subtitle">어느 곳이든 등록하고 자리 예약을 실행해 보세요</h3>
                         </a>
                         <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on September 24, 2023
+                            어떤 장소든 가능해요
                         </p>
                     </div>
                     <!-- Divider-->
                     <hr class="my-4" />
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="post.html"><h2 class="post-title">I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.</h2></a>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on September 18, 2023
+                        <a href="/reserve">
+                            <h2 class="post-title text-primary text-end">어떤 배치든지 가능</h2>
+                            <h3 class="post-subtitle text-end">자리 배치가 규칙적이지 않아고 괜찮아요</h3>
+                        </a>
+                        <p class="post-meta text-end">
+                            자리 배치를 직접 등록할 수 있어요
                         </p>
                     </div>
                     <!-- Divider-->
                     <hr class="my-4" />
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="post.html">
-                            <h2 class="post-title">Science has not yet mastered prophecy</h2>
-                            <h3 class="post-subtitle">We predict too much for the next year and yet far too little for the next ten.</h3>
+                        <a href="/join">
+                            <h2 class="post-title text-primary">누구든지 가능</h2>
+                            <h3 class="post-subtitle">회원이라면 누구나 예약할 수 있어요</h3>
                         </a>
                         <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on August 24, 2023
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="post.html">
-                            <h2 class="post-title">Failure is not an option</h2>
-                            <h3 class="post-subtitle">Many say exploration is part of our destiny, but it’s actually our duty to future generations.</h3>
-                        </a>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on July 8, 2023
+                            회원 가입을 해보세요
                         </p>
                     </div>
                     <!-- Divider-->
