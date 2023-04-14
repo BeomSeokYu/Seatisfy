@@ -33,7 +33,7 @@
 							</select> <span class="d-inline">개씩 보기</span>
 						</div>
 						<div class="col-9 text-end">
-						<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
 							<a href="/qnas/add" class="btn btn-sm btn-outline-success"> 등록 </a>
 						</sec:authorize>
 						</div>
