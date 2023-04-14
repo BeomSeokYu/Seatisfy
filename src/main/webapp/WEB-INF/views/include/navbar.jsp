@@ -35,9 +35,10 @@
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">로그인</a></li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
+				
                 <li class="nav-item dropdown">
-				    <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="/user/detail" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-				        회원 아이디
+				    <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4 currentUser" href="/user/detail" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<sec:authentication var="sessionId" property="name" />
 				    </a>
 				    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 				        <li><a class="dropdown-item" href="/user/detail">마이페이지</a></li>
@@ -65,4 +66,21 @@ function logoutPost(){
     f.submit();
 }
 
+getName('${sessionId}')
+function getName(email) {
+	fetch("/uname", {	
+		method: "post",
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'X-CSRF-TOKEN': '${ _csrf.token }'
+		},
+		body: new URLSearchParams({
+				username: email
+			})
+        })
+		.then(resp => resp.json())
+		.then(data => {
+			$('.currentUser').text(data.name);
+		})
+}
 </script>

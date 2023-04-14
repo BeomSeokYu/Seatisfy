@@ -40,7 +40,7 @@
 				</div>
 				<hr class="my-4">
 
-				<table class="table table-hover table-rounded shadow-sm bg-body rounded">
+				<%-- <table class="table table-hover table-rounded shadow-sm bg-body rounded">
 					<thead>
 						<tr class="bg-primary" style="color: white;">
 							<th scope="col" class="col-1">no</th>
@@ -51,8 +51,8 @@
 							<th scope="col" class="col-2">작성일</th>
 						</tr>
 					</thead>
-					<tbody id="imgList">
-						<%-- <c:forEach items="${ list }" var="pvo" varStatus="i">
+					<tbody>
+						<c:forEach items="${ list }" var="pvo" varStatus="i">
 							<tr class="move" data="${ pvo.pno }">
 					            <td>${ pvo.pno }</td>
 					            <td>${ pvo.ptitle }</td>
@@ -62,27 +62,13 @@
 								<fmt:formatDate value="${noticePostDate}" pattern="yyyy.MM.dd"/>
 					            <td>${ pvo.regdate }</td>
 					        </tr>
-						</c:forEach> --%>
+						</c:forEach>
 					</tbody>
-				</table>
+				</table> --%>
 				<div class="card-columns row" id="imgList">
-			        <div class="card col-4 m-4" >
-			        	<div  class="card-header"><strong>제목</strong></div>
-			        	<div class="row mx-3">
-			        	<div class="col-6">진행중</div>
-			        	<div class="col-6 text-end"><i class="bi bi-alarm"></i></div>
-			        	</div>
-			        	<a href="#">
-			            <div  class="card-body">
-			                <div class="card-text my-2">시작일 : 1234-12-12 12:12</div>
-			                <div class="card-text my-2">시작일 : 1234-12-12 12:12</div>
-			                <div class="card-text comment my-2 text-end">작성</div>
-		            	</div>
-			            </a>
-			        </div>
-			     </div>
-				<div class="row text-center" id="none"></div>
-				
+					
+				</div>
+				<div class="row text-center" id="none"></div>'
 				<hr class="my-4">
 				<div class="row">
 					<div class="col-8">
@@ -164,7 +150,7 @@ onload = function() {
 			var status = getDateStatus(data[i].startdate, data[i].enddate)
 			var statusColor = '';
 			switch(status) {
-				case '시작 전':statusColor = 'white';
+				case '시작 전':statusColor = 'black';
 					break;
 				case '진행중':	statusColor = 'green';
 					break;
@@ -183,9 +169,20 @@ onload = function() {
        	      // 다른 날짜의 경우, 년-월-일 형식으로 출력합니다.
        	      formatRegDate = regDate.getFullYear() + '-' + ('0' + (regDate.getMonth() + 1)).slice(-2) + '-' + ('0' + regDate.getDate()).slice(-2);
        	    }
-			
-			
-			imgHTML += ''
+       	 imgHTML += ''
+		       	+ '<div class="card col-4" >'
+		       	+ '<div  class="card-header text-of"><strong>'+data[i].ptitle+'</strong></div><div class="row mx-3">'
+		       	+ '<div class="col-6 text-of" style="color: '+statusColor+';">'+status+'</div><div class="col-6 text-end"><i class="bi bi-alarm"></i>'
+		       	+ '</div></div><a href="/reserve/detail/'+ data[i].pno + '"><div  class="card-body">'
+		       	+ '<div class="row"><h5 class="col-3 text-of">장소:</h5>'
+		       	+ '<div class="col-9 card-text comment text-end text-of">'+data[i].place+'</div>'
+		       	+ '</div><h5 class="mt-3">시간</h5>'
+		       	+ '<div class="card-text my-2 text-of">'+data[i].startdate.replace('T',' ')+' 시작</div>'
+		       	+ '<div class="card-text my-2 text-of">'+data[i].startdate.replace('T',' ')+' 종료</div>'
+		       	+ '<div class="row mt-3"><h5 class="col-6 text-of">작성자:</h5>'
+		       	+ '<div class="col-6 card-text comment text-end text-of" id="td'+i+'">'+data[i].pwriter+'</div></div></div></a></div></div>';
+		       	getName(data[i].pwriter, i)
+			/* imgHTML += ''
 					+ '<tr onclick="location.href=\'/reserve/detail/'
 					+ data[i].pno + '\'"><td>' + data[i].pno + '</td>'
 					+ '<td>' + data[i].ptitle + '</td>' + '<td id="td'+i+'">'
@@ -193,7 +190,7 @@ onload = function() {
 					+ '<td>' + data[i].startdate.replace('T',' ') + ' 부터<br>'
 					+ data[i].enddate.replace('T',' ') +' 까지</td>'
 					+ '<td style="color: '+statusColor+';">' + status +'</td>'
-					+ '<td>' + formatRegDate + '</td></a></tr>';
+					+ '<td>' + formatRegDate + '</td></a></tr>'; */
 		}
 		$('#imgList').html(imgHTML);
 	}

@@ -156,7 +156,7 @@
 						<th class="col-sm-2 text-center table-primary text-of">예약 가능 시간</th>
 						<td class="col-sm-6 text-of table-light" colspan="3">${fn:replace(post.startdate, 'T', ' ')} ~ ${fn:replace(post.enddate, 'T', ' ')}</td>
 						<th class="col-sm-2 text-center table-primary text-of" colspan="1">진행 상태</th>
-						<td class="col-sm-2 text-of table-light" colspan="1" id="status"></td>
+						<td class="col-sm-2 text-of table-light" colspan="1" id="statusPost"></td>
 					</tr>
 				</table>
 
@@ -497,7 +497,6 @@ onload = function() {
 	  	popModal('좌석 미선택', '예약할 좌석을 선택해 주세요');
 	    break;
 	}
-	$('#status').html(getDateStatus('${post.startdate}', '${post.enddate}'));
 }
 
 function getDateStatus(sdate, edate) {
@@ -936,6 +935,8 @@ function getName(email, i) {
 			$('#'+i).html(data.name);
 		})
 }
+
+$('#statusPost').html(getDateStatus('${post.startdate}', '${post.enddate}'));
 </script>
 </body>
 </html>

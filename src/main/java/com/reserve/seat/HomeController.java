@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.reserve.seat.HomeController;
+import com.reserve.seat.user.MailService;
 import com.reserve.seat.user.User;
 import com.reserve.seat.user.UserService;
 
@@ -33,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
 	private final UserService userService;
 	private final BCryptPasswordEncoder bcryptPasswordEncoder;
+	private final MailService mailService;
 
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -93,7 +95,7 @@ public class HomeController {
 		
 		//성공 로직
 		userService.signup(user);
-//		userService.changeTmpPw(user);	//임시 비밀번호로 DB데이터 변경, 메일 전송
+		mailService.sendMail(user.getUsername(), "[Seatisfy] 회원가입을 축하합니다.", "회원가입을 축하드립니다 !");	// 회원가입 축하 메일 전송
 		
 		return "redirect:/login";
 	}
