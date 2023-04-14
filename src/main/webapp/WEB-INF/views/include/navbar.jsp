@@ -17,8 +17,8 @@
 				        소개
 				    </a>
 				    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-				        <li><a class="dropdown-item" href="#">서비스 소개</a></li>
-				        <li><a class="dropdown-item" href="#">이용 방법</a></li>
+				        <li><a class="dropdown-item" href="/intro">서비스 소개</a></li>
+				        <li><a class="dropdown-item" href="/how">이용 방법</a></li>
 				    </ul>
 				</li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/reserve">예약</a></li>
