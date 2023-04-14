@@ -59,8 +59,8 @@
       <div class="col-lg-3 mb-4 mb-lg-0">
         <h5 class="text-primary mb-3">Support</h5>
         <ul class="list-unstyled">
-          <li><a href="#" class="text-muted text-decoration-none">이용 방법</a></li>
-          <li><a href="#" class="text-muted text-decoration-none">서비스 소개</a></li>
+          <li><a href="/intro" class="text-muted text-decoration-none">서비스 소개</a></li>
+          <li><a href="/how" class="text-muted text-decoration-none">이용 방법</a></li>
         </ul>
       </div>
       <!-- <div class="col-lg-3">
@@ -74,7 +74,7 @@
     </div>
     <div class="row mt-5">
       <div class="col-lg-12">
-        <p class="text-muted small mb-0">© 2023 Your Company. All Rights Reserved.</p>
+        <p class="text-muted small mb-0 text-center">© 2023 Final-Project - <span class="text-primary">유범석, 권두현, 김형준, 김지수</span></p>
       </div>
     </div>
   </div>
