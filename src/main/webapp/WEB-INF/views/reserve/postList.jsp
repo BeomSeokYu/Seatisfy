@@ -147,15 +147,15 @@ onload = function() {
 		for (var i = 0; i < data.length; i++) {
 			var status = getDateStatus(data[i].startdate, data[i].enddate)
 			var regDate = new Date(data[i].regdate); // Date 객체 생성
-        	    var formatRegDate = '';
-        	    var now = new Date(); // 오늘 날짜를 가져옵니다.
-        	    if (regDate.getFullYear() == now.getFullYear() && regDate.getMonth() == now.getMonth() && regDate.getDate() == now.getDate()) {
-        	      // 오늘 날짜와 같은 경우, 시간을 출력합니다.
-        	      formatRegDate = ('0' + regDate.getHours()).slice(-2) + ':' + ('0' + regDate.getMinutes()).slice(-2) + ':' + ('0' + regDate.getSeconds()).slice(-2);
-        	    } else {
-        	      // 다른 날짜의 경우, 년-월-일 형식으로 출력합니다.
-        	      formatRegDate = regDate.getFullYear() + '-' + ('0' + (regDate.getMonth() + 1)).slice(-2) + '-' + ('0' + regDate.getDate()).slice(-2);
-        	    }
+       	    var formatRegDate = '';
+       	    var now = new Date(); // 오늘 날짜를 가져옵니다.
+       	    if (regDate.getFullYear() == now.getFullYear() && regDate.getMonth() == now.getMonth() && regDate.getDate() == now.getDate()) {
+       	      // 오늘 날짜와 같은 경우, 시간을 출력합니다.
+       	      formatRegDate = ('0' + regDate.getHours()).slice(-2) + ':' + ('0' + regDate.getMinutes()).slice(-2) + ':' + ('0' + regDate.getSeconds()).slice(-2);
+       	    } else {
+       	      // 다른 날짜의 경우, 년-월-일 형식으로 출력합니다.
+       	      formatRegDate = regDate.getFullYear() + '-' + ('0' + (regDate.getMonth() + 1)).slice(-2) + '-' + ('0' + regDate.getDate()).slice(-2);
+       	    }
 			
 			
 			imgHTML += ''
