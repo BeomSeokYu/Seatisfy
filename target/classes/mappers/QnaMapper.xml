@@ -56,20 +56,26 @@
 	]]>
 	</select>
 	
-	<delete id="deleteQna">
+	<delete id="deleteQna" parameterType="String">
+	<![CDATA[
   	DELETE FROM qna WHERE qno = #{qno}
+  	]]>
   	</delete>
   	
   	<update id="updateQna">
+  	<![CDATA[
   	UPDATE qna
   	SET
   		qtitle=#{qtitle},
   		qcontent=#{qcontent}
   	WHERE qno = #{qno}
+  	]]>
   	</update>
   	
-  	<select id="selectQna" resultType="com.reserve.seat.qna.QnaDTO">
+  	<select id="selectQna" parameterType="String" resultType="com.reserve.seat.qna.QnaDTO">
+  	<![CDATA[
   	SELECT * FROM qna WHERE qno = #{qno}
+  	]]>
   	</select>
   	
   

@@ -58,7 +58,7 @@
 			<div class="row">
 				<div class="col-12 text-end mb-2">
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<a href="/qnas" class="btn btn-outline-danger btn-sm mx-1">취소</a> 
+					<a href="/qnas/select?qno=${qna.qno}" class="btn btn-outline-danger btn-sm mx-1">취소</a> 
 					<input type="hidden" name="_csrf" value="${_csrf.token}"/>
 					<input type="submit"
 						value="수정" class="btn btn-outline-warning btn-sm mx-1">

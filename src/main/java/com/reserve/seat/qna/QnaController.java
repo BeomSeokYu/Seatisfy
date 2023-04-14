@@ -69,25 +69,25 @@ public class QnaController {
 	
 	//수정
 	@GetMapping("/update")
-	public String updateQnaForm(@ModelAttribute QnaDTO NewQna,@RequestParam("qno") String qno, Model model) {
+	public String updateQnaForm(@ModelAttribute("updateQna") QnaDTO NewQna,@RequestParam("qno") String qno, Model model) {
 		QnaDTO qnaNum = qnaService.selectQna(qno);
 		model.addAttribute("qna", qnaNum);
 		
 		return "qnas/qnaUpdate";
 	}
 	@PostMapping("/update")
-	public String updateQna(QnaDTO qna) {
+	public String updateQna(@ModelAttribute("updateQna") QnaDTO qna) {
 		
 		qnaService.updateQna(qna);
 		return "redirect:/qnas";
 	}
 	//삭제
 	@PostMapping("/delete")
-	public String deleteQna(@RequestParam("qno") String qno) {
+	@ResponseBody
+	public void deleteQna(@RequestParam("qno") String qno) {
 		
 		qnaService.deleteQna(qno);
 		
-		return "redirect:/qnas";
 	}
 	//상세보기
 	@GetMapping("/select")

@@ -8,8 +8,6 @@
 <!DOCTYPE html>		
 <html>
 <%@include file="../include/header.jsp"%>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <style>
 .text-of {
   white-space: nowrap;
@@ -34,11 +32,8 @@
 				<div class="row">
 					<div class="col-12 text-end mb-2">
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<form class="form-inline" method="POST" action="/qnas/delete?qno=${qna.qno}">
-							<input type="hidden" name="_csrf" value="${_csrf.token}"/>
-							<a class="btn btn-outline-warning btn-sm mx-1" href="/qnas/update?qno=${qna.qno}" >수정</a>
-							<button class="btn btn-outline-danger btn-sm mx-1">삭제</button>
-						</form>
+						<button class="btn btn-outline-warning btn-sm mx-1" type="button" id="editBtn">수정</button>
+								<button class="btn btn-outline-danger btn-sm mx-1" type="button" id="removeBtn">삭제</button>
 						</sec:authorize>
 					</div>
 				</div>
@@ -66,13 +61,18 @@
 		</div>
 	</div>
 </div>
-</body>
+
 					
 
 	
 <%@include file="../include/footer.jsp"%>
 <script>
-function checkForm() {
+var csrfToken = getCsrfToken();
+
+function getCsrfToken(){
+    return '${_csrf.token}';
+}
+/* function checkForm() {
 	  // 폼 유효성 검사를 수행
 	  if (bindingResult.hasErrors()) {
 	    alert("폼을 제출할 수 없습니다.");
@@ -81,7 +81,37 @@ function checkForm() {
 
 	  // 폼 유효성 검사를 통과하면 true 반환
 	  return true;
+	} */
+$("#editBtn").on("click", function() {
+	  var qnaQno = '${qna.qno}'; // 해당 게시물의 pno 값을 가져옵니다.
+	  location.href = '/qnas/update?qno=' + qnaQno; // edit 페이지로 이동합니다.
+	});
+	
+$("#removeBtn").on("click", function() {
+	if(confirm('정말로 삭제하시겠습니까?')) {
+  // 해당 게시물의 nno
+  var qno = '${qna.qno}';
+  // POST 요청
+  $.ajax({
+    type: "POST",
+    url: "/qnas/delete",
+    data: {
+      qno : qno
+    },
+    beforeSend: function(xhr) {
+      // 요청 헤더에 CSRF 토큰을 추가
+  	  xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+    },
+    success: function(result) {
+  	  location.href = '/qnas'; 
+    },
+    error: function(xhr, status, error) {
+      console.log("삭제 요청 실패");
+      console.log(xhr.responseText);
+    }
+  });
 	}
+});
 </script>
-</head>
+</body>
 </html>
