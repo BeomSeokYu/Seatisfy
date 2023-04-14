@@ -123,6 +123,17 @@
         	// var regDate = new Date(data[i].udate); // Date 객체 생성
             // var formatRegDate = udate.getFullYear() + '-' + ('0' + (udate.getMonth() + 1)).slice(-2) + '-' + ('0' + udate.getDate()).slice(-2); // yyyy-MM-dd 형식으로 변환
             
+            var regDate = new Date(data[i].udate); // Date 객체 생성
+       	    var formatRegDate = '';
+       	    var now = new Date(); // 오늘 날짜를 가져옵니다.
+       	    if (regDate.getFullYear() == now.getFullYear() && regDate.getMonth() == now.getMonth() && regDate.getDate() == now.getDate()) {
+       	      // 오늘 날짜와 같은 경우, 시간을 출력합니다.
+       	      formatRegDate = ('0' + regDate.getHours()).slice(-2) + ':' + ('0' + regDate.getMinutes()).slice(-2) + ':' + ('0' + regDate.getSeconds()).slice(-2);
+       	    } else {
+       	      // 다른 날짜의 경우, 년-월-일 형식으로 출력합니다.
+       	      formatRegDate = regDate.getFullYear() + '-' + ('0' + (regDate.getMonth() + 1)).slice(-2) + '-' + ('0' + regDate.getDate()).slice(-2);
+       	    }
+            
               imgHTML += ''
                   + "<tr>"
             	  +"<td>" + data[i].uno + "</td>"
@@ -137,7 +148,7 @@
                   +		"<option value='ROLE_USER'>ROLE_USER</option>"
                   +		"<option value='ROLE_ADMIN'>ROLE_ADMIN</option>"
                   +		"</select></td>"
-                  +"<td>" + data[i].udate + "</td>" 
+                  +"<td>" + formatRegDate + "</td>" 
                   +"<td><button onclick=\"javascript:removeConfirm("+ data[i].uno+")\"	class=\"btn btn-danger btn-sm\">삭제</button></td>"
                   +"</tr>"
          }
