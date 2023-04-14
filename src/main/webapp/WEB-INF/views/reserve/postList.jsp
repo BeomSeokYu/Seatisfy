@@ -146,6 +146,17 @@ onload = function() {
 		var imgHTML = '';
 		for (var i = 0; i < data.length; i++) {
 			var status = getDateStatus(data[i].startdate, data[i].enddate)
+			var statusColor = '';
+			switch(status) {
+				case '시작 전':statusColor = 'white';
+					break;
+				case '진행중':	statusColor = 'green';
+					break;
+				case '종료': 	statusColor = 'red';
+					break;
+			}
+			
+			
 			var regDate = new Date(data[i].regdate); // Date 객체 생성
        	    var formatRegDate = '';
        	    var now = new Date(); // 오늘 날짜를 가져옵니다.
@@ -165,7 +176,7 @@ onload = function() {
 					+ getName(data[i].pwriter, i) + '</td>'
 					+ '<td>' + data[i].startdate.replace('T',' ') + ' 부터<br>'
 					+ data[i].enddate.replace('T',' ') +' 까지</td>'
-					+ '<td>' + status +'</td>'
+					+ '<td style="color: '+statusColor+';">' + status +'</td>'
 					+ '<td>' + formatRegDate + '</td></a></tr>';
 		}
 		$('#imgList').html(imgHTML);
