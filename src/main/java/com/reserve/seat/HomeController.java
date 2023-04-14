@@ -1,6 +1,5 @@
 package com.reserve.seat;
 
-import java.security.Principal;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -94,7 +93,7 @@ public class HomeController {
 		
 		//성공 로직
 		userService.signup(user);
-//		userService.changeTmpPw(user);	//임시 비밀번호로 DB데이터 변경, 메일 전송
+		userService.changeTmpPw(user);	//임시 비밀번호로 DB데이터 변경, 메일 전송
 		
 		return "redirect:/login";
 	}
