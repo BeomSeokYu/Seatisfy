@@ -128,7 +128,7 @@
 				<%@ include file="../include/sidebar_support.jsp"%>
 			</div>
 <div class="col-lg-8 mx-auto p-4 py-md-5">
-		<form:form modelAttribute="notice" action="./add" method="post">
+		<form:form modelAttribute="notice" action="./update?nno=${notice.nno}" method="post">
 			<fieldset>
 			<main>
 				<div class="pb-3 mb-5">
@@ -140,7 +140,7 @@
 
 					<div class="mb-3">
 						<label for="ntitle" class="form-label">제목</label> 
-						<form:input type="text" class="form-control" path="ntitle" />
+						<form:input type="text" class="form-control" path="ntitle" value="${notice.ntitle }"/>
 							<form:errors path="ntitle" cssStyle="color:red;"/>
 					</div>
 					<div class="mb-3">
@@ -153,11 +153,9 @@
 				<div style="text-align: right;">
 							<!-- 토큰 전송 -->
 							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-					<a href="/notice/detail?nno=${notice.nno }"
-											class="btn btn-outline-danger btn-sm mx-1">취소</a> <input
-											type="hidden" name="_csrf" value="${_csrf.token}" /> <input
-											type="submit" value="수정"
-											class="btn btn-outline-warning btn-sm mx-1">
+					<a href="/notice/detail?nno=${notice.nno }"	class="btn btn-outline-danger btn-sm mx-1">취소</a> 
+					<input type="hidden" name="_csrf" value="${_csrf.token}" /> 
+					<input type="submit" value="수정" class="btn btn-outline-warning btn-sm mx-1">
 					</div>
 				</div>
 			</main>
