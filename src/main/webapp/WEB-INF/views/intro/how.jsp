@@ -29,8 +29,8 @@
 		</div>
           <div class="row featurette">
       <div class="col-md-7 order-md-2">
-        <h2 class="featurette-heading text-primary">예약 장소 검색 <span class="text-muted"></span></h2>
-        <p class="lead">장소 검색을 이용하거나 지도에 장소를 클릭 시 선택 가능</p>
+        <h2 class="featurette-heading text-primary text-end">예약 장소 검색 <span class="text-muted"></span></h2>
+        <p class="lead text-end">장소 검색을 이용하거나 지도에 장소를 클릭 시 선택 가능</p>
       </div>
        <div class="col-md-5">
 			  <img src="/resources/assets/img/portfolio/rm.JPG" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" height="700" alt="Image description">
