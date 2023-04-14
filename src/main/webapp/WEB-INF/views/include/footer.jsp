@@ -45,7 +45,7 @@
         <a href="/" class="text-decoration-none">
           <h5 class="text-primary mb-3">Logo</h5>
         </a>
-        <p class="text-muted">소개 글</p>
+        <p class="text-muted">Seatisfy</p>
       </div>
       <div class="col-lg-3 mb-4 mb-lg-0">
         <h5 class="text-primary mb-3">Menu</h5>
@@ -59,7 +59,6 @@
       <div class="col-lg-3 mb-4 mb-lg-0">
         <h5 class="text-primary mb-3">Support</h5>
         <ul class="list-unstyled">
-          <li><a href="#" class="text-muted text-decoration-none">문의하기</a></li>
           <li><a href="#" class="text-muted text-decoration-none">이용 방법</a></li>
           <li><a href="#" class="text-muted text-decoration-none">서비스 소개</a></li>
         </ul>
