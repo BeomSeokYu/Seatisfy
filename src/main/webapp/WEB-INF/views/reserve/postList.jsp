@@ -65,10 +65,10 @@
 						</c:forEach>
 					</tbody>
 				</table> --%>
-				<div id="imgList">
+				<div class="card-columns row" id="imgList">
 					
 				</div>
-				
+				<div class="row text-center" id="none"></div>'
 				<hr class="my-4">
 				<div class="row">
 					<div class="col-8">
@@ -150,7 +150,7 @@ onload = function() {
 			var status = getDateStatus(data[i].startdate, data[i].enddate)
 			var statusColor = '';
 			switch(status) {
-				case '시작 전':statusColor = 'white';
+				case '시작 전':statusColor = 'black';
 					break;
 				case '진행중':	statusColor = 'green';
 					break;
@@ -170,7 +170,7 @@ onload = function() {
        	      formatRegDate = regDate.getFullYear() + '-' + ('0' + (regDate.getMonth() + 1)).slice(-2) + '-' + ('0' + regDate.getDate()).slice(-2);
        	    }
        	 imgHTML += ''
-		       	+ '<div class="card col-4 m-4" >'
+		       	+ '<div class="card col-4" >'
 		       	+ '<div  class="card-header text-of"><strong>'+data[i].ptitle+'</strong></div><div class="row mx-3">'
 		       	+ '<div class="col-6 text-of" style="color: '+statusColor+';">'+status+'</div><div class="col-6 text-end"><i class="bi bi-alarm"></i>'
 		       	+ '</div></div><a href="/reserve/detail/'+ data[i].pno + '"><div  class="card-body">'
@@ -180,8 +180,7 @@ onload = function() {
 		       	+ '<div class="card-text my-2 text-of">'+data[i].startdate+'시작</div>'
 		       	+ '<div class="card-text my-2 text-of">'+data[i].enddate+'종료</div>'
 		       	+ '<div class="row mt-3"><h5 class="col-6 text-of">작성자:</h5>'
-		       	+ '<div class="col-6 card-text comment text-end text-of" id="td'+i+'">'+data[i].pwriter+'</div></div></div></a></div></div>'
-		       	+ '<div class="row text-center" id="none"></div>';
+		       	+ '<div class="col-6 card-text comment text-end text-of" id="td'+i+'">'+data[i].pwriter+'</div></div></div></a></div></div>';
 		       	getName(data[i].pwriter, i)
 			/* imgHTML += ''
 					+ '<tr onclick="location.href=\'/reserve/detail/'
