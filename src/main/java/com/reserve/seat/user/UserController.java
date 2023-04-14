@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.reserve.seat.Criteria;
@@ -38,7 +40,8 @@ public class UserController {
 	
 	// 회원 탈퇴
 	@PostMapping("/signout")
-	public String signout(@ModelAttribute("user") User user, 
+	@ResponseStatus(code = HttpStatus.OK)
+	public void signout(@ModelAttribute("user") User user, 
 			HttpServletRequest request, HttpServletResponse response) {
 		
 		// 로그아웃 처리
@@ -46,7 +49,7 @@ public class UserController {
 		new SecurityContextLogoutHandler().logout(request, response, auth);
 		//회원 탈퇴
 		userService.removeUser(user.getUno());
-		return "redirect:/";
+		
 	}
 
 	// 전체 회원 목록
@@ -137,8 +140,8 @@ public class UserController {
 	@PostMapping("/changepw")
 	public String changePw(@ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
-		if (!user.getPassword().matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$")) {
-			bindingResult.rejectValue("password", "incorrectPw", "비밀번호는 8자 이상이어야 하며, 영문자와 숫자를 모두 포함해야 합니다.");
+		if (!user.getPassword().matches("^(?=.*[A-Za-z])(?=.*\\\\d)[A-Za-z\\\\d!@#$%^&*()_+]{8,}$")) {
+			bindingResult.rejectValue("password", "incorrectPw", "비밀번호는 8자 이상, 영문자와 숫자를 포함해야 합니다.");
 		}
 		if (!user.getPassword().equals(user.getPasswordConfirm())) {
 		    bindingResult.rejectValue("passwordConfirm", "pwConfirm", "비밀번호가 일치하지 않습니다.");

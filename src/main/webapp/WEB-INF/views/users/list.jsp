@@ -42,13 +42,13 @@
 					<table class="table table-hover shadow bg-body table-rounded">
 						<thead>
 							<tr class="bg-primary" style="color: white;">
-								<th scope="col" class="col-2">번호</th>
+								<th scope="col" class="col-1">번호</th>
 								<th scope="col" class="col-2">이메일</th>
 								<th scope="col" class="col-2">이름</th>
 								<th scope="col" class="col-2">전화번호</th>
 								<th scope="col" class="col-2">권한</th>
 								<th scope="col" class="col-2">가입일</th>
-								<th scope="col" class="col-2">관리</th>
+								<th scope="col" class="col-3">관리</th>
 								
 							</tr>
 						</thead>
@@ -141,7 +141,7 @@
                   + data[i].uno	+"'\">"	+ data[i].username + "</a></td>" 
                   +'<td>' + data[i].name+ "</td>"
                   + '<td>' + data[i].phone  + "</td>"
-                  +	"<td><select "
+                  +	"<td><select onchange=\"javascript:updateAuth(" + data[i].uno, this.value + ")"
                   +	"class='form-select form-select-sm	 aria-label='.form-select-sm example'>"
                   +		"<option selected>" +data[i].authority + "</option>"
                   +		"<option disabled>---------</option>"

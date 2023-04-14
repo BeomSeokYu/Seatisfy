@@ -82,6 +82,7 @@
 			},
 			success : function(result) {
 				alert("회원탈퇴가 완료되었습니다.");
+				location.href="/";
 			},
 			error : function(request, status, error) {
 				alert(request.status + " " + request.responseText);
