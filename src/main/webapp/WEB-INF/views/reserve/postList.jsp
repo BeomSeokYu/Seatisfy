@@ -68,7 +68,7 @@
 				<div class="card-columns row" id="imgList">
 					
 				</div>
-				<div class="row text-center" id="none"></div>'
+				<div class="row text-center" id="none"></div>
 				<hr class="my-4">
 				<div class="row">
 					<div class="col-8">
@@ -142,7 +142,7 @@ onload = function() {
 		//TODO: 리스트 출력 처리 하세요
 		if (data.length < 1) {
 			var noneStr = '';
-			noneStr ='<div>등록된 게시물이 없습니다.<div>'
+			noneStr ='<div>등록된 게시물이 없습니다.<div>';
 			$("#none").html(noneStr);
 		}
 		var imgHTML = '';
