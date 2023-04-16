@@ -920,8 +920,8 @@ onload = function() {
 	case 'success':
 		popModal('예약 성공', '예약에 성공했습니다');
 	  break;
-	case 'fail':
-		popModal('예약 실패', '작성자는 예약이 불가능합니다');
+	case 'reserved':
+		popModal('예약 실패', '이미 예약된 자리입니다');
 	  break;
 	case 'dupli':
 		popModal('중복 예약 불가', '이미 예약된 회원입니다 <br> 자리 변경을 원하시면 취소 후 다시 이용해 주세요');
