@@ -245,6 +245,10 @@
 	      	<table class="table table-fixed" id="seatTable">
 	      	</table>
       	</div>
+      	<div class="text-end"><span class="rounded" style="background-color: #808080;">　</span> : 좌석 없음</div>
+      	<div class="text-end"><span class="rounded" style="background-color: #0067a3;">　</span> : 선택 표시</div>
+      	<div class="text-end"><span class="rounded" style="background-color: #FF6347;">　</span> : 예약된 좌석</div>
+      	<div class="text-end"><span class="rounded" style="background-color: #B0FF66;">　</span> : 내 예약 좌석</div>
       </div>
       <div class="modal-footer text-center justify-content-center">
       	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -260,12 +264,6 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
 
 <input type="text" id="selectAmount" value="5">
 <%@include file="../include/scriptUtil.jsp"%>
