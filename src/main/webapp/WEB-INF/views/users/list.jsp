@@ -117,7 +117,9 @@
             var noneStr = '';
             noneStr ='<div>가입된 회원이 없습니다.<div>'
             $("#none").html(noneStr);
-         }
+         }  else {
+ 			$("#none").html('');
+ 		}
          var imgHTML = '';
          for (var i = 0; i < data.length; i++) {
         	// var regDate = new Date(data[i].udate); // Date 객체 생성

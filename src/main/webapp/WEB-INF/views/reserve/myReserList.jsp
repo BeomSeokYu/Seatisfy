@@ -64,12 +64,12 @@
 				
 				<hr class="my-4">
 				<div class="row">
-					<div class="col-md-8">
+					<div class="col-md-12">
 						<ul class="pagination justify-content-center" id="pagination">
 
 						</ul>
 					</div>
-					<div class="col-md-4">
+					<!-- <div class="col-md-4">
 						<div class="d-flex text-end">
 							<select class="form-select" id="selectType">
 								<option value="T" selected>제목</option>
@@ -84,7 +84,7 @@
 								<i class="bi bi-search"></i>
 							</button>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -124,6 +124,8 @@
 			var noneStr = '';
 			noneStr ='<div>예약된 좌석의 게시물이 없습니다.<div>'
 			$("#none").html(noneStr);
+		}  else {
+			$("#none").html('');
 		}
 		var imgHTML = '';
 		for (var i = 0; i < data.length; i++) {

@@ -144,6 +144,8 @@ onload = function() {
 			var noneStr = '';
 			noneStr ='<div>등록된 게시물이 없습니다.<div>';
 			$("#none").html(noneStr);
+		} else {
+			$("#none").html('');
 		}
 		var imgHTML = '';
 		for (var i = 0; i < data.length; i++) {
