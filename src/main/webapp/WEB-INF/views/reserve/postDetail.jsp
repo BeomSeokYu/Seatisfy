@@ -268,9 +268,7 @@
 
 
 <input type="text" id="selectAmount" value="5">
-
 <%@include file="../include/scriptUtil.jsp"%>
-<script src="/resources/js/page.js"></script>
 <script>
 
 /* 전체 게시물 수 가져오기 위해 처리한 jsp URL 입력해주세요 */
@@ -477,27 +475,6 @@ function cancel(rno){
 	  pageObj.pageCal(cri);
 }
 
-onload = function() {
-	switch ('${param.result}') {
-	  case 'success':
-	  	popModal('예약 성공', '예약에 성공했습니다');
-	    break;
-	  case 'fail':
-	  	popModal('예약 실패', '작성자는 예약이 불가능합니다');
-	    break;
-	  case 'dupli':
-	  	popModal('중복 예약 불가', '이미 예약된 회원입니다 <br> 자리 변경을 원하시면 취소 후 다시 이용해 주세요');
-	    break;
-	  case 'ccsuccess':
-	  	popModal('예약 취소 성공', '예약이 취소되었습니다');
-	    break;
-	  case 'ccfail':
-	  	popModal('예약 취소 실패', '예약 취소에 실패하였습니다');
-	  case 'nosn':
-	  	popModal('좌석 미선택', '예약할 좌석을 선택해 주세요');
-	    break;
-	}
-}
 
 function getDateStatus(sdate, edate) {
 	const now = new Date(); // 현재 시각
@@ -573,7 +550,7 @@ $("#removeBtn").on("click", function() {
 
 
 </script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8b383d5cd72a2f6c17df1bc2be653f54&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=앱키&libraries=services"></script>
 <script>   
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {
@@ -757,8 +734,6 @@ function checkMinMaxRange(TagNameById) {
 		}
 	}
 }
-
-removeAllParam();
 </script>
 <script>
 /**
@@ -937,6 +912,31 @@ function getName(email, i) {
 }
 
 $('#statusPost').html(getDateStatus('${post.startdate}', '${post.enddate}'));
+
+var msg = '${param.result}';
+
+onload = function() {
+	switch (msg) {
+	case 'success':
+		popModal('예약 성공', '예약에 성공했습니다');
+	  break;
+	case 'fail':
+		popModal('예약 실패', '작성자는 예약이 불가능합니다');
+	  break;
+	case 'dupli':
+		popModal('중복 예약 불가', '이미 예약된 회원입니다 <br> 자리 변경을 원하시면 취소 후 다시 이용해 주세요');
+	  break;
+	case 'ccsuccess':
+		popModal('예약 취소 성공', '예약이 취소되었습니다');
+	  break;
+	case 'ccfail':
+		popModal('예약 취소 실패', '예약 취소에 실패하였습니다');
+	case 'nosn':
+		popModal('좌석 미선택', '예약할 좌석을 선택해 주세요');
+	  break;
+	}
+	removeAllParam();
+}
 </script>
 </body>
 </html>
