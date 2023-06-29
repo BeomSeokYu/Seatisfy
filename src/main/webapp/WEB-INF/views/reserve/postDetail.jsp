@@ -548,7 +548,7 @@ $("#removeBtn").on("click", function() {
 
 
 </script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=앱키&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cfff884a65c8af600cc7839bec9c710c&libraries=services"></script>
 <script>   
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {
@@ -866,10 +866,6 @@ function searchExe() {
 	pageObj.pageCal(cri);
 }
 
-onload = function() {
-	pageObj.pageCal(cri);
-}
-
 function getList() {
 	var csrfToken = getCsrfToken();
 	fetch(getListUrl(), {	
@@ -914,6 +910,7 @@ $('#statusPost').html(getDateStatus('${post.startdate}', '${post.enddate}'));
 var msg = '${param.result}';
 
 onload = function() {
+	pageObj.pageCal(cri);
 	switch (msg) {
 	case 'success':
 		popModal('예약 성공', '예약에 성공했습니다');
