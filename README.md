@@ -34,7 +34,8 @@
 - 우리 서비스 목표
   - 위의 제시된 문제점을 해결하고자 어떠한 공간에 대한 좌석의 배치를 이용자가 설정하고 등록하여 다른 이용자들이 예약 시스템을 사용할 수 있는 시스템으로 제작
   - 좌석의 예약만을 서비스하여 예약 서비스가 필요한 기업이나 개인이 손쉽게 좌석 예약을 만들고 사용할 수 있는 B2B(Business-to-Business) 비즈니스 모델을 만드는 것이 목표
-
+#### 프로젝트 배포
+- cafe24 호스팅 : [http://bsyu.shop](http://bsyu.shop)
 
 <br><br><br>
 
@@ -117,7 +118,7 @@
 
 ## 프로젝트 결과 소개
 - ### 홈페이지 URL
-  [Seatisfy (http://bsyu.shop)]([http://actswoori.org/main.jsp](http://bsyu.shop) "Seatisfy")
+  [Seatisfy (http://bsyu.shop)](http://bsyu.shop)
 
 <br>
 
