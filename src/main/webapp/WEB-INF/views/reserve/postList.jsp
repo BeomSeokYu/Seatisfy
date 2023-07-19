@@ -180,7 +180,7 @@ onload = function() {
 		       	+ '<div class="col-9 card-text comment text-end text-of">'+data[i].place+'</div>'
 		       	+ '</div><h5 class="mt-3">시간</h5>'
 		       	+ '<div class="card-text my-2 text-of">'+data[i].startdate.replace('T',' ')+' 시작</div>'
-		       	+ '<div class="card-text my-2 text-of">'+data[i].startdate.replace('T',' ')+' 종료</div>'
+		       	+ '<div class="card-text my-2 text-of">'+data[i].enddate.replace('T',' ')+' 종료</div>'
 		       	+ '<div class="row mt-3"><h5 class="col-6 text-of">작성자:</h5>'
 		       	+ '<div class="col-6 card-text comment text-end text-of" id="td'+i+'">'+data[i].pwriter+'</div></div></div></a></div></div>';
 		       	getName(data[i].pwriter, i)
